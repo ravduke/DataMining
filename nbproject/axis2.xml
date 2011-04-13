@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<axis2 xmlns="http://www.netbeans.org/ns/axis2/1">
-    <service name="DataAccess">
-        <service-class>pl.edu.agh.ftj.weka.dbapi.webservice.DataAccess</service-class>
-        <generate-wsdl targetNamespace="http://webservice/dbapi/weka/ftj/agh/edu/pl/" schemaNamespace="http://webservice/dbapi/weka/ftj/agh/edu/pl/xsd"/>
-    </service>
-</axis2>
