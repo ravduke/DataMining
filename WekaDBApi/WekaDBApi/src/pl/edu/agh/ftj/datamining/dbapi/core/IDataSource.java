@@ -6,21 +6,16 @@ import weka.core.Instances;
  * (czyli SQLite, PostgreSQL, pliki tekstowe, itd.)
  *
  * @author janek
- * @version 1.0.0 alfa
+ * @version 1.0.0 beta
  */
 public interface IDataSource {
 
-    /** 
-     * Ustawianie parametrow zrodla danych do polaczen
+    /**
+     * Pobranie danych w formie konsumowalnej przez Weke
      * @param location URI do polaczen z baza lub lokalizacja pliku w systemie
      * @param username Nazwa uzytkownika do polaczen
      * @param password Haslo
-     */
-    public void setDataSourceParameters(String location,String username, String password);
-
-    /**
-     * Pobranie danych w formie konsumowalnej przez Weke
      * @return dane do analizy
      */
-    public Instances getData();
+    public Instances getData(String location, String username, String password);
 }

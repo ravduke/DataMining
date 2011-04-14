@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : conf.xml
+    Created on : 14 kwiecien 2011
+    Author     : janek
+    Description: glowny plik konfiguracyjny zrodel danych
+-->
+
+<dataSources>
+    <server>
+        <id>1</id>
+        <name>PostgreSQL @ localhost</name>
+        <location>mysqlserver.com</location>
+        <port>port</port>
+        <database>databasename</database>
+        <username>user</username>
+        <password>password</password>
+    </server>
+</dataSources>
