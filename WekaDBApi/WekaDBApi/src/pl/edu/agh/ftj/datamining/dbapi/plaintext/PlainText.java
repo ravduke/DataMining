@@ -11,12 +11,10 @@ import weka.core.Instances;
 public class PlainText implements IDataSource{
 
     /**
-     * Ustawianie zrodla danych
-     * @param location
-     * @param username
-     * @param password
+     * Pobieranie danych dla danego zrodla danych
+     * @param table tabela z danymi lub nazwa pliku z danymi
      */
-    public Instances getData(String location, String username, String password) {
+    public Instances getData(String table) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

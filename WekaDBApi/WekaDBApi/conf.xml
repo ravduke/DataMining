@@ -10,11 +10,17 @@
 <dataSources>
     <server>
         <id>1</id>
+        <type>PostgreSQL</type>
         <name>PostgreSQL @ localhost</name>
         <location>mysqlserver.com</location>
         <port>port</port>
         <database>databasename</database>
         <username>user</username>
         <password>password</password>
+        <tables>
+            <table>t1</table>
+            <table>t2</table>
+            <table>t3</table>
+        </tables>
     </server>
 </dataSources>

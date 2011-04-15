@@ -13,9 +13,7 @@ public interface IDataSource {
     /**
      * Pobranie danych w formie konsumowalnej przez Weke
      * @param location URI do polaczen z baza lub lokalizacja pliku w systemie
-     * @param username Nazwa uzytkownika do polaczen
-     * @param password Haslo
-     * @return dane do analizy
+     * @param table z danymi lub nazwa pliku zawierającego dane
      */
-    public Instances getData(String location, String username, String password);
+    public Instances getData(String table);
 }

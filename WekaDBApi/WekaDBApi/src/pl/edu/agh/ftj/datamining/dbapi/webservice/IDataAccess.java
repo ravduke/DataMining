@@ -1,7 +1,8 @@
 
 package pl.edu.agh.ftj.datamining.dbapi.webservice;
 
-import pl.edu.agh.ftj.datamining.dbapi.core.DSApiEnums;
+import java.util.List;
+import pl.edu.agh.ftj.datamining.dbapi.core.BasicConfigurationDataSourceModel;
 import weka.core.Instances;
 
 /**
@@ -13,14 +14,16 @@ public interface IDataAccess {
 
     /**
      * Pobranie danych z wybranego zrodla w formie konsumowalnej przez Weke
+     * @param id unikalny identyffikator zrodla danych
+     * @param table nazwa tabeli lub pliku z danymi
      * @return dane do analizy
      */
-    public Instances getData();
+    public Instances getData(String id, String table);
 
 
     /**
      * Zwraca informacje o dostepnych zrodlach danych
      * @return Informacje o źródłach danych
      */
-    public String[][] getDataSources();
+    public List<BasicConfigurationDataSourceModel> getDataSources();
 }

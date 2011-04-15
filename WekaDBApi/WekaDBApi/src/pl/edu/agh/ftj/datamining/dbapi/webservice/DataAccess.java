@@ -1,12 +1,12 @@
 package pl.edu.agh.ftj.datamining.dbapi.webservice;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jws.WebService;
-import pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationDataSourceModel;
+import pl.edu.agh.ftj.datamining.dbapi.core.BasicConfigurationDataSourceModel;
 import pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationHelper;
 import pl.edu.agh.ftj.datamining.dbapi.core.IDataSource;
 import weka.core.Instances;
@@ -16,7 +16,7 @@ import weka.core.Instances;
  *
  * Klasa ma wbudowany logger, zapisujacy wyjatki do pliku ws.log
  * @author janek
- * @version 1.0.0
+ * @version 1.0.1
  */
 @WebService
 public class DataAccess implements IDataAccess {
@@ -34,6 +34,7 @@ public class DataAccess implements IDataAccess {
         try {
             fh = new FileHandler("ws.log", true);
             log.addHandler(fh);
+            readConfigurationFile();
         } catch (Exception ex) {
             System.err.print(ex.getMessage());
             System.exit(-1);
@@ -42,31 +43,29 @@ public class DataAccess implements IDataAccess {
 
     /**
      * Zwraca dane pobrane ze źródła danych
+     * @param id unikalny identyfikator zrodla danych
+     * @param table nazwa tabeli z danymi lub nazwa pliku z danymi
      * @return Dane w postaci konsumowalnej przez Weke
      */
-    public Instances getData() {
-        readConfigurationFile();
-        return dataSource.getData();
+    public Instances getData(String id, String table) {
+        
+        //instancjonowanie
+        return dataSource.getData(table);
     }
 
     /**
      * Zwraca zrodla dostepne danych 
-     * @return ID zrodla danych, wraz z nazwa
+     * @return podstawowe informacje o zrodle danych
      */
-    public String[][] getDataSources() {
+    public List<BasicConfigurationDataSourceModel> getDataSources() {
         try {
             readConfigurationFile();
-            List<ConfigurationDataSourceModel> conf = helper.getConfiguration();
-            String[][] confArray = new String[conf.size()][];
-            for (int i = 0; i < conf.size(); i++) {
-                confArray[i] = new String[2];
-                confArray[i][0] = conf.get(i).getId();
-                confArray[i][0] = conf.get(i).getDisplayedName();
-            }
-            return confArray;
+            List<BasicConfigurationDataSourceModel> confList = new ArrayList<BasicConfigurationDataSourceModel>();
+            confList.add((BasicConfigurationDataSourceModel) helper.getConfiguration());
+            return confList;
         } catch (Exception ex) {
-            log.log(Level.CONFIG, "Initialization error while reading configuration file.");
-            log.log(Level.CONFIG, ex.getMessage());
+            log.log(Level.ALL, "Initialization error while reading configuration file.");
+            log.log(Level.ALL, ex.getMessage());
             return null;
         }
     }
@@ -78,8 +77,9 @@ public class DataAccess implements IDataAccess {
         try {
             helper = new ConfigurationHelper();
         } catch (Exception ex) {
-            log.log(Level.CONFIG, "Initialization error while reading configuration file.");
-            log.log(Level.CONFIG, ex.getMessage());
+            log.log(Level.ALL, "Initialization error while reading configuration file.");
+            log.log(Level.ALL, ex.getMessage());
         }
     }
+
 }

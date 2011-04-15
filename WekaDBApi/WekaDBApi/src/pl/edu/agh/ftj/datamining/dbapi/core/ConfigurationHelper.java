@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import pl.edu.agh.ftj.datamining.dbapi.core.DSApiEnums.DataSourceType;
 
 /**
  * Klasa odpowiedzialna za odczyt pliku konfiguracyjnego
@@ -61,6 +62,10 @@ public class ConfigurationHelper {
                 String id = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
                 dsm.setId(id);
 
+                elementList = element.getElementsByTagName("type");
+                String type = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
+                dsm.setDataSourceType(DataSourceType.valueOf(type));
+
                 elementList = element.getElementsByTagName("database");
                 String database = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
                 dsm.setDatabase(database);
@@ -85,6 +90,12 @@ public class ConfigurationHelper {
                 elementList = element.getElementsByTagName("password");
                 String password = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
                 dsm.setPassword(password);
+
+                elementList = element.getElementsByTagName("tables");
+                String[] tables = new String[((Element)elementList.item(0)).getChildNodes().getLength()];
+                for(int j=0;j<((Element)elementList.item(0)).getChildNodes().getLength();j++)
+                    tables[j] = ((Node)((Element)elementList.item(0)).getChildNodes().item(j)).getNodeValue();
+                dsm.setTables(tables);
             }
             
             configuration.add(dsm);
