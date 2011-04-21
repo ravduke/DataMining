@@ -25,7 +25,7 @@ public class PlainText implements IDataSource{
     public Instances getData(String location, String file) throws DataSourceException{
         CSVLoader cvs = new CSVLoader();
         try{
-            cvs.setSource(new File(location+"/"+file));
+            cvs.setSource(new File(location+"\\"+file));
             return cvs.getDataSet();
         }catch(FileNotFoundException e){
             throw new DataSourceException("File not found. Please check configuration file.");

@@ -7,10 +7,9 @@ package pl.edu.agh.ftj.datamining.dbapi.exceptions;
  */
 public class DataSourceException extends Exception{
     /**
-     * Wykonuje konstruktor klasy nadrzednej
+     * Nic nie robi, ale musi byc zdefiniowany
      */
     public DataSourceException(){
-       super();
     }
 
     /**
