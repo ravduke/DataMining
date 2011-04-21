@@ -9,6 +9,7 @@ import javax.jws.WebService;
 import pl.edu.agh.ftj.datamining.dbapi.core.BasicConfigurationDataSourceModel;
 import pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationHelper;
 import pl.edu.agh.ftj.datamining.dbapi.core.IDataSource;
+import pl.edu.agh.ftj.datamining.dbapi.exceptions.DataSourceException;
 import weka.core.Instances;
 
 /**
@@ -23,14 +24,13 @@ public class DataAccess implements IDataAccess {
 
     private IDataSource dataSource;
     private ConfigurationHelper helper;
-    private static Logger log;
+    private static final Logger log  = Logger.getLogger("wsLog");
     private FileHandler fh;
 
     /**
      * Inicjalizacja loggera
      */
     public DataAccess() {
-        log = Logger.getLogger("wsLog");
         try {
             fh = new FileHandler("ws.log", true);
             log.addHandler(fh);
@@ -48,9 +48,13 @@ public class DataAccess implements IDataAccess {
      * @return Dane w postaci konsumowalnej przez Weke
      */
     public Instances getData(String id, String table) {
-        
-        //instancjonowanie
-        return dataSource.getData(table);
+        //instancjonowanie z wykorzystaniem mechanizmu refleksji
+        try{
+            return dataSource.getData(table, table);
+        }catch(DataSourceException e){
+            log.log(Level.WARNING,e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -81,5 +85,4 @@ public class DataAccess implements IDataAccess {
             log.log(Level.ALL, ex.getMessage());
         }
     }
-
 }
