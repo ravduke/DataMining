@@ -25,15 +25,23 @@ public class PlainTextTest {
      */
     @Test
     public void testGetData() {
+        //dokonczyc test
         try {
             String location = "data";
             String file = "contact-lenses.arff.csv";
             PlainText instance = new PlainText();
-            Instances expResult = null;
+            //Instances expResult = null;
             Instances result = instance.getData(location, file);
-            assertEquals(expResult, result);
+            //sprawdzenie poprawnosci naglowkow
+            assertEquals(3,result.attribute("age").numValues());
+            assertEquals(2,result.attribute("spectacle-prescrip").numValues());
+            assertEquals(2, result.attribute("astigmatism").numValues());
+            assertEquals(2, result.attribute("tear-prod-rate").numValues());
+            assertEquals(3, result.attribute("contact-lenses").numValues());
+            //sprawdzenie czy ilosc wynikow sie zgadza
+            assertEquals(24, result.numInstances());
         } catch (DataSourceException ex) {
-            fail("The test case is a prototype.");
+            fail("Test failed.");
         }
     }
 
