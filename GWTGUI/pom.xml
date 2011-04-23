@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <gwt.version>2.0.4</gwt.version>
-        <gxt.version>gxt-2.2.0</gxt.version>
+        <gxt.version>2.2.0</gxt.version>
         <runTarget>welcomeGWT.html</runTarget>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
