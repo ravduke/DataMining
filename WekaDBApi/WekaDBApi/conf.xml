@@ -10,14 +10,14 @@
 <dataSources>
     <server>
         <id>1</id>
-        <type>PostgreSQL</type>
+        <type>Tekstowe</type>
         <name>PostgreSQL @ localhost</name>
         <location>mysqlserver.com</location>
-        <port>port</port>
+        <port>-1</port>
         <database>databasename</database>
         <username>user</username>
         <password>password</password>
-		<className>pl.edu.agh.ftj.datamining.dbapi.plaintext</className>
+		<className>pl.edu.agh.ftj.datamining.dbapi.plaintext.PlainText</className>
         <tables>
             <table>t1</table>
             <table>t2</table>

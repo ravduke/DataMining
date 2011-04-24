@@ -91,6 +91,10 @@ public class ConfigurationHelper {
                 String password = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
                 dsm.setPassword(password);
 
+                elementList = element.getElementsByTagName("className");
+                String className = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
+                dsm.setClassName(className);
+
                 elementList = element.getElementsByTagName("tables");
                 String[] tables = new String[((Element)elementList.item(0)).getChildNodes().getLength()];
                 for(int j=0;j<((Element)elementList.item(0)).getChildNodes().getLength();j++)
