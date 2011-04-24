@@ -13,6 +13,23 @@ public class ConfigurationDataSourceModel extends BasicConfigurationDataSourceMo
     private String username, password;
     private int port;
     private DataSourceType dataSourceType;
+    private String className;
+
+    /**
+     * Nazwa klasy odpowiedzialnej za obsluge danego zrodla danych
+     * @return Nazwa klasy zawierajaca przestrzen nazw
+     */
+    public String getClassName() {
+        return className;
+    }
+
+    /**
+     * Nazwa klasy odpowiedzialnej za obsluge danego zrodla danych
+     * @param Nazwa klasy zawierajaca przestrzen nazw
+     */
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     /**
      * Pobiera nazwa uzytkownika do polaczen z baza danych

@@ -17,6 +17,7 @@
         <database>databasename</database>
         <username>user</username>
         <password>password</password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.plaintext</className>
         <tables>
             <table>t1</table>
             <table>t2</table>

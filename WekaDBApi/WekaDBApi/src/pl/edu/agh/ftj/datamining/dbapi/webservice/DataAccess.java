@@ -1,12 +1,14 @@
 package pl.edu.agh.ftj.datamining.dbapi.webservice;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jws.WebService;
 import pl.edu.agh.ftj.datamining.dbapi.core.BasicConfigurationDataSourceModel;
+import pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationDataSourceModel;
 import pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationHelper;
 import pl.edu.agh.ftj.datamining.dbapi.core.IDataSource;
 import pl.edu.agh.ftj.datamining.dbapi.exceptions.DataSourceException;
@@ -24,6 +26,7 @@ public class DataAccess implements IDataAccess {
 
     private IDataSource dataSource;
     private ConfigurationHelper helper;
+    private HashMap<String, ConfigurationDataSourceModel> config;
     private static final Logger log  = Logger.getLogger("wsLog");
     private FileHandler fh;
 
@@ -50,9 +53,19 @@ public class DataAccess implements IDataAccess {
     public Instances getData(String id, String table) {
         //instancjonowanie z wykorzystaniem mechanizmu refleksji
         try{
+            dataSource = (IDataSource)Class.forName(config.get(id).getClassName()).newInstance();
             return dataSource.getData(table, table);
-        }catch(DataSourceException e){
-            log.log(Level.WARNING,e.getMessage());
+        } catch (InstantiationException ex) {
+            log.log(Level.WARNING,ex.getMessage());
+            return null;
+        } catch (IllegalAccessException ex) {
+            log.log(Level.WARNING,ex.getMessage());
+            return null;
+        } catch (ClassNotFoundException ex) {
+            log.log(Level.WARNING,ex.getMessage());
+            return null;
+        }catch(DataSourceException ex){
+            log.log(Level.WARNING,ex.getMessage());
             return null;
         }
     }
@@ -66,6 +79,10 @@ public class DataAccess implements IDataAccess {
             readConfigurationFile();
             List<BasicConfigurationDataSourceModel> confList = new ArrayList<BasicConfigurationDataSourceModel>();
             confList.add((BasicConfigurationDataSourceModel) helper.getConfiguration());
+            config = new HashMap<String, ConfigurationDataSourceModel>();
+            for(ConfigurationDataSourceModel conf: helper.getConfiguration()){
+                config.put(conf.getId(), conf);
+            }
             return confList;
         } catch (Exception ex) {
             log.log(Level.ALL, "Initialization error while reading configuration file.");

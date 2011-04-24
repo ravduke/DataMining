@@ -30,7 +30,7 @@ public class PlainTextTest {
             String location = "data";
             String file = "contact-lenses.arff.csv";
             PlainText instance = new PlainText();
-            //Instances expResult = null;
+            
             Instances result = instance.getData(location, file);
             //sprawdzenie poprawnosci naglowkow
             assertEquals(3,result.attribute("age").numValues());

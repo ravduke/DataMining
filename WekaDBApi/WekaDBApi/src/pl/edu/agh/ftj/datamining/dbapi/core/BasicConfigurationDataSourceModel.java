@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class BasicConfigurationDataSourceModel implements Serializable{
     private String id, displayedName, database, location;
     private String[] tables;
+    
 
      /**
      * Metoda zwraca unikalny identyfikator zrodla danych
