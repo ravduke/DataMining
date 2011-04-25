@@ -139,6 +139,15 @@ public class WekaAlgorithm {
         try {
             em.setOptions(options);
             em.buildClusterer(data);
+
+            wekaAnswer.setClusterPriors(em.getClusterPriors());
+            wekaAnswer.setClusterModelsNumericAtts(em.getClusterModelsNumericAtts());
+            wekaAnswer.setMinStdDev(em.getMinStdDev());
+            wekaAnswer.setCapabilities(em.getCapabilities());
+            wekaAnswer.setMaxIterations(em.getMaxIterations());
+            wekaAnswer.setNumClusters(em.getNumClusters());
+            wekaAnswer.setOptions(em.getOptions());
+            wekaAnswer.setRevision(em.getRevision());
         } catch(Exception e) {
             e.printStackTrace();
         }

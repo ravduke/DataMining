@@ -33,6 +33,10 @@ public class WekaAnswer {
     private String revision;
     private double squaredError;
     private int numberOfClusters;
+    private double[] clusterPriors;
+    private double[][][] clusterModelsNumericAtts;
+    private double minStdDev;
+    
 
     public int[] getAssignments() {
         return assignments;
@@ -144,6 +148,30 @@ public class WekaAnswer {
 
     public void setSquaredError(double squaredError) {
         this.squaredError = squaredError;
+    }
+
+    public double[][][] getClusterModelsNumericAtts() {
+        return clusterModelsNumericAtts;
+    }
+
+    public void setClusterModelsNumericAtts(double[][][] clusterModelsNumericAtts) {
+        this.clusterModelsNumericAtts = clusterModelsNumericAtts;
+    }
+
+    public double[] getClusterPriors() {
+        return clusterPriors;
+    }
+
+    public void setClusterPriors(double[] clusterPriors) {
+        this.clusterPriors = clusterPriors;
+    }
+
+    public double getMinStdDev() {
+        return minStdDev;
+    }
+
+    public void setMinStdDev(double minStdDev) {
+        this.minStdDev = minStdDev;
     }
 
     @Override
