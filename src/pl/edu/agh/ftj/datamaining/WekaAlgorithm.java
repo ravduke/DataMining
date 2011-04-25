@@ -110,7 +110,7 @@ public class WekaAlgorithm {
         try {
             skm.setOptions(options);
             skm.buildClusterer(data);
-            
+            //rozpoczęcie budowania obiektu z danymi
             wekaAnswer.setAssignments(skm.getAssignments());
             wekaAnswer.setCapabilities(skm.getCapabilities());
             wekaAnswer.setClusterCentroids(skm.getClusterCentroids());
@@ -139,7 +139,7 @@ public class WekaAlgorithm {
         try {
             em.setOptions(options);
             em.buildClusterer(data);
-
+            //rozpoczęcie budowania obiektu z danymi
             wekaAnswer.setClusterPriors(em.getClusterPriors());
             wekaAnswer.setClusterModelsNumericAtts(em.getClusterModelsNumericAtts());
             wekaAnswer.setMinStdDev(em.getMinStdDev());
