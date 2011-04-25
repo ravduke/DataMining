@@ -7,7 +7,8 @@ import weka.core.Instances;
 /**
  * Klasa obiektu przechowującego dane wyprodukowane przez algorytmy Weki.
  * Obiekt ten będzie zwracany do silnika.
- * @author Bartek
+ * @author Bartłomiej Wojas
+ * @version 0.8.0
  */
 public class WekaAnswer {
     /**
