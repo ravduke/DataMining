@@ -103,14 +103,27 @@ public class WekaAlgorithm {
      * Uruchamia algorytm SimpleKMeans.
      */
     private void runSimpleKMeans() {
+        wekaAnswer.setAlgorithmType(1);
         wekaAnswer.setAlgorithmName(algorithms[0]);
         SimpleKMeans skm = new SimpleKMeans();
 
         try {
             skm.setOptions(options);
             skm.buildClusterer(data);
-            //zbudować obiekt z danymi
             
+            wekaAnswer.setAssignments(skm.getAssignments());
+            wekaAnswer.setCapabilities(skm.getCapabilities());
+            wekaAnswer.setClusterCentroids(skm.getClusterCentroids());
+            wekaAnswer.setClusterNominalCounts(skm.getClusterNominalCounts());
+            wekaAnswer.setClusterSizes(skm.getClusterSizes());
+            wekaAnswer.setClusterStandardDevs(skm.getClusterStandardDevs());
+            wekaAnswer.setDistanceFunction(skm.getDistanceFunction());
+            wekaAnswer.setMaxIterations(skm.getMaxIterations());
+            wekaAnswer.setNumClusters(skm.getNumClusters());
+            wekaAnswer.setOptions(options);
+            wekaAnswer.setRevision(skm.getRevision());
+            wekaAnswer.setSquaredError(skm.getSquaredError());
+            wekaAnswer.setNumberOfClusters(skm.numberOfClusters());
         } catch(Exception e) {
             e.printStackTrace();
         }
