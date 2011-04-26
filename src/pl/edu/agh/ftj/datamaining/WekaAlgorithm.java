@@ -9,7 +9,7 @@ import weka.core.Instances;
 /**
  * Klasa odpowiedzialna za komunikacje z biblioteka Weki
  * @author Bartłomiej Wojas
- * @version 0.8.0
+ * @version 0.8.1
  */
 public class WekaAlgorithm {
     /**
@@ -83,11 +83,12 @@ public class WekaAlgorithm {
         this.data = data;
     }
 
-    /**
-     * Ustawia opcje dla algorytmu.
-     * Dostępne opcje podane są w dokumentacji każdego z algorytmów.
-     * @param options Opcje wg. których ma działać algorytm.
-     */
+   /**
+    * Ustawia opcje dla algorytmu.
+    * Opis parametrów oraz algorytmów znajduje się na TracWiki projektu.
+    * URL: http://prgzsp.ftj.agh.edu.pl/trac/P3-DataMining/wiki/Algorytmy
+    * @param options Opcje wg. których ma działać algorytm.
+    */
     public void setOptions(String[] options) {
         this.options = options;
     }
