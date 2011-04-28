@@ -3,12 +3,13 @@ package pl.edu.agh.ftj.datamaining;
 import weka.core.Capabilities;
 import weka.core.DistanceFunction;
 import weka.core.Instances;
+import weka.core.SelectedTag;
 
 /**
  * Klasa obiektu przechowującego dane wyprodukowane przez algorytmy Weki.
  * Obiekt ten będzie zwracany do silnika.
- * @author Bartłomiej Wojas
- * @version 0.8.0
+ * @author Bartłomiej Wojas, Adrian Kremblewski
+ * @version 0.9.0
  */
 public class WekaAnswer {
     /**
@@ -100,6 +101,36 @@ public class WekaAnswer {
      * Minimalne dopuszczalne odchylenie standardowe.
      */
     private double minStdDev;
+    
+    /**
+     * 
+     */
+    private double acuity;
+    
+    /**
+     * 
+     */
+    private double cutoff;
+    
+    /**
+     * 
+     */
+    private String graph;
+    
+    /**
+     * 
+     */
+    private int graphType;
+    
+    /**
+     * 
+     */
+    private SelectedTag linkType;
+    
+    /**
+     * 
+     */
+    private boolean printNewick;
 
     /**
     * Zwraca tablice indeksow pozwalajacych powiazac srodki klastrow z poszczegolnymi instancjami.
@@ -390,4 +421,91 @@ public class WekaAnswer {
     public void setAlgorithmName(String algorithmName) {
         this.algorithmName = algorithmName;
     }
+    
+/* --- Cobweb, HierarchicalClusterer --- */
+
+    /**
+     * @return the acuity
+     */
+    public double getAcuity() {
+        return acuity;
+    }
+
+    /**
+     * @param acuity the acuity to set
+     */
+    public void setAcuity(double acuity) {
+        this.acuity = acuity;
+    }
+
+    /**
+     * @return the cutoff
+     */
+    public double getCutoff() {
+        return cutoff;
+    }
+
+    /**
+     * @param cutoff the cutoff to set
+     */
+    public void setCutoff(double cutoff) {
+        this.cutoff = cutoff;
+    }
+
+    /**
+     * @return the graph
+     */
+    public String getGraph() {
+        return graph;
+    }
+
+    /**
+     * @param graph the graph to set
+     */
+    public void setGraph(String graph) {
+        this.graph = graph;
+    }
+
+    /**
+     * @return the graphType
+     */
+    public int getGraphType() {
+        return graphType;
+    }
+
+    /**
+     * @param graphType the graphType to set
+     */
+    public void setGraphType(int graphType) {
+        this.graphType = graphType;
+    }
+
+    /**
+     * @return the linkType
+     */
+    public SelectedTag getLinkType() {
+        return linkType;
+    }
+
+    /**
+     * @param linkType the linkType to set
+     */
+    public void setLinkType(SelectedTag linkType) {
+        this.linkType = linkType;
+    }
+
+    /**
+     * @return the printNewick
+     */
+    public boolean isPrintNewick() {
+        return printNewick;
+    }
+
+    /**
+     * @param printNewick the printNewick to set
+     */
+    public void setPrintNewick(boolean printNewick) {
+        this.printNewick = printNewick;
+    }
+
 }
