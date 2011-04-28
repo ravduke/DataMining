@@ -8,8 +8,8 @@ import weka.core.Instances;
 
 /**
  * Klasa odpowiedzialna za komunikacje z biblioteka Weki
- * @author Bartłomiej Wojas
- * @version 0.8.1
+ * @author Bartłomiej Wojas, Adrian Kremblewski
+ * @version 0.9.1
  */
 public class WekaAlgorithm {
     /**
