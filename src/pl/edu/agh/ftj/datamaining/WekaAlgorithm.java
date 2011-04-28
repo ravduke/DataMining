@@ -165,6 +165,16 @@ public class WekaAlgorithm {
         try {
             hc.setOptions(options);
             hc.buildClusterer(data);
+            //rozpoczęcie budowania obiektu z danymi
+            wekaAnswer.setCapabilities(hc.getCapabilities());
+            wekaAnswer.setDistanceFunction(hc.getDistanceFunction());
+            wekaAnswer.setLinkType(hc.getLinkType());
+            wekaAnswer.setNumClusters(hc.getNumClusters());
+            wekaAnswer.setOptions(options);
+            wekaAnswer.setPrintNewick(hc.getPrintNewick());
+            wekaAnswer.setRevision(hc.getRevision());
+            wekaAnswer.setGraph(hc.graph());
+            wekaAnswer.setGraphType(hc.graphType());
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -180,6 +190,14 @@ public class WekaAlgorithm {
         try {
             cw.setOptions(options);
             cw.buildClusterer(data);
+            //rozpoczęcie budowania obiektu z danymi
+            wekaAnswer.setAcuity(cw.getAcuity());
+            wekaAnswer.setCapabilities(cw.getCapabilities());
+            wekaAnswer.setCutoff(cw.getCutoff());
+            wekaAnswer.setOptions(options);
+            wekaAnswer.setRevision(cw.getRevision());
+            wekaAnswer.setGraph(cw.graph());
+            wekaAnswer.setGraphType(cw.graphType());
         } catch(Exception e) {
             e.printStackTrace();
         }
