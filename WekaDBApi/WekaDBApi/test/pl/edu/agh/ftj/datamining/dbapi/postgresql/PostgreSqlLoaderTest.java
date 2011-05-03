@@ -8,6 +8,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 /**
  * Testy klasy PostgreSqlLoader.
  * @author Szymon Stupkiewicz
+ * @version 1.0.0
  */
 public class PostgreSqlLoaderTest {
 
