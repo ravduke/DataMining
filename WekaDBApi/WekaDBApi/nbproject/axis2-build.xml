@@ -5,6 +5,7 @@
                 JAX-WS WSIMPORT SECTION
                 ===================
             -->
+
     <target name="java2wsdl-init" depends="init">
         <mkdir dir="${basedir}/xml-resources/axis2/META-INF"/>
         <taskdef name="java2wsdl" classname="org.apache.ws.java2wsdl.Java2WSDLTask">

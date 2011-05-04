@@ -28,7 +28,7 @@ public class PostgreSqlLoaderTest {
         System.out.println("getInstances");
         String uri = "jdbc:postgresql://localhost/datamine?user=datamine&password=me@me.com";
         String table = "iris";
-        String file = "/home/timon/uci/nominal/" + table + ".arff";
+        String file = "C:\\Program Files\\Weka-3-6\\data\\" + table + ".arff";
 
         PostgresqlLoader instance = new PostgresqlLoader(uri, table);
 
