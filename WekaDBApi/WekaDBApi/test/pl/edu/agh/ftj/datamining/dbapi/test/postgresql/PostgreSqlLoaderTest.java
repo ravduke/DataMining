@@ -26,11 +26,11 @@ public class PostgreSqlLoaderTest {
     @Test
     public void testGetInstances() throws Exception {
         System.out.println("getInstances");
-        String uri = "jdbc:postgresql://localhost/datamine?user=datamine&password=me@me.com";
+        String url = "jdbc:postgresql://localhost/datamine?user=datamine&password=me@me.com";
         String table = "iris";
-        String file = "C:\\Program Files\\Weka-3-6\\data\\" + table + ".arff";
+        String file = "/home/timon/weka/weka-3-6-4/data/" + table + ".arff";
 
-        PostgresqlLoader instance = new PostgresqlLoader(uri, table);
+        PostgresqlLoader instance = new PostgresqlLoader(url, table);
 
         Instances file_data = DataSource.read(file);
         Instances db_data = instance.getInstances();
