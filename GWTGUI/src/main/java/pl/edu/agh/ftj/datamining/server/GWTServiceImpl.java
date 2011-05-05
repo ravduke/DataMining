@@ -3,14 +3,14 @@
  * and open the template in the editor.
  */
 
-package pl.edu.agh.ftj.datamaining.server;
+package pl.edu.agh.ftj.datamining.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import pl.edu.agh.ftj.datamaining.client.GWTService;
+import pl.edu.agh.ftj.datamining.client.GWTService;
 
 /**
  *
