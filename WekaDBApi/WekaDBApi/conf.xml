@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : conf.xml
+    Created on : 14 kwiecien 2011
+    Author     : janek
+    Description: glowny plik konfiguracyjny zrodel danych
+-->
+
+<dataSources>
+    <server>
+        <id>1</id>
+        <type>PlainText</type>
+        <name>Tekst</name>
+        <location>C:\</location>
+        <port>-1</port>
+        <database></database>
+        <username></username>
+        <password></password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.plaintext.PlainText</className>
+        <tables>
+            <table>t1</table>
+            <table>t2</table>
+            <table>t3</table>
+        </tables>
+    </server>
+</dataSources>
