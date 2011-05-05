@@ -1,7 +1,7 @@
 package pl.edu.agh.ftj.datamining.dbapi.postgresql;
 
 import java.sql.SQLException;
-import pl.edu.agh.ftj.datamining.dbapi.exceptions.PgsqlSourceException;
+import pl.edu.agh.ftj.datamining.dbapi.exceptions.DataSourceException;
 import weka.core.Instances;
 import weka.core.converters.DatabaseLoader;
 
@@ -21,9 +21,9 @@ public final class PostgresqlLoader {
      *
      * @param url URL do bazy danych zawierajacy host, port, login i haslo do bazy danych
      * @param table Tabela w bazie danych, z ktorej maja byc pobrane dane
-     * @throws PgsqlSourceException Wyjatek wyrzucany kiedy wystapi blad z polaczeniem badz wybraniem tabeli
+     * @throws DataSourceException Wyjatek wyrzucany kiedy wystapi blad z polaczeniem badz wybraniem tabeli
      */
-    public PostgresqlLoader(String url, String table) throws PgsqlSourceException {
+    public PostgresqlLoader(String url, String table) throws DataSourceException {
 
         this.setDbUrl(url);
         this.setRelation(table);
@@ -32,13 +32,13 @@ public final class PostgresqlLoader {
             this.fetchInstances();
         } catch (ClassNotFoundException ex) {
             String message = "The required PostgreSQL JDBC driver was not found. Additional info:\n" + ex.getMessage();
-            throw new PgsqlSourceException(message);
+            throw new DataSourceException(message);
         } catch (SQLException ex) {
             String message = "There was an error in your SQL statement. Additional info:\n" + ex.getMessage();
-            throw new PgsqlSourceException(message);
+            throw new DataSourceException(message);
         } catch (Exception ex) {
             String message = "There was an exception. Additional info:\n" + ex.getMessage();
-            throw new PgsqlSourceException(message);
+            throw new DataSourceException(message);
         }
     }
 
