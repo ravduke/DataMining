@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<axis2 xmlns="http://www.netbeans.org/ns/axis2/1">
+    <service name="WekaService">
+        <service-class>pl.edu.agh.ftj.datamaining.weka.webservice.WekaService</service-class>
+        <generate-wsdl targetNamespace="http://webservice/weka/datamaining/ftj/agh/edu/pl/" schemaNamespace="http://webservice/weka/datamaining/ftj/agh/edu/pl/xsd"/>
+    </service>
+    <libraries>
+        <library-ref name="weka.jar"/>
+    </libraries>
+</axis2>
