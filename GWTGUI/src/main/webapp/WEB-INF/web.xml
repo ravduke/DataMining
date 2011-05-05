@@ -3,7 +3,7 @@
     <display-name>GWTGUI</display-name>
     <servlet>
         <servlet-name>GWTService</servlet-name>
-        <servlet-class>pl.edu.agh.ftj.datmining.GWTServiceImpl</servlet-class>
+        <servlet-class>pl.edu.agh.ftj.datamining.server.GWTServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GWTService</servlet-name>
