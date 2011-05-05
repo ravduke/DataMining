@@ -1,7 +1,7 @@
 package pl.edu.agh.ftj.datamining.dbapi.postgresql;
 
 import pl.edu.agh.ftj.datamining.dbapi.core.IDataSource;
-import pl.edu.agh.ftj.datamining.dbapi.exceptions.PgsqlSourceException;
+import pl.edu.agh.ftj.datamining.dbapi.exceptions.DataSourceException;
 import weka.core.Instances;
 
 /**
@@ -18,9 +18,9 @@ public class Postgresql implements IDataSource {
      * @param location URL do bazy danych zawierajace typ sterownika, nazwe hosta, baze danych a takze uzytkownika i haslo.
      * @param table Nazwa tabeli, z ktorej beda pobierane dane.
      * @return Obiekt Instances z danymi dla algorytmow WEKI
-     * @throws PgsqlSourceException 
+     * @throws DataSourceException
      */
-    public Instances getData(String location, String table) throws PgsqlSourceException {
+    public Instances getData(String location, String table) throws DataSourceException {
 
         PostgresqlLoader loader = new PostgresqlLoader(location, table);
         return loader.getInstances();
