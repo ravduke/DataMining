@@ -1,8 +1,6 @@
 package pl.edu.agh.ftj.datamining.dbapi.webservice;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,18 +51,26 @@ public class DataAccess implements IDataAccess {
     public Instances getData(String id, String table) {
         //instancjonowanie z wykorzystaniem mechanizmu refleksji
         try{
+            if(config == null)
+                readConfigurationFile();
             dataSource = (IDataSource)Class.forName(config.get(id).getClassName()).newInstance();
-            return dataSource.getData(table, table);
+            return dataSource.getData(config.get(id).getLocation(), table);
         } catch (InstantiationException ex) {
+            log.log(Level.ALL,"InstatnioExce"
+                    + ""
+                    + "sption");
             log.log(Level.WARNING,ex.getMessage());
             return null;
         } catch (IllegalAccessException ex) {
+            log.log(Level.ALL,"IllegalAccessException");
             log.log(Level.WARNING,ex.getMessage());
             return null;
         } catch (ClassNotFoundException ex) {
+            log.log(Level.ALL,"ClassNotFoundException");
             log.log(Level.WARNING,ex.getMessage());
             return null;
         }catch(DataSourceException ex){
+            log.log(Level.ALL,"DataSourceException");
             log.log(Level.WARNING,ex.getMessage());
             return null;
         }
@@ -74,16 +80,16 @@ public class DataAccess implements IDataAccess {
      * Zwraca zrodla dostepne danych 
      * @return podstawowe informacje o zrodle danych
      */
-    public List<BasicConfigurationDataSourceModel> getDataSources() {
+    public BasicConfigurationDataSourceModel[] getDataSources() {
         try {
             readConfigurationFile();
-            List<BasicConfigurationDataSourceModel> confList = new ArrayList<BasicConfigurationDataSourceModel>();
-            confList.add((BasicConfigurationDataSourceModel) helper.getConfiguration());
+            BasicConfigurationDataSourceModel[] confArray = new BasicConfigurationDataSourceModel[helper.getConfiguration().size()];
             config = new HashMap<String, ConfigurationDataSourceModel>();
-            for(ConfigurationDataSourceModel conf: helper.getConfiguration()){
-                config.put(conf.getId(), conf);
+            for(int i = 0;i<helper.getConfiguration().size();i++){
+                config.put(helper.getConfiguration().get(i).getId(), helper.getConfiguration().get(i));
+                confArray[i] = (BasicConfigurationDataSourceModel) helper.getConfiguration().get(i);
             }
-            return confList;
+            return confArray;
         } catch (Exception ex) {
             log.log(Level.ALL, "Initialization error while reading configuration file.");
             log.log(Level.ALL, ex.getMessage());
@@ -96,6 +102,7 @@ public class DataAccess implements IDataAccess {
      */
     private void readConfigurationFile() {
         try {
+            log.log(Level.ALL,"Reading configuration file ...");
             helper = new ConfigurationHelper();
         } catch (Exception ex) {
             log.log(Level.ALL, "Initialization error while reading configuration file.");

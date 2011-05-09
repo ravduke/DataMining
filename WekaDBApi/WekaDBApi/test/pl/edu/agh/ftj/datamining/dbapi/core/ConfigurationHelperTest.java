@@ -1,8 +1,6 @@
 package pl.edu.agh.ftj.datamining.dbapi.core;
 
 import java.util.List;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,18 +12,7 @@ import static org.junit.Assert.*;
  */
 public class ConfigurationHelperTest {
 
-//    public ConfigurationHelperTest() {
-//    }
-//
-//    @BeforeClass
-//    public static void setUpClass() throws Exception {
-//    }
-//
-//    @AfterClass
-//    public static void tearDownClass() throws Exception {
-//    }
-
-    /**
+  /**
      * Test poprawnosci odczytu konfiguracji
      */
     @Test
@@ -49,7 +36,6 @@ public class ConfigurationHelperTest {
                 assertEquals("t"+(i+1),result.get(0).getTables()[i]);
             
         }catch(Exception e){
-            e.printStackTrace();
             System.out.println(e.getMessage());
             fail("Read configuration exception was thrown.");
         }

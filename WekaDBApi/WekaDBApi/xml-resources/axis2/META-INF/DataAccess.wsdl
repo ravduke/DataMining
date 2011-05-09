@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://webservice/dbapi/datamining/ftj/agh/edu/pl/" xmlns:ns2="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd" xmlns:ns1="http://core.weka/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://util.java/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://webservice/dbapi/datamining/ftj/agh/edu/pl/">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://webservice/dbapi/datamining/ftj/agh/edu/pl/" xmlns:ns2="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd" xmlns:ns1="http://core.weka/xsd" xmlns:ns3="http://core.dbapi.datamining.ftj.agh.edu.pl/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://webservice/dbapi/datamining/ftj/agh/edu/pl/">
     <wsdl:types>
-        <xs:schema xmlns:ax22="http://util.java/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://util.java/xsd">
-            <xs:complexType name="Properties">
-                <xs:complexContent>
-                    <xs:extension base="xs:Hashtable">
-                        <xs:sequence/>
-                    </xs:extension>
-                </xs:complexContent>
-            </xs:complexType>
-        </xs:schema>
-        <xs:schema xmlns:ax21="http://core.weka/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://core.weka/xsd">
+
+        <xs:schema xmlns:ax22="http://core.weka/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://core.weka/xsd">
             <xs:complexType name="Instances">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="class" nillable="true" type="ax21:Attribute"/>
+                    <xs:element minOccurs="0" name="class" nillable="true" type="ax22:Attribute"/>
                     <xs:element minOccurs="0" name="classIndex" type="xs:int"/>
                     <xs:element minOccurs="0" name="relationName" nillable="true" type="xs:string"/>
                     <xs:element minOccurs="0" name="revision" nillable="true" type="xs:string"/>
@@ -30,7 +22,7 @@
                     <xs:element minOccurs="0" name="dateFormat" nillable="true" type="xs:string"/>
                     <xs:element minOccurs="0" name="index" type="xs:int"/>
                     <xs:element minOccurs="0" name="lowerNumericBound" type="xs:double"/>
-                    <xs:element minOccurs="0" name="metadata" nillable="true" type="ax21:ProtectedProperties"/>
+                    <xs:element minOccurs="0" name="metadata" nillable="true" type="ax22:ProtectedProperties"/>
                     <xs:element minOccurs="0" name="nominal" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="numeric" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="numericRange" nillable="true" type="xs:string"/>
@@ -72,7 +64,7 @@
             <xs:element name="getDataSourcesResponse">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ns3:BasicConfigurationDataSourceModel"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -91,6 +83,17 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:ax21="http://core.dbapi.datamining.ftj.agh.edu.pl/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://core.dbapi.datamining.ftj.agh.edu.pl/xsd">
+            <xs:complexType name="BasicConfigurationDataSourceModel">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="database" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="displayedName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="location" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="tables" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
         </xs:schema>
     </wsdl:types>
     <wsdl:message name="getDataRequest">
