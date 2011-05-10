@@ -1,5 +1,7 @@
 package pl.edu.agh.ftj.datamining.gui.communication.impl;
 
+import java.util.List;
+
 import pl.edu.agh.ftj.datamining.gui.communication.WekaAnswer;
 import pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication;
 
@@ -31,7 +33,7 @@ public class WekaAxisCommunication implements WekaCommunication {
 	 * @see pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication#getAlgorithms()
 	 */
 	@Override
-	public String getAlgorithms() {
+	public List<String> getAlgorithms() {
 		// TODO Auto-generated method stub
 		return null;
 	}

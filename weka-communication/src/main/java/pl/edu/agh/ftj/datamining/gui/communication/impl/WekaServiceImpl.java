@@ -1,6 +1,8 @@
 package pl.edu.agh.ftj.datamining.gui.communication.impl;
 
 
+import java.util.List;
+
 import pl.edu.agh.ftj.datamining.gui.communication.WekaAnswer;
 import pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication;
 import pl.edu.agh.ftj.datamining.gui.communication.WekaService;
@@ -19,7 +21,7 @@ public class WekaServiceImpl extends RemoteServiceServlet implements WekaService
 	}
 
 	@Override
-	public String getAlgorithms() {
+	public List<String> getAlgorithms() {
 		return wekaCommunication.getAlgorithms();
 	}
 

@@ -1,5 +1,6 @@
 package pl.edu.agh.ftj.datamining.gui.communication.impl;
 
+import java.util.List;
 import java.util.logging.Logger;
 import javax.ws.rs.core.MediaType;
 import pl.edu.agh.ftj.datamining.gui.communication.WekaAnswer;
@@ -42,7 +43,7 @@ public class WekaRestCommunication implements WekaCommunication {
 	 * @see pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication#getAlgorithms()
 	 */
 	@Override
-	public String getAlgorithms() {
+	public List<String> getAlgorithms() {
 		LOGGER.info("WekaRestCommunication::getAlgorithms() [...]");
 		String result = null;
 		try {
@@ -50,7 +51,7 @@ public class WekaRestCommunication implements WekaCommunication {
 		} catch(UniformInterfaceException uie) {
 			LOGGER.warning("ERROR: " + uie);
 		}
-		return result;
+		return Utils.getAlgorithms(result);
 	}
 
 	/*

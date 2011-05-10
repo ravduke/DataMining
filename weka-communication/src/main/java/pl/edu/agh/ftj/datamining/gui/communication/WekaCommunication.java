@@ -1,5 +1,7 @@
 package pl.edu.agh.ftj.datamining.gui.communication;
 
+import java.util.List;
+
 /**
  * Interfejs do komunikacji z web serwisami Weki.
  * @author Tomasz Pyszka
@@ -9,7 +11,7 @@ public interface WekaCommunication {
 	/*
 	 * @return zwraca tablice (XML) z nazwami dostepnych algorytmow
 	 */
-	public String getAlgorithms();
+	public List<String> getAlgorithms();
 	
 	/**
      * Metoda odpowiedzialna za uruchomienie algorytmu Weki.
