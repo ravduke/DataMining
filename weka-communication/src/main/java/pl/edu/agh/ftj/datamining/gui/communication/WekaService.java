@@ -11,7 +11,5 @@ public interface WekaService extends RemoteService {
 	
 	public String getAlgorithms();
 	
-	public boolean setAlgorithm(Integer algorithmType, String location, String id, String table);
-	
-	public WekaAnswer runAlgorithm();
+	public WekaAnswer runAlgorithm(Integer algorithmType, String location, String id, String table);
 }

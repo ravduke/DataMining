@@ -24,13 +24,8 @@ public class WekaServiceImpl extends RemoteServiceServlet implements WekaService
 	}
 
 	@Override
-	public boolean setAlgorithm(Integer algorithmType, String location,
+	public WekaAnswer runAlgorithm(Integer algorithmType, String location,
 			String id, String table) {
-		return wekaCommunication.setAlgorithm(algorithmType, location, id, table);
-	}
-
-	@Override
-	public WekaAnswer runAlgorithm() {
-		return wekaCommunication.runAlgorithm();
+		return wekaCommunication.runAlgorithm(algorithmType, location, id, table);
 	}
 }

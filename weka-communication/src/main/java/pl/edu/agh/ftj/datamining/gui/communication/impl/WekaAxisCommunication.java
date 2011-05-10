@@ -38,21 +38,11 @@ public class WekaAxisCommunication implements WekaCommunication {
 
 	/*
 	 * (non-Javadoc)
-	 * @see pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication#setAlgorithm(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String)
-	 */
-	@Override
-	public boolean setAlgorithm(Integer algorithmType, String location,
-			String id, String table) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication#runAlgorithm()
 	 */
 	@Override
-	public WekaAnswer runAlgorithm() {
+	public WekaAnswer runAlgorithm(Integer algorithmType, String location,
+			String id, String table) {
 		// TODO Auto-generated method stub
 		return null;
 	}
