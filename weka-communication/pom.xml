@@ -16,6 +16,7 @@
   
   <properties>
 	<jersey.version>1.6</jersey.version>
+	<gwt.version>2.2.0</gwt.version>
   </properties>
 	
   <build>
@@ -45,6 +46,16 @@
 	    <groupId>com.sun.jersey</groupId>
 	    <artifactId>jersey-client</artifactId>
 	    <version>${jersey.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.gwt</groupId>
+		<artifactId>gwt-servlet</artifactId>
+		<version>${gwt.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.gwt</groupId>
+		<artifactId>gwt-user</artifactId>
+		<version>${gwt.version}</version>
 	</dependency>
   </dependencies>
   

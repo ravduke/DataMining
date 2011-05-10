@@ -7,12 +7,12 @@ package pl.edu.agh.ftj.datamining.gui.communication;
 public interface WekaCommunication {
 	
 	/*
-	 * @return zwraca tablicę (XML) z nazwami dostępnych algorytmów
+	 * @return zwraca tablice (XML) z nazwami dostepnych algorytmow
 	 */
 	public String getAlgorithms();
 	
 	/**
-     * Metoda konfigurująca algorytm Weki
+     * Metoda konfigurujaca algorytm Weki
      *
      * @param algorithmType wybiera typ algorytmu (od 0 do 3) (indeks tablicy z metody getAlgorithms)
      * @param location      adres URL do webservisu dbapi
