@@ -22,7 +22,6 @@
                     <xs:element minOccurs="0" name="dateFormat" nillable="true" type="xs:string"/>
                     <xs:element minOccurs="0" name="index" type="xs:int"/>
                     <xs:element minOccurs="0" name="lowerNumericBound" type="xs:double"/>
-                    <xs:element minOccurs="0" name="metadata" nillable="true" type="ax22:ProtectedProperties"/>
                     <xs:element minOccurs="0" name="nominal" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="numeric" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="numericRange" nillable="true" type="xs:string"/>
@@ -49,15 +48,6 @@
                     <xs:element minOccurs="0" name="ARFF_ATTRIBUTE_STRING" nillable="true" type="xs:string"/>
                     <xs:element minOccurs="0" name="ARFF_END_SUBRELATION" nillable="true" type="xs:string"/>
                 </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="ProtectedProperties">
-                <xs:complexContent>
-                    <xs:extension base="ns0:Properties">
-                        <xs:sequence>
-                            <xs:element minOccurs="0" name="revision" nillable="true" type="xs:string"/>
-                        </xs:sequence>
-                    </xs:extension>
-                </xs:complexContent>
             </xs:complexType>
         </xs:schema>
         <xs:schema xmlns:ns="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd">

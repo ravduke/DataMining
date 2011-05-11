@@ -20,7 +20,7 @@ public class SqliteTest {
     public void testGetData() throws Exception {
         String uri = "jdbc:sqlite:data/sqlite/weka.db";
         String table = "soybean";
-        String location = "C:\\Program Files\\Weka-3-6\\data\\";
+        String location = "C:\\Program Files\\Weka-3-7\\data\\";
         String file =  location+ table + ".arff";
         
         Sqlite s = new Sqlite();

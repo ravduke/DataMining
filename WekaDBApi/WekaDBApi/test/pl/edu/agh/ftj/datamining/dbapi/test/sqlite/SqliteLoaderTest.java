@@ -21,7 +21,7 @@ public class SqliteLoaderTest {
     public void testGetInstances() throws Exception {
         String url = "jdbc:sqlite:data/sqlite/weka.db";
         String table = "cpu.with.vendor";
-        String file = "C:\\Program Files\\Weka-3-6\\data\\" + table + ".arff";
+        String file = "C:\\Program Files\\Weka-3-7\\data\\" + table + ".arff";
 
         SqliteLoader sl = new SqliteLoader(url, table);
 

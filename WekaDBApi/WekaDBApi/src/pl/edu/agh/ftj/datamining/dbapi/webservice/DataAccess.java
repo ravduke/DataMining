@@ -17,7 +17,7 @@ import weka.core.Instances;
  *
  * Klasa ma wbudowany logger, zapisujacy wyjatki do pliku ws.log
  * @author janek
- * @version 1.0.1
+ * @version 1.1.1
  */
 @WebService
 public class DataAccess implements IDataAccess {
@@ -53,12 +53,15 @@ public class DataAccess implements IDataAccess {
         try{
             if(config == null)
                 readConfigurationFile();
-            dataSource = (IDataSource)Class.forName(config.get(id).getClassName()).newInstance();
-            return dataSource.getData(config.get(id).getLocation(), table);
+            dataSource = (IDataSource)(Class.forName(config.get(id).getClassName()).newInstance());
+            System.out.println(config.get(id).getUsername());
+            System.out.println(config.get(id).getLocation());
+            System.out.println(config.get(id).getDatabase());
+            
+            System.out.println(config.get(id).getLocation()+"//"+config.get(id).getDatabase()+"?user="+config.get(id).getUsername()+"&datamine="+config.get(id).getPassword());
+            return dataSource.getData(config.get(id).getLocation()+"//"+config.get(id).getDatabase()+"?user="+config.get(id).getUsername()+"&datamine="+config.get(id).getPassword(), table);
         } catch (InstantiationException ex) {
-            log.log(Level.ALL,"InstatnioExce"
-                    + ""
-                    + "sption");
+            log.log(Level.ALL,"InstatnioException");
             log.log(Level.WARNING,ex.getMessage());
             return null;
         } catch (IllegalAccessException ex) {
