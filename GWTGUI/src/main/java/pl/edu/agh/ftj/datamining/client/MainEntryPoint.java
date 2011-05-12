@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+=======
+
+>>>>>>> 0986ee68e4f1d2fa2a3596b46a3fa2e29e089101
 package pl.edu.agh.ftj.datamining.client;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -15,11 +19,11 @@ import com.google.gwt.user.client.ui.RootPanel;
 /**
  * Main entry point.
  *
- * @author ravduke
+ * @author Rafal Jablonowski
  */
 public class MainEntryPoint implements EntryPoint {
     /** 
-     * Creates a new instance of MainEntryPoint
+     * Tworzy instancje MainEntryPoint
      */
     public MainEntryPoint() {
 
@@ -27,11 +31,9 @@ public class MainEntryPoint implements EntryPoint {
     }
 
     /** 
-     * The entry point method, called automatically by loading a module
-     * that declares an implementing class as an entry-point
+     * Metoda entry point, wywolywana automatycznie poprzez zaladowanie
+     * modulu, ktory deklaruje klase wykonawcza jako punkt wejscia (entry-point)
      */
-
-
     public void onModuleLoad() {
    /*     final Label label = new Label("Hello, GWT!!!");
         final Button button = new Button("Click me!");
@@ -47,7 +49,7 @@ public class MainEntryPoint implements EntryPoint {
 
 
       /* RootPanel.get().add(new GWTServiceUsage());*/
-         MessageBox.info("Message", "Hello World!!", null);
+       /*  MessageBox.info("Message", "Hello World!!", null);
 
          ContentPanel cp = new ContentPanel();
          cp.setHeading("Folder Contents");
@@ -62,8 +64,9 @@ public class MainEntryPoint implements EntryPoint {
          cp.addButton(new com.extjs.gxt.ui.client.widget.button.Button("Ok"));
          cp.setIconStyle("tree-folder-open");
          RootPanel.get().add(cp);
-         cp.layout();
+         cp.layout();*/
 
+         RootPanel.get().add(new GWTServiceGUI());
 
     }
 }

@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
+=======
+>>>>>>> 0986ee68e4f1d2fa2a3596b46a3fa2e29e089101
 package pl.edu.agh.ftj.datamining.client;
 
 import com.google.gwt.core.client.GWT;
@@ -22,7 +25,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 /**
  * Example class using the GWTService service.
  *+
- * @author ravduke
+ * @author Rafal Jablonowski
  */
 public class GWTServiceUsage extends VerticalPanel {
     private Label lblServerReply = new Label();
@@ -30,7 +33,7 @@ public class GWTServiceUsage extends VerticalPanel {
     private Button btnSend = new Button("Send to server");
     
     public GWTServiceUsage() {
-        
+         
         add(new Label("Input your text: "));
         add(txtUserInput);
         add(btnSend);

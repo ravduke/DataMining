@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 /**
  *
- * @author ravduke
+ * @author Rafal Jablonowski
  */
 @RemoteServiceRelativePath("gwtservice")
 public interface GWTService extends RemoteService {

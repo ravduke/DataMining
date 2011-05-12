@@ -14,7 +14,7 @@ import pl.edu.agh.ftj.datamining.client.GWTService;
 
 /**
  *
- * @author ravduke
+* @author Rafal Jablonowski
  */
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
@@ -22,7 +22,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     private static final long serialVersionUID = -15020842597334403L;
     private static List quotes = new ArrayList();
 
-    static {
+    static { 
         quotes.add("No great thing is created suddenly - Epictetus");
         quotes.add("Well done is better than well said - Ben Franklin");
         quotes.add("No wind favors he who has no destined port - Montaigne");

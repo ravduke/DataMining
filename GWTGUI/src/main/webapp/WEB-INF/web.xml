@@ -3,11 +3,15 @@
     <display-name>GWTGUI</display-name>
     <servlet>
         <servlet-name>GWTService</servlet-name>
+<<<<<<< HEAD
         <servlet-class>pl.edu.agh.ftj.datamining.GWTServiceImpl</servlet-class>
+=======
+        <servlet-class>pl.edu.agh.ftj.datamining.server.GWTServiceImpl</servlet-class>
+>>>>>>> 0986ee68e4f1d2fa2a3596b46a3fa2e29e089101
     </servlet>
     <servlet-mapping>
         <servlet-name>GWTService</servlet-name>
-        <url-pattern>/pl.edu.agh.ftj.datamaining.Main/gwtservice</url-pattern>
+        <url-pattern>/pl.edu.agh.ftj.datamining.Main/gwtservice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

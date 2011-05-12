@@ -5,14 +5,14 @@
 <module>
     <inherits name="com.google.gwt.user.User"/>
 
-    <inherits name="com.extjs.gxt.ui.GXT"/>
+    <inherits name="com.extjs.gxt.ui.GXT"/> 
     <!-- Inherit the default GWT style sheet. You can change -->
     <!-- the theme of your GWT application by uncommenting -->
     <!-- any one of the following lines. -->
     <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
     <!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
     <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
-    <entry-point class="pl.edu.agh.ftj.datamaining.client.MainEntryPoint"/>
+    <entry-point class="pl.edu.agh.ftj.datamining.client.MainEntryPoint"/>
 
     <!-- Do not define servlets here, use web.xml -->
 </module>
