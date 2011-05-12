@@ -77,6 +77,9 @@
                 </executions>
                 <configuration>
                     <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+                    <modules>
+                        <module>pl.edu.agh.ftj.datamining.Main</module>
+                    </modules>
                 </configuration>
             </plugin>
             <plugin>

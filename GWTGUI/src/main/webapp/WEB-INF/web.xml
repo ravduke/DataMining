@@ -5,7 +5,7 @@
         <servlet-name>GWTService</servlet-name>
         <servlet-class>pl.edu.agh.ftj.datamining.server.GWTServiceImpl</servlet-class>
     </servlet>
-    <servlet-mapping>
+    <servlet-mapping> 
         <servlet-name>GWTService</servlet-name>
         <url-pattern>/pl.edu.agh.ftj.datamining.Main/gwtservice</url-pattern>
     </servlet-mapping>
