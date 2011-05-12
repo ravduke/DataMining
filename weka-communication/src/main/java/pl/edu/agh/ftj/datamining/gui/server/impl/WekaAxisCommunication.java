@@ -1,9 +1,8 @@
-package pl.edu.agh.ftj.datamining.gui.communication.impl;
+package pl.edu.agh.ftj.datamining.gui.server.impl;
 
 import java.util.List;
-
-import pl.edu.agh.ftj.datamining.gui.communication.WekaAnswer;
-import pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication;
+import pl.edu.agh.ftj.datamining.gui.server.WekaCommunication;
+import pl.edu.agh.ftj.datamining.gui.server.WekaAnswer;
 
 /*
  * Klasa implementujaca interfejs {@link WekaCommunication}.
@@ -30,7 +29,7 @@ public class WekaAxisCommunication implements WekaCommunication {
 
 	/*
 	 * (non-Javadoc)
-	 * @see pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication#getAlgorithms()
+	 * @see pl.edu.agh.ftj.datamining.gui.WekaCommunication#getAlgorithms()
 	 */
 	@Override
 	public List<String> getAlgorithms() {
@@ -40,7 +39,7 @@ public class WekaAxisCommunication implements WekaCommunication {
 
 	/*
 	 * (non-Javadoc)
-	 * @see pl.edu.agh.ftj.datamining.gui.communication.WekaCommunication#runAlgorithm()
+	 * @see pl.edu.agh.ftj.datamining.gui.WekaCommunication#runAlgorithm()
 	 */
 	@Override
 	public WekaAnswer runAlgorithm(Integer algorithmType, String location,

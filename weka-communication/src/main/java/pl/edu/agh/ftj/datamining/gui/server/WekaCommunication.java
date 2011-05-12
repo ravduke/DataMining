@@ -1,6 +1,8 @@
-package pl.edu.agh.ftj.datamining.gui.communication;
+package pl.edu.agh.ftj.datamining.gui.server;
 
 import java.util.List;
+
+import pl.edu.agh.ftj.datamining.gui.server.WekaAnswer;
 
 /**
  * Interfejs do komunikacji z web serwisami Weki.

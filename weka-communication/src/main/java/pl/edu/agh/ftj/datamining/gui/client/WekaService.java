@@ -1,7 +1,8 @@
-package pl.edu.agh.ftj.datamining.gui.communication;
+package pl.edu.agh.ftj.datamining.gui.client;
 
 import java.util.List;
-import pl.edu.agh.ftj.datamining.gui.communication.impl.WekaCommunicationFactory.Type;
+import pl.edu.agh.ftj.datamining.gui.shared.CommunicationType;
+import pl.edu.agh.ftj.datamining.gui.shared.WekaAnswerDTO;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -16,7 +17,7 @@ public interface WekaService extends RemoteService {
 	 * Metoda odpowiedzialna za utworzenie odpowiedniego klienta.
 	 * @param typ komunikacji REST lub AXIS {@link Type}
 	 */
-	public void createCommunication(Type type);
+	public void createCommunication(CommunicationType type);
 	
 	/*
 	 * Metoda odpowiedzialna za popbranie z klienta Weki dostepnych algorytmow.
@@ -28,5 +29,5 @@ public interface WekaService extends RemoteService {
 	 * Metoda odpowiedzialna za uruchomienie za pomoca klienta algorytmu Weki.
 	 * @return Zwraca dane z algorytmu {@link WekaAnswer}.
 	 */
-	public WekaAnswer runAlgorithm(Integer algorithmType, String location, String id, String table);
+	public WekaAnswerDTO runAlgorithm(Integer algorithmType, String location, String id, String table);
 }
