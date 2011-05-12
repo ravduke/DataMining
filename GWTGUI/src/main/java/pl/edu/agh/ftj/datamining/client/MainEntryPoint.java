@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-=======
-
->>>>>>> 0986ee68e4f1d2fa2a3596b46a3fa2e29e089101
 package pl.edu.agh.ftj.datamining.client;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -22,7 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author Rafal Jablonowski
  */
 public class MainEntryPoint implements EntryPoint {
-    /** 
+    /**
      * Tworzy instancje MainEntryPoint
      */
     public MainEntryPoint() {
@@ -30,14 +22,14 @@ public class MainEntryPoint implements EntryPoint {
 
     }
 
-    /** 
+    /**
      * Metoda entry point, wywolywana automatycznie poprzez zaladowanie
      * modulu, ktory deklaruje klase wykonawcza jako punkt wejscia (entry-point)
      */
     public void onModuleLoad() {
    /*     final Label label = new Label("Hello, GWT!!!");
         final Button button = new Button("Click me!");
-        
+
         button.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 label.setVisible(!label.isVisible());

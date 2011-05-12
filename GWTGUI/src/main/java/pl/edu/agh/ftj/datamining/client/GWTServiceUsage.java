@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-=======
->>>>>>> 0986ee68e4f1d2fa2a3596b46a3fa2e29e089101
 package pl.edu.agh.ftj.datamining.client;
 
 import com.google.gwt.core.client.GWT;
@@ -31,9 +23,9 @@ public class GWTServiceUsage extends VerticalPanel {
     private Label lblServerReply = new Label();
     private TextBox txtUserInput = new TextBox();
     private Button btnSend = new Button("Send to server");
-    
+
     public GWTServiceUsage() {
-         
+
         add(new Label("Input your text: "));
         add(txtUserInput);
         add(btnSend);
@@ -44,7 +36,7 @@ public class GWTServiceUsage extends VerticalPanel {
             public void onSuccess(String result) {
                 lblServerReply.setText(result);
                 lblServerReply.setStyleName(".quoteLabel");
-                
+
             }
 
             public void onFailure(Throwable caught) {
@@ -61,7 +53,7 @@ public class GWTServiceUsage extends VerticalPanel {
             }
         });
     }
-    
+
     public static GWTServiceAsync getService() {
         // Create the client proxy. Note that although you are creating the
         // service interface proper, you cast the result to the asynchronous
