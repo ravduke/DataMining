@@ -9,7 +9,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 /**
  * Testy klasy PostgreSqlLoader.
  * @author Szymon Stupkiewicz
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class PostgreSqlLoaderTest {
 
@@ -28,7 +28,7 @@ public class PostgreSqlLoaderTest {
         System.out.println("getInstances");
         String url = "jdbc:postgresql://localhost/datamine?user=datamine&password=me@me.com";
         String table = "iris";
-        String file = "/home/timon/weka/weka-3-6-4/data/" + table + ".arff";
+        String file = "C:\\Program Files\\Weka-3-7\\data\\" + table + ".arff";
 
         PostgresqlLoader instance = new PostgresqlLoader(url, table);
 

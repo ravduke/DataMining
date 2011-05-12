@@ -67,7 +67,8 @@ public class ConfigurationHelper {
                 dsm.setDataSourceType(DataSourceType.valueOf(type));
 
                 elementList = element.getElementsByTagName("database");
-                String database = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
+                Node n = ((Node)((Element)elementList.item(0)).getChildNodes().item(0));
+                String database = (n!=null)? n.getNodeValue():"";
                 dsm.setDatabase(database);
 
                 elementList = element.getElementsByTagName("name");
@@ -84,21 +85,24 @@ public class ConfigurationHelper {
                 dsm.setPort(port);
 
                 elementList = element.getElementsByTagName("username");
-                String username = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
+                n = ((Node)((Element)elementList.item(0)).getChildNodes().item(0));
+                String username = (n!=null)? n.getNodeValue():"";
                 dsm.setUsername(username);
 
                 elementList = element.getElementsByTagName("password");
-                String password = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
+                n = ((Node)((Element)elementList.item(0)).getChildNodes().item(0));
+                String password = (n!=null)? n.getNodeValue():"";
                 dsm.setPassword(password);
 
                 elementList = element.getElementsByTagName("className");
                 String className = ((Node)((Element)elementList.item(0)).getChildNodes().item(0)).getNodeValue();
                 dsm.setClassName(className);
 
-                elementList = element.getElementsByTagName("tables");
-                String[] tables = new String[((Element)elementList.item(0)).getChildNodes().getLength()];
-                for(int j=0;j<((Element)elementList.item(0)).getChildNodes().getLength();j++)
-                    tables[j] = ((Node)((Element)elementList.item(0)).getChildNodes().item(j)).getNodeValue();
+                elementList = element.getElementsByTagName("table");
+                String[] tables = new String[elementList.getLength()];
+                for(int j=0;j<elementList.getLength();j++){
+                    tables[j] = elementList.item(j).getChildNodes().item(0).getNodeValue();
+                }
                 dsm.setTables(tables);
             }
             

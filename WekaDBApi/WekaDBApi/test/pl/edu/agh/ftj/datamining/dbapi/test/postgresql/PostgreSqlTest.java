@@ -9,7 +9,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 /**
  * Test obslugi bazy postgresql
  * @author Szymon Stupkiewicz
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class PostgreSqlTest {
 
@@ -28,7 +28,7 @@ public class PostgreSqlTest {
 //      TODO choose a file and corresponding table to test
         String uri = "jdbc:postgresql://localhost/datamine?user=datamine&password=me@me.com";
         String table = "iris";
-        String file = "/home/timon/weka/weka-3-6-4/data/" + table + ".arff";
+        String file = "C:\\Program Files\\Weka-3-7\\data\\" + table + ".arff";
         
         Postgresql instance = new Postgresql();
         Instances db_data = instance.getData(uri, table);

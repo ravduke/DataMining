@@ -23,8 +23,8 @@ public class PlainText implements IDataSource{
      * @return obiekt z danymi
      */
     public Instances getData(String location, String file) throws DataSourceException{
-        CSVLoader cvs = new CSVLoader();
         try{
+            CSVLoader cvs = new CSVLoader();
             cvs.setSource(new File(location+"\\"+file));
             return cvs.getDataSet();
         }catch(FileNotFoundException e){
@@ -32,7 +32,7 @@ public class PlainText implements IDataSource{
         }catch(IOException e){
             throw new DataSourceException("File not found or couldn't be opened. Please check configuration file.");
         }catch(Exception e){
-            throw new DataSourceException(e.getMessage());
+            throw new DataSourceException("Unexpected exception "+e.getMessage());
         }
     }
 }

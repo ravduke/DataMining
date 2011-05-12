@@ -25,5 +25,5 @@ public interface IDataAccess {
      * Zwraca informacje o dostepnych zrodlach danych
      * @return Informacje o źródłach danych
      */
-    public List<BasicConfigurationDataSourceModel> getDataSources();
+    public BasicConfigurationDataSourceModel[] getDataSources();
 }

@@ -1,0 +1,6 @@
+pl.edu.agh.ftj.datamining.dbapi.core
+pl.edu.agh.ftj.datamining.dbapi.exceptions
+pl.edu.agh.ftj.datamining.dbapi.plaintext
+pl.edu.agh.ftj.datamining.dbapi.postgresql
+pl.edu.agh.ftj.datamining.dbapi.sqlite
+pl.edu.agh.ftj.datamining.dbapi.webservice
