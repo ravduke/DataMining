@@ -5,6 +5,8 @@
 
 package pl.edu.agh.ftj.datamining.server;
 
+import com.extjs.gxt.samples.resources.client.model.DBTable;
+import com.extjs.gxt.samples.resources.client.model.Folder;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,22 +20,40 @@ import pl.edu.agh.ftj.datamining.client.GWTService;
  */
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
-    private Random randomizer = new Random();
-    private static final long serialVersionUID = -15020842597334403L;
-    private static List quotes = new ArrayList();
-
-    static {
-        quotes.add("No great thing is created suddenly - Epictetus");
-        quotes.add("Well done is better than well said - Ben Franklin");
-        quotes.add("No wind favors he who has no destined port - Montaigne");
-        quotes.add("Sometimes even to live is an act of courage - Seneca");
-        quotes.add("Know thyself - Socrates");
-        quotes.add("Albo w javie rowy kopiesz, albo ona rowa kopie tobie - Abraham Lincoln");
-    }
-
     public String myMethod(String s) {
         // Do something interesting with 's' here on the server.
-       // return "Server says: " + s;
-        return s + "  " + (String) quotes.get(randomizer.nextInt(5));
+        return  "  " ;
+    }
+
+    public Folder getDatabases() {
+    Folder[] folders = new Folder[] {
+        new Folder("Quartets",  new DBTable[] {
+                                    new DBTable("Six String Quartets"),
+                                    new DBTable("Three String Quartets"),
+                                    new DBTable("Grosse Fugue for String Quartets")
+                                }
+                  )
+        };
+    folders[0].setChildren(
+                                new Folder ("Database1", new DBTable[] {
+                                    new DBTable("aaats"),
+                                    new DBTable("bbbring Quartets"),
+                                    new DBTable("cccugue for String Quartets")
+                                    }
+                                )
+                          );
+    folders[0].setChildren(
+                                new DBTable[] {
+                                    new DBTable("aaats"),
+                                    new DBTable("bbbring Quartets"),
+                                    new DBTable("cccugue for String Quartets")
+                                }
+                          );
+
+    Folder root = new Folder("root");
+    for (int i = 0; i < folders.length; i++) {
+      root.add((Folder) folders[i]);
+    }
+    return root;
     }
 }
