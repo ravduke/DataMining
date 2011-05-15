@@ -24,10 +24,12 @@ public class DataAccess implements IDataAccess {
 
     private IDataSource dataSource;
     private ConfigurationHelper helper;
-    private HashMap<String, ConfigurationDataSourceModel> config;
+    //private HashMap<String, ConfigurationDataSourceModel> config;
     private static final Logger log  = Logger.getLogger("wsLog");
     private FileHandler fh;
-
+    BasicConfigurationDataSourceModel[] simpleConfArray;
+    //ConfigurationDataSourceModel[] fullConfArray;
+    
     /**
      * Inicjalizacja loggera
      */
@@ -36,6 +38,7 @@ public class DataAccess implements IDataAccess {
             fh = new FileHandler("ws.log", true);
             log.addHandler(fh);
             readConfigurationFile();
+            getDataSources();
         } catch (Exception ex) {
             System.err.print(ex.getMessage());
             System.exit(-1);
@@ -51,30 +54,39 @@ public class DataAccess implements IDataAccess {
     public Instances getData(String id, String table) {
         //instancjonowanie z wykorzystaniem mechanizmu refleksji
         try{
-            if(config == null)
+            if(simpleConfArray == null)
                 readConfigurationFile();
-            dataSource = (IDataSource)(Class.forName(config.get(id).getClassName()).newInstance());
-            System.out.println(config.get(id).getUsername());
-            System.out.println(config.get(id).getLocation());
-            System.out.println(config.get(id).getDatabase());
-            
-            System.out.println(config.get(id).getLocation()+"//"+config.get(id).getDatabase()+"?user="+config.get(id).getUsername()+"&datamine="+config.get(id).getPassword());
-            return dataSource.getData(config.get(id).getLocation()+"//"+config.get(id).getDatabase()+"?user="+config.get(id).getUsername()+"&datamine="+config.get(id).getPassword(), table);
+            int uid = Integer.parseInt(id) - 1;
+            ConfigurationDataSourceModel conf = helper.getConfiguration().get(uid);
+            dataSource = (IDataSource)(Class.forName(conf.getClassName()).newInstance());
+            //System.out.println(conf.getLocation());
+            //System.out.println(table);
+            return dataSource.getData(conf.getLocation(), table);
+            //return dataSource.getData(conf.getLocation()+"//"+conf.getDatabase()+"?user="+conf.getUsername()+"&datamine="+conf.getPassword(), table);
         } catch (InstantiationException ex) {
             log.log(Level.ALL,"InstatnioException");
             log.log(Level.WARNING,ex.getMessage());
+            log.log(Level.ALL,ex.getStackTrace().toString());
             return null;
         } catch (IllegalAccessException ex) {
             log.log(Level.ALL,"IllegalAccessException");
             log.log(Level.WARNING,ex.getMessage());
+            log.log(Level.ALL,ex.getStackTrace().toString());
             return null;
         } catch (ClassNotFoundException ex) {
             log.log(Level.ALL,"ClassNotFoundException");
             log.log(Level.WARNING,ex.getMessage());
+            log.log(Level.ALL,ex.getStackTrace().toString());
+            return null;
+        }catch(NumberFormatException ex){
+            log.log(Level.ALL,"NumberFormatException");
+            log.log(Level.WARNING,ex.getMessage());
+            log.log(Level.ALL,ex.getStackTrace().toString());
             return null;
         }catch(DataSourceException ex){
             log.log(Level.ALL,"DataSourceException");
             log.log(Level.WARNING,ex.getMessage());
+            log.log(Level.ALL,ex.getStackTrace().toString());
             return null;
         }
     }
@@ -86,13 +98,15 @@ public class DataAccess implements IDataAccess {
     public BasicConfigurationDataSourceModel[] getDataSources() {
         try {
             readConfigurationFile();
-            BasicConfigurationDataSourceModel[] confArray = new BasicConfigurationDataSourceModel[helper.getConfiguration().size()];
-            config = new HashMap<String, ConfigurationDataSourceModel>();
+            simpleConfArray = new BasicConfigurationDataSourceModel[helper.getConfiguration().size()];
+//            fullConfArray = new ConfigurationDataSourceModel[helper.getConfiguration().size()];
+            //config = new HashMap<String, ConfigurationDataSourceModel>();
             for(int i = 0;i<helper.getConfiguration().size();i++){
-                config.put(helper.getConfiguration().get(i).getId(), helper.getConfiguration().get(i));
-                confArray[i] = (BasicConfigurationDataSourceModel) helper.getConfiguration().get(i);
+                //config.put(helper.getConfiguration().get(i).getId(), helper.getConfiguration().get(i));
+
+                simpleConfArray[i] = (BasicConfigurationDataSourceModel) helper.getConfiguration().get(i);
             }
-            return confArray;
+            return simpleConfArray;
         } catch (Exception ex) {
             log.log(Level.ALL, "Initialization error while reading configuration file.");
             log.log(Level.ALL, ex.getMessage());
