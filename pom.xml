@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : pom.xml
+    Created on : 24 kwiecień 2011, 00:11
+    Author     : janek
+    Description:
+        Do buildowania w mavenie, glownie do badania pokrycia testami jednostkowymi.
+-->
+
+<root>
+
+</root>

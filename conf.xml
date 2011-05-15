@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : conf.xml
+    Created on : 14 kwiecien 2011
+    Author     : janek
+    Description: glowny plik konfiguracyjny zrodel danych
+-->
+
+<dataSources>
+    <server>
+        <id>1</id>
+        <type>PlainText</type>
+        <name>Tekst</name>
+        <location>C:\Program Files\Weka-3-7\data</location>
+        <port>-1</port>
+        <database></database>
+        <username></username>
+        <password></password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.plaintext.PlainText</className>
+        <tables>
+            <table>iris.arff.csv</table>
+        </tables>
+    </server>
+	<server>
+        <id>2</id>
+        <type>PostgreSQL</type>
+        <name>Postgres</name>
+        <location>jdbc:postgresql://localhost</location>
+        <port>5432</port>
+        <database>datamine</database>
+        <username>datamine</username>
+        <password>me@me.com</password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.postgresql.Postgresql</className>
+        <tables>
+            <table>iris</table>
+        </tables>
+    </server>
+</dataSources>
