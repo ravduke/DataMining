@@ -5,6 +5,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import pl.edu.agh.ftj.datamining.gui.shared.CommunicationType;
 import pl.edu.agh.ftj.datamining.gui.shared.WekaAnswerDTO;
 
+/**
+ * @uml.dependency   supplier="pl.edu.agh.ftj.datamining.gui.shared.WekaAnswerDTO"
+ */
 public interface WekaServiceAsync {
 	
 	public void createCommunication(CommunicationType type, AsyncCallback<Void> callback);

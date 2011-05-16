@@ -10,8 +10,6 @@ import pl.edu.agh.ftj.datamining.gui.shared.CommunicationType;
  */
 public class WekaCommunicationFactory {
 	
-
-	
 	/*
 	 * (non-Javadoc)
 	 * @see pl.edu.agh.ftj.datamining.gui.WekaCommunicationFactory#create(pl.edu.agh.ftj.datamining.gui.WekaCommunicationFactory.Type)

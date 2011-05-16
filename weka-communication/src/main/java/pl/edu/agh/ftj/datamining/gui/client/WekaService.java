@@ -10,6 +10,9 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * Serwis odpowiedzialny za komunikacje z klientem Weki.
  * @author Tomasz Pyszka
  */
+/**
+ * @uml.dependency   supplier="pl.edu.agh.ftj.datamining.gui.shared.WekaAnswerDTO"
+ */
 @RemoteServiceRelativePath("wekaservice")
 public interface WekaService extends RemoteService {
 
@@ -29,5 +32,5 @@ public interface WekaService extends RemoteService {
 	 * Metoda odpowiedzialna za uruchomienie za pomoca klienta algorytmu Weki.
 	 * @return Zwraca dane z algorytmu {@link WekaAnswer}.
 	 */
-	public WekaAnswerDTO runAlgorithm(Integer algorithmType, String location, String id, String table);
+	public WekaAnswerDTO runAlgorithm(Integer algorithmType, String location, String id, String table, String options);
 }

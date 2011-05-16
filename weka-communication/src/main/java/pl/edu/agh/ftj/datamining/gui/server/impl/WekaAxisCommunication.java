@@ -18,8 +18,12 @@ public class WekaAxisCommunication implements WekaCommunication {
 	private WekaAxisCommunication() {
 		
 	}
-	
+
 	private static final class WekaAxisCommunicationHolder {
+		/**
+		 * @uml.property  name="iNSTANCE"
+		 * @uml.associationEnd  
+		 */
 		private static final WekaCommunication INSTANCE = new WekaAxisCommunication();
 	}
 	
@@ -43,7 +47,7 @@ public class WekaAxisCommunication implements WekaCommunication {
 	 */
 	@Override
 	public WekaAnswer runAlgorithm(Integer algorithmType, String location,
-			String id, String table) {
+			String id, String table, String options) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,8 @@
 package pl.edu.agh.ftj.datamining.gui.server.impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,4 +24,17 @@ public class Utils {
 		
 		return result;
 	}
+	
+	public static byte[] readFromStream(InputStream stream) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        byte[] buffer = new byte[1000];
+        int wasRead = 0;
+        do {
+            wasRead = stream.read(buffer);
+            if(wasRead > 0)
+                baos.write(buffer, 0, wasRead);
+        } while(wasRead > -1);
+        return baos.toByteArray();
+    }
 }
