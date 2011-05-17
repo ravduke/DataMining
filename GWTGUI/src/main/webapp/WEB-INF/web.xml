@@ -5,9 +5,17 @@
         <servlet-name>GWTService</servlet-name>
         <servlet-class>pl.edu.agh.ftj.datamining.server.GWTServiceImpl</servlet-class>
     </servlet>
-    <servlet-mapping> 
+    <servlet>
+        <servlet-name>WekaService</servlet-name>
+        <servlet-class>pl.edu.agh.ftj.datamining.gui.server.impl.WekaServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>GWTService</servlet-name>
         <url-pattern>/pl.edu.agh.ftj.datamining.Main/gwtservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WekaService</servlet-name>
+        <url-pattern>/pl.edu.agh.ftj.datamining.Main/wekaservice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

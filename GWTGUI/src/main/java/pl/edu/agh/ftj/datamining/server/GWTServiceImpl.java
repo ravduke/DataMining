@@ -29,27 +29,33 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
     public Folder getDatabases() {
     Folder[] folders = new Folder[] {
-        new Folder("Quartets",  new DBTable[] {
-                                    new DBTable("Six String Quartets"),
-                                    new DBTable("Three String Quartets"),
-                                    new DBTable("Grosse Fugue for String Quartets")
-                                }
-                  )
+        new Folder("PostgreSQL"),
+        new Folder("SQLite"),
+        new Folder("Plain Text")
         };
     folders[0].setChildren(
-                                new Folder ("Database1", new DBTable[] {
-                                    new DBTable("aaats"),
-                                    new DBTable("bbbring Quartets"),
-                                    new DBTable("cccugue for String Quartets")
+                                 new Folder ("Database1", new DBTable[] {
+                                    new DBTable("Table0","Database1","PostgreSQL"),
+                                    new DBTable("Table-1","Database1","PostgreSQL"),
+                                    new DBTable("Table-2","Database1","PostgreSQL")
                                     }
                                 )
                           );
-    folders[0].setChildren(
-                                new DBTable[] {
-                                    new DBTable("aaats"),
-                                    new DBTable("bbbring Quartets"),
-                                    new DBTable("cccugue for String Quartets")
-                                }
+    folders[1].setChildren(
+                                new Folder ("Database2", new DBTable[] {
+                                    new DBTable("Table1","Database2","SQLite"),
+                                    new DBTable("Table2","Database2","SQLite"),
+                                    new DBTable("Table3","Database2","SQLite")
+                                    }
+                                )
+                          );
+    folders[2].setChildren(
+                                new Folder ("Database3", new DBTable[] {
+                                    new DBTable("Table44","Database3","Plain Text"),
+                                    new DBTable("Table23","Database3","Plain Text"),
+                                    new DBTable("Table4","Database3","Plain Text")
+                                    }
+                                )
                           );
 
     Folder root = new Folder("root");
