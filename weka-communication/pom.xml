@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
   <groupId>pl.edu.agh.ftj.datamining</groupId>
   <artifactId>weka-communication</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -16,6 +17,7 @@
   
   <properties>
 	<jersey.version>1.6</jersey.version>
+	<gwt.version>2.2.0</gwt.version>
   </properties>
 	
   <build>
@@ -28,6 +30,19 @@
 				<target>1.6</target>
 			</configuration>
 		</plugin>
+		<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-source-plugin</artifactId>
+		        <executions>
+		          <execution>
+		            <id>attach-sources</id>
+		            <phase>package</phase>
+		            <goals>
+		              <goal>jar</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		      </plugin>	
 		<plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-javadoc-plugin</artifactId>
@@ -45,6 +60,29 @@
 	    <groupId>com.sun.jersey</groupId>
 	    <artifactId>jersey-client</artifactId>
 	    <version>${jersey.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.gwt</groupId>
+		<artifactId>gwt-servlet</artifactId>
+		<version>${gwt.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.gwt</groupId>
+		<artifactId>gwt-user</artifactId>
+		<version>${gwt.version}</version>
+	</dependency>
+	<dependency>
+      <groupId>weka</groupId>
+      <artifactId>weka</artifactId>
+      <version>3.6.4</version>
+      <!--
+	  mvn install:install-file -Dfile=weka.jar -DgroupId=weka -DartifactId=weka -Dversion=3.6.4 -Dpackaging=jar
+	   -->
+    </dependency>
+    <dependency>
+	    <groupId>net.sf.dozer</groupId>
+	    <artifactId>dozer</artifactId>
+	    <version>5.3.2</version>
 	</dependency>
   </dependencies>
   
