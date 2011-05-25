@@ -41,8 +41,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.List;
 import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
 
-
-
 /**
  * Klasa odpowiedzialna za wyswietlanie GUI.
  * @author Rafal Jablonowski
@@ -186,7 +184,7 @@ public class GWTServiceGUI extends LayoutContainer {
                 if(!DBconnected)
                 getService().getDatabases(new AsyncCallback<Folder>() {
                     public void onFailure(Throwable caught) {
-                        MessageBox.alert("Failure", "Connecting to server failed.", null);
+                        MessageBox.alert("Failure", "Connecting to server failed. Error: " + caught.getMessage(), null);
                         DBconnected = false;
                     }
 
@@ -255,7 +253,7 @@ public class GWTServiceGUI extends LayoutContainer {
                             database_type.setVisible(false);
                             database_name.setVisible(false);
                             table_name.setVisible(false);
-                            MessageBox.alert("Failure", "Connecting to DB server failed.", null);
+                            MessageBox.alert("Failure", "Connecting to DB server failed. Error: " + caught.getMessage(), null);
                         }
 
                         public void onSuccess(Folder result) {
@@ -623,7 +621,11 @@ public class GWTServiceGUI extends LayoutContainer {
     public static WekaServiceAsync getWekaService() {
        return GWT.create(WekaService.class);
     }
-    
+
+	public static DbServiceAsync getDbService() {
+		return GWT.create(DbService.class);
+	}
+
 public Folder getTestDatabases() {
     Folder[] folders = new Folder[] {
         new Folder("PostgreSQL",  new DBTable[] {
