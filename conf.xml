@@ -36,4 +36,18 @@
             <table>iris</table>
         </tables>
     </server>
+	<server>
+        <id>3</id>
+        <type>SQLite</type>
+        <name>SQLite</name>
+        <location>jdbc:sqlite:C://Program Files/Weka-3-7/data</location>
+        <port>-1</port>
+        <database>weka.db</database>
+        <username></username>
+        <password></password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.sqlite.Sqlite</className>
+        <tables>
+            <table>iris</table>
+        </tables>
+    </server>
 </dataSources>

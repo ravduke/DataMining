@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://webservice/dbapi/datamining/ftj/agh/edu/pl/" xmlns:ns1="http://core.dbapi.datamining.ftj.agh.edu.pl/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://webservice/dbapi/datamining/ftj/agh/edu/pl/">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://webservice/dbapi/datamining/ftj/agh/edu/pl/" xmlns:ns1="http://core.dbapi.datamining.ftj.agh.edu.pl/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://webservice/dbapi/datamining/ftj/agh/edu/pl/">
     <wsdl:types>
         <xs:schema xmlns:ns="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://webservice/dbapi/datamining/ftj/agh/edu/pl/xsd">
             
@@ -9,15 +9,11 @@
                         <xs:element minOccurs="1" name="table" nillable="true" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
-            
-            
                 <xs:complexType name="getDataResponse">
                     <xs:sequence>
                         <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
-            
-            
                 <xs:complexType name="getDataSourcesResponse">
                     <xs:sequence>
                         <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ns1:BasicConfigurationDataSourceModel"/>
@@ -78,27 +74,6 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <!--<wsdl:binding name="DataAccessSOAP12Binding" type="axis2:DataAccessPortType">
-        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="getData">
-            <soap12:operation soapAction="urn:getData" style="document"/>
-            <wsdl:input>
-                <soap12:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap12:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="getDataSources">
-            <soap12:operation soapAction="urn:getDataSources" style="document"/>
-            <wsdl:input>
-                <soap12:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap12:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>-->
     <wsdl:binding name="DataAccessHttpBinding" type="axis2:DataAccessPortType">
         <http:binding verb="POST"/>
         <wsdl:operation name="getData">
@@ -124,9 +99,7 @@
         <wsdl:port name="DataAccessSOAP11port_http" binding="axis2:DataAccessSOAP11Binding">
             <soap:address location="http://localhost:8080/axis2/services/DataAccess"/>
         </wsdl:port>
-        <!--<wsdl:port name="DataAccessSOAP12port_http" binding="axis2:DataAccessSOAP12Binding">
-            <soap12:address location="http://localhost:8080/axis2/services/DataAccess"/>
-        </wsdl:port>-->
+ 
         <wsdl:port name="DataAccessHttpport" binding="axis2:DataAccessHttpBinding">
             <http:address location="http://localhost:8080/axis2/services/DataAccess"/>
         </wsdl:port>

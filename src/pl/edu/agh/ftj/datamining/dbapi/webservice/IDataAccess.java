@@ -1,9 +1,7 @@
-
 package pl.edu.agh.ftj.datamining.dbapi.webservice;
 
-import java.util.List;
+
 import pl.edu.agh.ftj.datamining.dbapi.core.BasicConfigurationDataSourceModel;
-import weka.core.Instances;
 
 /**
  * Interfejs okresla metody dostepu do danych z poziomu webservice'u.

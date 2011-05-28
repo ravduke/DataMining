@@ -1,14 +1,13 @@
 package pl.edu.agh.ftj.datamining.dbapi.core;
 
-import java.io.Serializable;
 import pl.edu.agh.ftj.datamining.dbapi.core.DSApiEnums.DataSourceType;
 
 /**
  * Model danych dla konfiguracji zrodel danych
  * @author janek
- * @version 1.0.2
+ * @version 1.0.3
  */
-public class ConfigurationDataSourceModel extends BasicConfigurationDataSourceModel implements Serializable{
+public class ConfigurationDataSourceModel extends BasicConfigurationDataSourceModel{
     
     private String username, password;
     private int port;

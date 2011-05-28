@@ -11,14 +11,13 @@ import pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationHelper;
 import pl.edu.agh.ftj.datamining.dbapi.core.DSApiEnums.DataSourceType;
 import pl.edu.agh.ftj.datamining.dbapi.core.IDataSource;
 import pl.edu.agh.ftj.datamining.dbapi.exceptions.DataSourceException;
-import weka.core.Instances;
 
 /**
  * Glowna klasa WebService'u udostepniajaca dostep do danych poprzez API
  *
  * Klasa ma wbudowany logger, zapisujacy wyjatki do pliku ws.log
  * @author janek
- * @version 1.2.0
+ * @version 1.2.1
  */
 @WebService
 public class DataAccess implements IDataAccess{
@@ -61,17 +60,12 @@ public class DataAccess implements IDataAccess{
             ConfigurationDataSourceModel conf = helper.getConfiguration().get(uid);
             String location = conf.getLocation();
             if(conf.getDataSourceType().compareTo(DataSourceType.PostgreSQL)==0 )
-                location = conf.getLocation()+":"+conf.getPort()+"/"+conf.getDatabase()+"user="+conf.getUsername()+"?password="+conf.getPassword();
+                location = conf.getLocation()+":"+conf.getPort()+"/"+conf.getDatabase()+"?user="+conf.getUsername()+"&password="+conf.getPassword();
             if(conf.getDataSourceType().compareTo(DataSourceType.SQLite)==0 ){
-                location = "jdbc:sqlite:/"+conf.getLocation();
+                location = conf.getLocation()+"/"+conf.getDatabase();
             }
             dataSource = (IDataSource)(Class.forName(conf.getClassName()).newInstance());
-            /*Instances inst = dataSource.getData(location, table);
-            String[] data = new String[inst.numInstances()];
-            for(int i = 0;i<inst.numInstances();i++){
-          //      System.out.println(inst.instance(i).toString());
-                data[i] = inst.instance(i).toString();
-            }*/
+     
             return dataSource.getData(location,table).toString();
             //return dataSource.getData(conf.getLocation()+"//"+conf.getDatabase()+"?user="+conf.getUsername()+"&datamine="+conf.getPassword(), table);
         } catch (InstantiationException ex) {
@@ -94,7 +88,13 @@ public class DataAccess implements IDataAccess{
             log.log(Level.WARNING,ex.getMessage());
             log.log(Level.ALL,ex.getStackTrace().toString());
             return null;
-        }catch(DataSourceException ex){
+        }catch(NullPointerException ex){
+            log.log(Level.ALL,"NullPointerException");
+            log.log(Level.WARNING,ex.getMessage());
+            log.log(Level.ALL,ex.getStackTrace().toString());
+            return null;
+        }
+        catch(DataSourceException ex){
             log.log(Level.ALL,"DataSourceException");
             log.log(Level.WARNING,ex.getMessage());
             log.log(Level.ALL,ex.getStackTrace().toString());
