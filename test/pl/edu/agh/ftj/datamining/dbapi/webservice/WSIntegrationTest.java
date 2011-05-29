@@ -55,11 +55,10 @@ public class WSIntegrationTest {
     @Test
     public void testDataSource(){
         try{
-        //client = new DataAccessService(new URL("http://localhost:8080/axis2/services/DataAccessService?wsdl"));
         client = new DataAccessService();
         DataAccessServicePortType dataClient = client.getDataAccessServiceHttpSoap11Endpoint();
         String response = dataClient.getData("1", "iris.arff.csv");
-        assertEquals(response.length(), 1);
+        assertTrue(response.length()>100?true:false);
         }catch(Exception ex){
             System.out.print(ex.getMessage());
             ex.printStackTrace();
