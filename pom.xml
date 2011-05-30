@@ -22,9 +22,16 @@
 			<version>4.5</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>       
+			<groupId>weka</groupId> 
+			<artifactId>weka</artifactId> 
+			<version>3.6.4</version>
+		</dependency>
 	</dependencies>
 	
 	<build>
+	    <sourceDirectory>src/pl/edu/agh/ftj/datamining/dbapi</sourceDirectory>
 	    <testSourceDirectory>test</testSourceDirectory>
 		<extensions>
 			<extension>
