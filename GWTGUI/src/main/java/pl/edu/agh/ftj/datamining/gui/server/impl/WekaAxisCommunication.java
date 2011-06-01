@@ -43,7 +43,7 @@ public class WekaAxisCommunication implements WekaCommunication {
 	 */
 	@Override
 	public WekaAnswer runAlgorithm(Integer algorithmType, String location,
-			String id, String table) {
+			String id, String table, String options) {
 		// TODO Auto-generated method stub
 		return null;
 	}

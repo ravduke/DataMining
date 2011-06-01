@@ -8,7 +8,7 @@ package pl.edu.agh.ftj.datamining.client;
 import com.extjs.gxt.samples.resources.client.model.Folder;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-
+import com.extjs.gxt.ui.client.data.BaseTreeModel;
 /**
  *
  * @author Rafal Jablonowski

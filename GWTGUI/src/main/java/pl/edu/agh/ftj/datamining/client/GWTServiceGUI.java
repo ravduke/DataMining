@@ -1,7 +1,7 @@
  package pl.edu.agh.ftj.datamining.client;
 
  import com.extjs.gxt.samples.resources.client.Resources;
-import com.extjs.gxt.samples.resources.client.model.DBTable;
+ import com.extjs.gxt.samples.resources.client.model.DBTable;
  import com.extjs.gxt.samples.resources.client.model.Folder;
  import com.extjs.gxt.ui.client.Style.Orientation;
  import com.extjs.gxt.ui.client.widget.layout.FlowData;
@@ -9,37 +9,51 @@ import com.extjs.gxt.samples.resources.client.model.DBTable;
  import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
  import com.extjs.gxt.ui.client.widget.ContentPanel;
  import com.extjs.gxt.ui.client.widget.button.Button;
+ import com.extjs.gxt.ui.client.data.BaseTreeModel;
 
  import com.extjs.gxt.ui.client.widget.menu.Menu;
  import com.extjs.gxt.ui.client.widget.menu.MenuItem;
  import com.extjs.gxt.ui.client.widget.menu.SeparatorMenuItem;
  import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
  import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
-import com.extjs.gxt.ui.client.Style.SelectionMode;
+ import com.extjs.gxt.ui.client.Style.SelectionMode;
  import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.event.BaseEvent;
  import com.extjs.gxt.ui.client.event.ButtonEvent;
-import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
-import com.extjs.gxt.ui.client.event.SelectionChangedListener;
-import com.extjs.gxt.ui.client.event.SelectionListener;
-import com.extjs.gxt.ui.client.store.TreeStore;
+import com.extjs.gxt.ui.client.event.ComponentEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
+ import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
+ import com.extjs.gxt.ui.client.event.SelectionChangedListener;
+ import com.extjs.gxt.ui.client.event.SelectionListener;
+ import com.extjs.gxt.ui.client.store.TreeStore;
  import com.extjs.gxt.ui.client.util.Margins;
  import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.MessageBox;
+ import com.extjs.gxt.ui.client.widget.MessageBox;
+import com.extjs.gxt.ui.client.widget.Slider;
  import com.extjs.gxt.ui.client.widget.TabItem;
  import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.extjs.gxt.ui.client.widget.form.CheckBox;
+ import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
 
 
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.LabelField;
+import com.extjs.gxt.ui.client.widget.form.Radio;
+import com.extjs.gxt.ui.client.widget.form.RadioGroup;
+import com.extjs.gxt.ui.client.widget.form.SimpleComboBox;
+import com.extjs.gxt.ui.client.widget.form.SliderField;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 
 import com.extjs.gxt.ui.client.widget.layout.RowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.core.client.GWT;
- import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.List;
 import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
+import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
 
 
 
@@ -69,6 +83,10 @@ public class GWTServiceGUI extends LayoutContainer {
   * Zakladka wyboru atrybutow
   */
  TabItem selectAttributes;
+  /**
+  * Zakladka wynikow
+  */
+ TabItem showResults;
   /**
   * Drzewo danych
   */
@@ -137,6 +155,7 @@ public class GWTServiceGUI extends LayoutContainer {
 
      menu = new Menu();
      menu.add(new MenuItem("User Interface"));
+     menu.add(new MenuItem("Algorithm Discription"));
      menu.add(new MenuItem("Documentation"));
      MenuBarItem item3 = new MenuBarItem("Help", menu);
      bar.add(item3);
@@ -195,6 +214,7 @@ public class GWTServiceGUI extends LayoutContainer {
                             tree.collapseAll();
                             tree.getStore().add(result.getChildren(), true);
                             DBconnected = true;
+                            selectAttributes.disable();
                             info_name.setValue("    Data selection:");
                             MessageBox.info("Connected", "Connected to the DB server.", null);
                             database_type.setVisible(true);
@@ -216,16 +236,6 @@ public class GWTServiceGUI extends LayoutContainer {
                     public void onSuccess(Void result) {
                         Wekaconnected = true;
                         MessageBox.info("Connected", "Connected to the Weka server.", null);
-/*                       getWekaService().getAlgorithms(new AsyncCallback<List<String>>() {
-
-                            public void onFailure(Throwable caught) {
-                                MessageBox.alert("Connection", "getAlgo ERROR", null);
-                            }
-
-                            public void onSuccess(List<String> result) {
-                                info_name.setValue(result.get(0).toString());
-                            }
-                        });*/
                     }
                 });
                 else
@@ -259,6 +269,7 @@ public class GWTServiceGUI extends LayoutContainer {
                         }
 
                         public void onSuccess(Folder result) {
+                            selectAttributes.enable();
                             tree.getStore().removeAll();
                             tree.collapseAll();
                             tree.getStore().add(result.getChildren(), true);
@@ -336,8 +347,8 @@ public class GWTServiceGUI extends LayoutContainer {
     tabPanel = new TabPanel();
     tabPanel.setPlain(true);
     tabPanel.setBorders(false);
-    tabPanel.setHeight(579);
-
+    tabPanel.setHeight(679);
+    tabPanel.setWidth("99%");
     TabItem connect = new TabItem("Select Data");
     ContentPanel horizontalPane = new ContentPanel();
     horizontalPane.setHeaderVisible(false);
@@ -410,19 +421,286 @@ public class GWTServiceGUI extends LayoutContainer {
     // iconTab.setIcon(Resources.ICONS.table());
     selectAttributes.addStyleName("pad-text");
     //selectAttributes.disable();
-    ContentPanel horizontalTab2Pane = new ContentPanel();
-    horizontalTab2Pane.setHeaderVisible(false);
-    horizontalTab2Pane.setFrame(true);
-    horizontalTab2Pane.setWidth("100%");
-    horizontalTab2Pane.setHeight(479);
-    horizontalTab2Pane.setLayout(new RowLayout(Orientation.HORIZONTAL));
+    ContentPanel verticalTab2Pane = new ContentPanel();
+    verticalTab2Pane.setHeaderVisible(false);
+    verticalTab2Pane.setFrame(true);
+    verticalTab2Pane.setWidth("100%");
+    verticalTab2Pane.setHeight(479);
+    verticalTab2Pane.setLayout(new RowLayout(Orientation.VERTICAL));
 
-    selectAttributes.add(horizontalTab2Pane);
-     
+    FormPanel horizontalTab2Pane1 = new FormPanel();
+    horizontalTab2Pane1.setHeaderVisible(false);
+    horizontalTab2Pane1.setWidth("100%");
+    horizontalTab2Pane1.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    final SimpleComboBox combo = new SimpleComboBox<String>();
+    combo.setEmptyText("Select algorithm...");
+    //combo.setLabelSeparator("Select algorithm type:");
+    combo.setFieldLabel("Algorithm type");
+
+    final LabelField dataTypeLabel = new LabelField();
+    final LabelField dataNameLabel = new LabelField();
+    final LabelField tableNameLabel = new LabelField();
+
+    selectAttributes.addListener(Events.Select,new Listener<ComponentEvent>() {
+
+            public void handleEvent(ComponentEvent be) {
+                getWekaService().getAlgorithms(new AsyncCallback<List<String>>() {
+
+                public void onFailure(Throwable caught) {
+                    MessageBox.alert("Error", "Cannot get algotrithm list.", null);
+                }
+                public void onSuccess(List<String> result) {
+                    combo.removeAll();
+                    for(String s : result)
+                        combo.add(s);
+                    dataTypeLabel.setValue(database_type.getValue());
+                    dataNameLabel.setValue(database_name.getValue());
+                    tableNameLabel.setValue(table_name.getValue());                    
+                }
+        });                
+            }
+        });
+        
+    combo.setTypeAhead(true);
+    combo.setTriggerAction(TriggerAction.ALL);
+    combo.setEditable(false);
+
+    //
+    //  Attributes pane
+    //
+    FormPanel horizontalTab2Pane2 = new FormPanel();
+    horizontalTab2Pane2.setHeaderVisible(false);
+    horizontalTab2Pane2.setWidth("100%");
+    horizontalTab2Pane2.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    FormPanel attributePane = new FormPanel();
+    attributePane.setHeaderVisible(false);
+    attributePane.setWidth("100%");
+    attributePane.setLayout(new RowLayout(Orientation.VERTICAL));
+    attributePane.setBorders(true);
+    final int algorithmType = 1;
+    //
+    //  Attribute SimpleKMeans
+    //
+
+    FormPanel a1 = new FormPanel();
+    a1.setHeaderVisible(false);
+    a1.setWidth("100%");
+    a1.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+
+    final LabelField numCluster = new LabelField();
+    numCluster.setValue("Liczba klastrow: 2");
+
+    final Slider slider = new Slider();
+    slider.setMinValue(1);
+    slider.setMaxValue(12);
+    slider.setValue(2);
+    slider.setMessage("{0} klastry");
+    slider.setIncrement(1);
+    slider.addListener(Events.Change, new Listener<ComponentEvent>() {
+
+            public void handleEvent(ComponentEvent be) {
+                if(slider.getValue() == 1)
+                    slider.setMessage("{0} klaster");
+                else if(slider.getValue() > 4)
+                    slider.setMessage("{0} klastrow");
+                else
+                    slider.setMessage("{0} klastry");
+                numCluster.setValue("Liczba klastrow: " + slider.getValue() );
+            }
+    });        
+    
+    final SliderField sf = new SliderField(slider);
+    sf.setFieldLabel("Size");
+    
+    a1.add(numCluster, new RowData(0.2, 1, new Margins(4,4,4,4)));
+    a1.add(sf, new RowData(0.5, 1, new Margins(4,4,4,4)));
+
+    CheckBox variationCheckBox = new CheckBox();
+    variationCheckBox.setBoxLabel("     Wyswietl odchylenia standardowe dla srodkow klastrow");
+    variationCheckBox.setValue(false);
+
+    FormPanel a2 = new FormPanel();
+    a2.setHeaderVisible(false);
+    a2.setWidth("100%");
+    a2.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    final LabelField distanceFunction = new LabelField();
+    distanceFunction.setValue("Distance Function:");
+
+    Radio radio = new Radio();
+    radio.setBoxLabel("Euclidean Distance");
+    radio.setValue(true);
+
+    Radio radio2 = new Radio();
+    radio2.setBoxLabel("Manhattan Distance");
+
+    RadioGroup radioGroup = new RadioGroup();
+    radioGroup.setFieldLabel("Distance Function: ");
+    radioGroup.add(radio);
+    radioGroup.add(radio2);
+
+    
+    a2.add(distanceFunction, new RowData(0.2, 1, new Margins(2)));
+    a2.add(radioGroup, new RowData(0.5, 1, new Margins(2)));
+
+    FormPanel a3 = new FormPanel();
+    a3.setHeaderVisible(false);
+    a3.setWidth("100%");
+    a3.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    final LabelField maxIteration = new LabelField();
+    maxIteration.setValue("Liczba iteracji: 20");
+
+    final Slider slider2 = new Slider();
+    slider2.setMinValue(1);
+    slider2.setMaxValue(100);
+    slider2.setValue(20);
+    slider2.setMessage("{0} klastry");
+    slider2.setIncrement(1);
+    slider2.addListener(Events.Change, new Listener<ComponentEvent>() {
+
+            public void handleEvent(ComponentEvent be) {
+                if(slider2.getValue() == 1)
+                    slider2.setMessage("{0} iteracja");
+                else if(slider2.getValue() > 4)
+                    slider2.setMessage("{0} iteracje");
+                else
+                    slider2.setMessage("{0} iteracji");
+                maxIteration.setValue("Liczba iteracji: " + slider2.getValue() );
+            }
+    });
+
+    final SliderField sf2 = new SliderField(slider2);
+
+    a3.add(maxIteration, new RowData(0.2, 1, new Margins(4,4,4,4)));
+    a3.add(sf2, new RowData(0.5, 1, new Margins(4,4,4,4)));
+
+    CheckBox instanceOrderCheckBox = new CheckBox();
+    instanceOrderCheckBox.setBoxLabel("     Zachowaj kolejnosc instancji");
+    instanceOrderCheckBox.setValue(false);
+
+    CheckBox fastCheckBox = new CheckBox();
+    fastCheckBox.setBoxLabel("     Szybsze obliczanie dystansow poprzez okrojenie wartosci."
+            + "\n Wylacza obliczanie kwadratowych bledow");
+    fastCheckBox.setValue(false);
+
+    FormPanel a4 = new FormPanel();
+    a4.setHeaderVisible(false);
+    a4.setWidth("100%");
+    a4.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    final LabelField randomSeed = new LabelField();
+    randomSeed.setValue("Losowa liczba ziarne: 20");
+
+    final Slider slider3 = new Slider();
+    slider3.setMinValue(2);
+    slider3.setMaxValue(50);
+    slider3.setValue(10);
+    slider3.setMessage("{0} ziaren");
+    slider3.setIncrement(1);
+    slider3.addListener(Events.Change, new Listener<ComponentEvent>() {
+
+            public void handleEvent(ComponentEvent be) {
+                if(slider3.getValue() == 1)
+                    slider3.setMessage("{0} ziarno");
+                else if(slider3.getValue() > 4)
+                    slider3.setMessage("{0} ziaren");
+                else
+                    slider3.setMessage("{0} ziarna");
+                randomSeed.setValue("Losowa liczba ziarne: " + slider3.getValue() );
+            }
+    });
+
+    final SliderField sf3 = new SliderField(slider3);
+
+    a4.add(randomSeed, new RowData(0.3, 1, new Margins(4,4,4,4)));
+    a4.add(sf3, new RowData(0.5, 1, new Margins(4,4,4,4)));
+
+
+    attributePane.add(a1, new RowData(1, 0.15, new Margins(2)));
+    attributePane.add(variationCheckBox, new RowData(1, 0.15, new Margins(2,2,2,14)));
+    attributePane.add(a2, new RowData(1, 0.15, new Margins(2,2,2,4)));
+    attributePane.add(a3, new RowData(1, 0.15, new Margins(2,2,2,4)));
+    attributePane.add(instanceOrderCheckBox, new RowData(1, 0.15, new Margins(2,2,2,14)));
+    attributePane.add(fastCheckBox, new RowData(1, 0.15, new Margins(2,2,2,14)));
+    attributePane.add(a4, new RowData(1, 0.15, new Margins(2,2,2,4)));
+
+    //
+    //  Panel wyniku
+    //
+    FormPanel resultTab2Pane = new FormPanel();
+    resultTab2Pane.setHeaderVisible(false);
+    resultTab2Pane.setWidth("100%");
+    resultTab2Pane.setLayout(new RowLayout(Orientation.VERTICAL));
+
+    resultTab2Pane.add(dataTypeLabel,new RowData(0.3, 0.15, new Margins(4,4,4,104)));
+    resultTab2Pane.add(dataNameLabel,new RowData(0.3, 0.15, new Margins(4,4,4,104)));
+    resultTab2Pane.add(tableNameLabel,new RowData(0.3, 0.15, new Margins(4,4,4,104)));
+
+    //
+    // client close do weki
+    // testy jednostkowe
+    //
+    //
+
+    Button buttonRun = new Button("RUN");
+     buttonRun.addListener(Events.OnClick, new Listener<ButtonEvent>() {
+       public void handleEvent(ButtonEvent be) {
+            getWekaService().runAlgorithm(algorithmType, stateId, database_name.getValue(), table_name.getValue(), height, new AsyncCallback<WekaAnswerDTO>() {
+
+                    public void onFailure(Throwable caught) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+
+                    public void onSuccess(WekaAnswerDTO result) {
+                        
+                    }
+                });     
+       }
+     });
+
+    // TODO COMBOBOX ALGORITHM_INDEX CHOOSE TO RUNALGORITHM
+     // COMBOBOOX ATTRIBUTES PANE CHANGE
+     // Options string creation
+     // result tab
+     // chart tab
+     // REFRESH - default database, type name, table name
+     // default button
+
+    resultTab2Pane.add(buttonRun,new RowData(0.3, 0.15, new Margins(124,4,4,204)));
+
+    horizontalTab2Pane1.add(combo, new RowData(0.15, 1, new Margins(4,4,4,14)));
+    horizontalTab2Pane2.add(attributePane,new RowData(0.5, 1, new Margins(4,4,4,14)));
+    horizontalTab2Pane2.add(resultTab2Pane,new RowData(0.5, 1, new Margins(4,4,4,14)));
+    
+    verticalTab2Pane.add(horizontalTab2Pane1, new RowData(1, 0.125, new Margins(4,4,4,14)));
+    verticalTab2Pane.add(horizontalTab2Pane2, new RowData(1, 0.7, new Margins(4,4,4,14)));
+    selectAttributes.add(verticalTab2Pane);
+
+   //////////////////////////////////////////////////////////////////////////
+    //  Panel Results
+    //////////////////////////////////////////////////////////////////////////
+    showResults = new TabItem("Show Results");
+    // iconTab.setIcon(Resources.ICONS.table());
+    showResults.addStyleName("pad-text");
+    //showResults.disable();
+    ContentPanel verticalTab3Pane = new ContentPanel();
+    verticalTab3Pane.setHeaderVisible(false);
+    verticalTab3Pane.setFrame(true);
+    verticalTab3Pane.setWidth("100%");
+    verticalTab3Pane.setHeight(479);
+    verticalTab3Pane.setLayout(new RowLayout(Orientation.VERTICAL));
+
+
+
      //////////////////////////////////////////////////////////////
      //////////////////////////////////////////////////////////////
     tabPanel.add(connect);
     tabPanel.add(selectAttributes);
+    tabPanel.add(showResults);
 
     panel.setTopComponent(bar);
     panel.add(toolBar);
@@ -452,136 +730,9 @@ public class GWTServiceGUI extends LayoutContainer {
      combo.setTriggerAction(TriggerAction.ALL);
      combo.setEditable(false);
  */
-/*      COMBOBOX DATABASE NAME        
-     final SimpleComboBox combo2 = new SimpleComboBox<String>();
-     combo2.setEmptyText("Select database name...");
-     //combo.setLabelSeparator("Database type:");
-     combo2.setFieldLabel("Database name");
-     combo2.add("database0");
-     combo2.add("database1");
-     combo2.add("database3");
-     combo2.add("database3");
-     combo2.setTypeAhead(true);
-     combo2.setTriggerAction(TriggerAction.ALL);
-     combo2.setEditable(false);
-     combo2.setEnabled(false);
-*/
-   /*      COMBOBOX TABLE NAME        
 
-    final SimpleComboBox<String> combo3 = new SimpleComboBox<String>();
-     combo3.setEmptyText("Select table...");
-     combo3.setLabelSeparator("Database type:");
-     combo3.setFieldLabel("Table name");
-     combo3.add("table0");
-     combo3.add("table1");
-     combo3.add("table3");
-     combo3.add("table3");
-     combo3.setTypeAhead(true);
-     combo3.setTriggerAction(TriggerAction.ALL);
-     combo3.setEditable(false);
-     combo3.setEnabled(false);
-        */
-
-   /*  ComboBox combo3 = new ComboBox();
-     combo3.setEmptyText("Select table...");
-     combo3.setLabelSeparator("Database type:");
-     combo3.setFieldLabel("Table name");
-     ListStore<Stock> store3 = new ListStore<Stock>();
-     List<Stock> stocks3 = new ArrayList<Stock>();
-     stocks3.add(new Stock("table0"));
-     stocks3.add(new Stock("table1"));
-     stocks3.add(new Stock("table3"));
-     stocks3.add(new Stock("table3"));
-     store3.add(stocks3);
-     combo3.setStore(store3);
-     combo3.setDisplayField("name");
-     combo3.setTypeAhead(true);
-     combo3.setTriggerAction(TriggerAction.ALL);
-     combo3.setEditable(false); */
-     
-  /*   FormPanel p1 = new FormPanel();
-     p1.setHeaderVisible(false);
-     p1.setWidth("100%");
-     p1.setHeight(470);
-     p1.setLayout(new RowLayout(Orientation.VERTICAL));
-
-    */
- /*    FormPanel p2 = new FormPanel();
-     p2.setHeaderVisible(false);
-     p2.setWidth("100%");
-     p2.setHeight(50);
-     p2.setLayout(new RowLayout(Orientation.HORIZONTAL));
-     
-     FormPanel p3 = new FormPanel();
-     
-     p3.setHeaderVisible(false);
-     p3.setWidth("100%");
-     p3.setHeight(50);
-     p3.setLayout(new RowLayout(Orientation.HORIZONTAL));
-     */
 /*
-     TextField<String> database_type = new TextField<String>();
-     database_type.setEnabled(false);
-     database_type.setValue("Database type:");
-     database_type.setReadOnly(true);
-
-     final TextField<String> db_name = new TextField<String>();
-     db_name.setEnabled(false);
-     db_name.setEmptyText("name...");
-     db_name.setReadOnly(true);
-
-     TextField<String> database_name = new TextField<String>();
-     database_name.setEnabled(false);     
-     database_name.setValue("Database name:");
-     database_name.setReadOnly(true);
-
-     TextField<String> table_name = new TextField<String>();
-     table_name.setEnabled(false);
-     table_name.setValue("Table name:");
-     table_name.setReadOnly(true);  */
-
-
-     /*      BUTTON CONNECT TO DATABASE        
-     Button buttonConnect = new Button("Connect");
-     buttonConnect.addListener(Events.OnClick, new Listener<ButtonEvent>() {
-       public void handleEvent(ButtonEvent be) {
-         Window.alert("Connected!");
-         combo2.setEnabled(true);
-         combo3.setEnabled(true);
-         db_name.setValue("name @ localhost");
-       }
-     });
-    */
- //   p1.add(tree , new RowData(0.2, 1, new Margins(4)));
-     /*
-     p1.add(database_type , new RowData(0.09, 1, new Margins(4)));
-     p1.add(combo , new RowData(0.15, 1, new Margins(4)));
-     p1.add(buttonConnect , new RowData(0.1, 1, new Margins(4)));
-     p1.add(db_name , new RowData(0.25, 1, new Margins(4,4,4,44)));
-
-     p2.add(database_name , new RowData(0.09, 1, new Margins(4)));
-     p2.add(combo2 , new RowData(0.15, 1, new Margins(4)));
-
-     p3.add(table_name , new RowData(0.09, 1, new Margins(4)));
-     p3.add(combo3 , new RowData(0.15, 1, new Margins(4)));
-*/
-   //  simple.add(p1 , new RowData(1, -1, new Margins(4,4,4,14)));
-/*     simple.add(p2 , new RowData(1, -1, new Margins(4,4,4,14)));
-     simple.add(p3 , new RowData(1, -1, new Margins(4,4,4,14)));
-*/
-     //Label label1 = new Label("Database type:");
-     
-     //simple.add(connect , new RowData(0.1, -1, new Margins(4)));
-     //simple.add(label1, new RowData(0.3, -1, new Margins(4)));
-    // simple.add(combo, new RowData(0.1, -1, new Margins(4)));     // frame adds ComboBox
-     //simple.add(buttonConnect, new RowData(0.1, -1, new Margins(4)));
-    // simple.add(combo2, new RowData(0.1, -1, new Margins(0, 4, 0, 4)));     // frame adds ComboBox
-     //simple.add(combo3, new RowData(0.1, -1, new Margins(4)));     // frame adds ComboBox
-
-  /*   connect.add(simple);  // tab panel adds Frame
-     connect.addStyleName("pad-text");
-     //connect.addText("Just a plain old tab");    
-     panel.add(connect);
+  
 /* ******************* SELECT ATTRIBUTES ********************************* */
   /*   TabItem selectAttributes = new TabItem("Select Attributes");
     // iconTab.setIcon(Resources.ICONS.table());
@@ -623,52 +774,7 @@ public class GWTServiceGUI extends LayoutContainer {
     public static WekaServiceAsync getWekaService() {
        return GWT.create(WekaService.class);
     }
-    
-public Folder getTestDatabases() {
-    Folder[] folders = new Folder[] {
-        new Folder("PostgreSQL",  new DBTable[] {
-                                    new DBTable("Six String Quartets"),
-                                    new DBTable("Three String Quartets"),
-                                    new DBTable("Grosse Fugue for String Quartets")
-                                }
-                  ),
-        new Folder("SQLite",  new DBTable[] {
-                                    new DBTable("Six String Quartets"),
-                                    new DBTable("Three String Quartets"),
-                                    new DBTable("Grosse Fugue for String Quartets")
-                                }
-                  ),
-        new Folder("Plain Text")
-        };
-    folders[0].setChildren(
-                                 new Folder ("Database1", new DBTable[] {
-                                    new DBTable("aaats"),
-                                    new DBTable("bbbring Quartets"),
-                                    new DBTable("cccugue for String Quartets")
-                                    }
-                                )
-                          );
-    folders[2].setChildren(
-                                new DBTable[] {
-                                    new DBTable("arrraats"),
-                                    new DBTable("bbbring Quartets"),
-                                    new DBTable("cccugue for String Quartets")
-                                }
-                          );
 
-
-    Folder root = new Folder("root");
-    for (int i = 0; i < folders.length; i++) {
-      root.add((Folder) folders[i]);
-    }
-    return root;
-    }
 
 }
 
-
-/*
-
-
- 
- */

@@ -20,6 +20,7 @@ public class WekaRestCommunication implements WekaCommunication {
 
 	private static final String URI = "http://localhost:8080/WekaRESTService/rest/";
 	private static final Logger LOGGER = Logger.getLogger(WekaRestCommunication.class.getName());
+        
 	private WebResource webResource;
 	private Client client;
 	
@@ -59,7 +60,7 @@ public class WekaRestCommunication implements WekaCommunication {
 	 * @see pl.edu.agh.ftj.datamining.gui.WekaCommunication#runAlgorithm()
 	 */
 	@Override
-	public WekaAnswer runAlgorithm(Integer algorithmType, String location, String id, String table) {
+	public WekaAnswer runAlgorithm(Integer algorithmType, String location, String id, String table, String options) {
 		LOGGER.info("WekaRestCommunication::runAlgorithm() [...]");
 		webResource = client.resource(URI);
 		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
@@ -67,7 +68,8 @@ public class WekaRestCommunication implements WekaCommunication {
 	 	queryParams.add("location", location);
 	 	queryParams.add("id", id);
 	 	queryParams.add("table", table);
-	 	
+	 	queryParams.add("options", options);
+                
 		WekaAnswer weka = null;
 		try {
 			weka = (WekaAnswer) webResource.path("runAlgorithm").queryParams(queryParams).accept(MediaType.APPLICATION_XML_TYPE).get(WekaAnswer.class);

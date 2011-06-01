@@ -11,5 +11,5 @@ public interface WekaServiceAsync {
 	
 	public void getAlgorithms(AsyncCallback<List<String>> callback);
 	
-	public void runAlgorithm(Integer algorithmType, String location, String id, String table, AsyncCallback<WekaAnswerDTO> callback);
+	public void runAlgorithm(Integer algorithmType, String location, String id, String table, String options, AsyncCallback<WekaAnswerDTO> callback);
 }

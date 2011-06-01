@@ -48,7 +48,9 @@ public class Folder extends BaseTreeModel implements Serializable {
   public String getName() {
     return (String) get("name");
   }
-
+  public void setName(String name) {
+    set("name", name);
+  }
   public String toString() {
     return getName();
   }

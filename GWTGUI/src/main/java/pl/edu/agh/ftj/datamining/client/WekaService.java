@@ -29,5 +29,5 @@ public interface WekaService extends RemoteService {
 	 * Metoda odpowiedzialna za uruchomienie za pomoca klienta algorytmu Weki.
 	 * @return Zwraca dane z algorytmu {@link WekaAnswer}.
 	 */
-	public WekaAnswerDTO runAlgorithm(Integer algorithmType, String location, String id, String table);
+	public WekaAnswerDTO runAlgorithm(Integer algorithmType, String location, String id, String table, String options);
 }

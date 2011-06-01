@@ -25,18 +25,32 @@ public class DBTable extends BaseTreeModel {
     set("genre", genre);
   }
 
+ public DBTable(String name,String displayedName, String database,  String id, String location) {
+    set("name", name);
+    set("displayedName", displayedName);
+    set("database", database);
+    set("id", id);
+    set("location", location);
+  }
+
   public String getName() {
     return (String) get("name");
   }
 
-  public String getAuthor() {
-    return (String) get("author");
+  public String getDatabase() {
+    return (String) get("database");
   }
 
-  public String getGenre() {
-    return (String) get("genre");
+  public String getDisplayedName() {
+    return (String) get("displayedName");
   }
 
+  public String getId() {
+    return (String) get("id");
+  }
+  public String getLocation() {
+    return (String) get("location");
+  }
   public String toString() {
     return getName();
   }
