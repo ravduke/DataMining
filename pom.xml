@@ -1,20 +1,28 @@
 <!--
     Document   : pom.xml
-    Created on : 24 kwiecień 2011, 00:11
-    Author     : janek
+    Created on : 1 czerwca 2011, 22:55
+    Author     : Szymon Stupkiewicz
     Description:
-        Do buildowania w mavenie, glownie do badania pokrycia testami jednostkowymi.
+        Build w mavenie.
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.maventest</groupId>
+	<groupId>pl.edu.agh.ftj.datamining.dbapi</groupId>
 	<artifactId>DataMining</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>DataMining</name>
 	<url>http://maven.apache.org</url>
+	<repositories>
+		<repository>
+			<url>http://download.java.net/maven/2</url>
+			<id>metro</id>
+			<layout>default</layout>
+			<name>Repository for library[metro]</name>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -22,17 +30,31 @@
 			<version>4.5</version>
 			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.0-801.jdbc4</version>
+		</dependency>
 		<dependency>       
 			<groupId>weka</groupId> 
 			<artifactId>weka</artifactId> 
 			<version>3.6.4</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
-	    <sourceDirectory>src/pl/edu/agh/ftj/datamining/dbapi</sourceDirectory>
-	    <testSourceDirectory>test</testSourceDirectory>
+		<sourceDirectory>src/pl/edu/agh/ftj/datamining/dbapi</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
@@ -41,33 +63,125 @@
 			</extension>
 		</extensions>
 		<plugins>
-		 <plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src</directory>
+							<targetPath>WEB-INF</targetPath>
+							<includes>
+								<include>jax-ws-catalog.xml</include>
+								<include>wsdl/**</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>remove-javax</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<tasks>
+						<delete dir="${project.build.directory}/classes/javax"/>
+					</tasks>
+				</configuration>
+			</plugin>
+			<plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.1</version>
         <executions>
           <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
             <goals>
-              <goal>clean</goal>
+              <goal>add-source</goal>
             </goals>
+            <configuration>
+              <sources>
+                <source>build/generated-sources/jax-ws/pl/edu/agh/ftj/datamining/dbapi/webservice/*</source>
+              </sources>
+            </configuration>
           </execution>
         </executions>
       </plugin>
-	     <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>5</source>
-          <target>5</target>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.5.1</version>
+				       <configuration>
+					    <formats>
+           <format>html</format>
+           <format>xml</format>
+       </formats>
+          <check>
+            <branchRate>0</branchRate>
+            <lineRate>0</lineRate>
+            <haltOnFailure>true</haltOnFailure>
+            <totalBranchRate>0</totalBranchRate>
+            <totalLineRate>0</totalLineRate>
+            <packageLineRate>0</packageLineRate>
+            <packageBranchRate>0</packageBranchRate>
+            <regexes>
+              <regex>
+                <pattern>pl.edu.agh.ftj.datamining.dbapi.*</pattern>
+                <branchRate>0</branchRate>
+            <lineRate>0</lineRate>
+              </regex>
+            </regexes>
+          </check>
         </configuration>
-      </plugin>
-	</plugins>
+				<executions>
+						 <execution>  
+                    <phase>package</phase>  
+                    <goals>  
+                        <goal>cobertura</goal>  
+                    </goals>  
+                </execution> 
+					
+				</executions>
+			</plugin>
+		</plugins>
+		<finalName>DataSource</finalName>
 	</build>
 	<reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.5.1</version>
 			</plugin>
 		</plugins>
 	</reporting>

@@ -1,0 +1,938 @@
+<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+
+<coverage line-rate="0.6265560165975104" branch-rate="0.59375" lines-covered="151" lines-valid="241" branches-covered="19" branches-valid="32" complexity="0.0" version="1.9.4.1" timestamp="1307222620868">
+	<sources>
+		<source>C:/Users/janek/Documents/NetBeansProjects/WekaDBApi/WekaDBApi/src/pl/edu/agh/ftj/datamining/dbapi</source>
+		<source>--source</source>
+		<source>C:/Users/janek/Documents/NetBeansProjects/WekaDBApi/WekaDBApi/build/generated-sources/jax-ws/pl/edu/agh/ftj/datamining/dbapi/webservice/*</source>
+	</sources>
+	<packages>
+		<package name="pl.edu.agh.ftj.datamining.dbapi.core" line-rate="0.9662921348314607" branch-rate="0.9166666666666666" complexity="0.0">
+			<classes>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.core.BasicConfigurationDataSourceModel" filename="pl/edu/agh/ftj/datamining/dbapi/core/BasicConfigurationDataSourceModel.java" line-rate="0.9375" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="10" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="getDatabase" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="52" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getDisplayedName" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="36" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getId" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="20" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getLocation" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="68" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getTables" signature="()[Ljava/lang/String;" line-rate="0.0" branch-rate="1.0">
+							<lines>
+								<line number="86" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="setDatabase" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="60" hits="3" branch="false"/>
+								<line number="61" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setDisplayedName" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="44" hits="3" branch="false"/>
+								<line number="45" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setId" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="28" hits="3" branch="false"/>
+								<line number="29" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setLocation" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="78" hits="3" branch="false"/>
+								<line number="79" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setTables" signature="([Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="94" hits="3" branch="false"/>
+								<line number="95" hits="3" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="10" hits="3" branch="false"/>
+						<line number="20" hits="1" branch="false"/>
+						<line number="28" hits="3" branch="false"/>
+						<line number="29" hits="3" branch="false"/>
+						<line number="36" hits="1" branch="false"/>
+						<line number="44" hits="3" branch="false"/>
+						<line number="45" hits="3" branch="false"/>
+						<line number="52" hits="1" branch="false"/>
+						<line number="60" hits="3" branch="false"/>
+						<line number="61" hits="3" branch="false"/>
+						<line number="68" hits="1" branch="false"/>
+						<line number="78" hits="3" branch="false"/>
+						<line number="79" hits="3" branch="false"/>
+						<line number="86" hits="0" branch="false"/>
+						<line number="94" hits="3" branch="false"/>
+						<line number="95" hits="3" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationDataSourceModel" filename="pl/edu/agh/ftj/datamining/dbapi/core/ConfigurationDataSourceModel.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="10" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="getClassName" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="22" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getDataSourceType" signature="()Lpl/edu/agh/ftj/datamining/dbapi/core/DSApiEnums$DataSourceType;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="88" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getPassword" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="54" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getPort" signature="()I" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="71" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getUsername" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="38" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="setClassName" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="30" hits="3" branch="false"/>
+								<line number="31" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setDataSourceType" signature="(Lpl/edu/agh/ftj/datamining/dbapi/core/DSApiEnums$DataSourceType;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="96" hits="3" branch="false"/>
+								<line number="97" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setPassword" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="62" hits="3" branch="false"/>
+								<line number="63" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setPort" signature="(I)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="79" hits="3" branch="false"/>
+								<line number="80" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="setUsername" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="46" hits="3" branch="false"/>
+								<line number="47" hits="3" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="10" hits="3" branch="false"/>
+						<line number="22" hits="1" branch="false"/>
+						<line number="30" hits="3" branch="false"/>
+						<line number="31" hits="3" branch="false"/>
+						<line number="38" hits="1" branch="false"/>
+						<line number="46" hits="3" branch="false"/>
+						<line number="47" hits="3" branch="false"/>
+						<line number="54" hits="1" branch="false"/>
+						<line number="62" hits="3" branch="false"/>
+						<line number="63" hits="3" branch="false"/>
+						<line number="71" hits="1" branch="false"/>
+						<line number="79" hits="3" branch="false"/>
+						<line number="80" hits="3" branch="false"/>
+						<line number="88" hits="1" branch="false"/>
+						<line number="96" hits="3" branch="false"/>
+						<line number="97" hits="3" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.core.ConfigurationHelper" filename="pl/edu/agh/ftj/datamining/dbapi/core/ConfigurationHelper.java" line-rate="1.0" branch-rate="0.9166666666666666" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="30" hits="1" branch="false"/>
+								<line number="31" hits="1" branch="false"/>
+								<line number="32" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getConfiguration" signature="()Ljava/util/List;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="39" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="readConfigurationFile" signature="()V" line-rate="1.0" branch-rate="0.9166666666666666">
+							<lines>
+								<line number="46" hits="1" branch="false"/>
+								<line number="48" hits="1" branch="false"/>
+								<line number="49" hits="1" branch="false"/>
+								<line number="50" hits="1" branch="false"/>
+								<line number="51" hits="1" branch="false"/>
+								<line number="52" hits="1" branch="false"/>
+								<line number="53" hits="1" branch="false"/>
+								<line number="55" hits="4" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="56" hits="3" branch="false"/>
+								<line number="57" hits="3" branch="false"/>
+								<line number="58" hits="3" branch="true" condition-coverage="50% (1/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="50%"/>
+									</conditions>
+								</line>
+								<line number="59" hits="3" branch="false"/>
+								<line number="61" hits="3" branch="false"/>
+								<line number="62" hits="3" branch="false"/>
+								<line number="63" hits="3" branch="false"/>
+								<line number="65" hits="3" branch="false"/>
+								<line number="66" hits="3" branch="false"/>
+								<line number="67" hits="3" branch="false"/>
+								<line number="69" hits="3" branch="false"/>
+								<line number="70" hits="3" branch="false"/>
+								<line number="71" hits="3" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="72" hits="3" branch="false"/>
+								<line number="74" hits="3" branch="false"/>
+								<line number="75" hits="3" branch="false"/>
+								<line number="76" hits="3" branch="false"/>
+								<line number="78" hits="3" branch="false"/>
+								<line number="79" hits="3" branch="false"/>
+								<line number="80" hits="3" branch="false"/>
+								<line number="82" hits="3" branch="false"/>
+								<line number="83" hits="3" branch="false"/>
+								<line number="84" hits="3" branch="false"/>
+								<line number="85" hits="3" branch="false"/>
+								<line number="87" hits="3" branch="false"/>
+								<line number="88" hits="3" branch="false"/>
+								<line number="89" hits="3" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="90" hits="3" branch="false"/>
+								<line number="92" hits="3" branch="false"/>
+								<line number="93" hits="3" branch="false"/>
+								<line number="94" hits="3" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="95" hits="3" branch="false"/>
+								<line number="97" hits="3" branch="false"/>
+								<line number="98" hits="3" branch="false"/>
+								<line number="99" hits="3" branch="false"/>
+								<line number="101" hits="3" branch="false"/>
+								<line number="102" hits="3" branch="false"/>
+								<line number="103" hits="65" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="104" hits="62" branch="false"/>
+								<line number="106" hits="3" branch="false"/>
+								<line number="109" hits="3" branch="false"/>
+								<line number="111" hits="1" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="30" hits="1" branch="false"/>
+						<line number="31" hits="1" branch="false"/>
+						<line number="32" hits="1" branch="false"/>
+						<line number="39" hits="1" branch="false"/>
+						<line number="46" hits="1" branch="false"/>
+						<line number="48" hits="1" branch="false"/>
+						<line number="49" hits="1" branch="false"/>
+						<line number="50" hits="1" branch="false"/>
+						<line number="51" hits="1" branch="false"/>
+						<line number="52" hits="1" branch="false"/>
+						<line number="53" hits="1" branch="false"/>
+						<line number="55" hits="4" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="56" hits="3" branch="false"/>
+						<line number="57" hits="3" branch="false"/>
+						<line number="58" hits="3" branch="true" condition-coverage="50% (1/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="50%"/>
+							</conditions>
+						</line>
+						<line number="59" hits="3" branch="false"/>
+						<line number="61" hits="3" branch="false"/>
+						<line number="62" hits="3" branch="false"/>
+						<line number="63" hits="3" branch="false"/>
+						<line number="65" hits="3" branch="false"/>
+						<line number="66" hits="3" branch="false"/>
+						<line number="67" hits="3" branch="false"/>
+						<line number="69" hits="3" branch="false"/>
+						<line number="70" hits="3" branch="false"/>
+						<line number="71" hits="3" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="72" hits="3" branch="false"/>
+						<line number="74" hits="3" branch="false"/>
+						<line number="75" hits="3" branch="false"/>
+						<line number="76" hits="3" branch="false"/>
+						<line number="78" hits="3" branch="false"/>
+						<line number="79" hits="3" branch="false"/>
+						<line number="80" hits="3" branch="false"/>
+						<line number="82" hits="3" branch="false"/>
+						<line number="83" hits="3" branch="false"/>
+						<line number="84" hits="3" branch="false"/>
+						<line number="85" hits="3" branch="false"/>
+						<line number="87" hits="3" branch="false"/>
+						<line number="88" hits="3" branch="false"/>
+						<line number="89" hits="3" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="90" hits="3" branch="false"/>
+						<line number="92" hits="3" branch="false"/>
+						<line number="93" hits="3" branch="false"/>
+						<line number="94" hits="3" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="95" hits="3" branch="false"/>
+						<line number="97" hits="3" branch="false"/>
+						<line number="98" hits="3" branch="false"/>
+						<line number="99" hits="3" branch="false"/>
+						<line number="101" hits="3" branch="false"/>
+						<line number="102" hits="3" branch="false"/>
+						<line number="103" hits="65" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="104" hits="62" branch="false"/>
+						<line number="106" hits="3" branch="false"/>
+						<line number="109" hits="3" branch="false"/>
+						<line number="111" hits="1" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.core.DSApiEnums" filename="pl/edu/agh/ftj/datamining/dbapi/core/DSApiEnums.java" line-rate="0.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0">
+							<lines>
+								<line number="8" hits="0" branch="false"/>
+								<line number="14" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="8" hits="0" branch="false"/>
+						<line number="14" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.core.DSApiEnums$DataSourceType" filename="pl/edu/agh/ftj/datamining/dbapi/core/DSApiEnums.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="14" hits="8" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;I)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+							</lines>
+						</method>
+						<method name="valueOf" signature="(Ljava/lang/String;)Lpl/edu/agh/ftj/datamining/dbapi/core/DSApiEnums$DataSourceType;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+							</lines>
+						</method>
+						<method name="values" signature="()[Lpl/edu/agh/ftj/datamining/dbapi/core/DSApiEnums$DataSourceType;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="14" hits="8" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.core.IDataSource" filename="pl/edu/agh/ftj/datamining/dbapi/core/IDataSource.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.edu.agh.ftj.datamining.dbapi.exceptions" line-rate="0.5" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.exceptions.DataSourceException" filename="pl/edu/agh/ftj/datamining/dbapi/exceptions/DataSourceException.java" line-rate="0.5" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0">
+							<lines>
+								<line number="12" hits="0" branch="false"/>
+								<line number="13" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="20" hits="4" branch="false"/>
+								<line number="21" hits="4" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="12" hits="0" branch="false"/>
+						<line number="13" hits="0" branch="false"/>
+						<line number="20" hits="4" branch="false"/>
+						<line number="21" hits="4" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.edu.agh.ftj.datamining.dbapi.plaintext" line-rate="0.8181818181818182" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.plaintext.PlainText" filename="pl/edu/agh/ftj/datamining/dbapi/plaintext/PlainText.java" line-rate="0.8181818181818182" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="16" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="getData" signature="(Ljava/lang/String;Ljava/lang/String;)Lweka/core/Instances;" line-rate="0.8" branch-rate="1.0">
+							<lines>
+								<line number="27" hits="6" branch="false"/>
+								<line number="28" hits="6" branch="false"/>
+								<line number="29" hits="6" branch="false"/>
+								<line number="30" hits="0" branch="false"/>
+								<line number="31" hits="0" branch="false"/>
+								<line number="32" hits="1" branch="false"/>
+								<line number="33" hits="1" branch="false"/>
+								<line number="34" hits="3" branch="false"/>
+								<line number="35" hits="3" branch="false"/>
+								<line number="36" hits="3" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="16" hits="3" branch="false"/>
+						<line number="27" hits="6" branch="false"/>
+						<line number="28" hits="6" branch="false"/>
+						<line number="29" hits="6" branch="false"/>
+						<line number="30" hits="0" branch="false"/>
+						<line number="31" hits="0" branch="false"/>
+						<line number="32" hits="1" branch="false"/>
+						<line number="33" hits="1" branch="false"/>
+						<line number="34" hits="3" branch="false"/>
+						<line number="35" hits="3" branch="false"/>
+						<line number="36" hits="3" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.edu.agh.ftj.datamining.dbapi.postgresql" line-rate="0.7272727272727273" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.postgresql.Postgresql" filename="pl/edu/agh/ftj/datamining/dbapi/postgresql/Postgresql.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="13" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="getData" signature="(Ljava/lang/String;Ljava/lang/String;)Lweka/core/Instances;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="25" hits="1" branch="false"/>
+								<line number="26" hits="1" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="13" hits="1" branch="false"/>
+						<line number="25" hits="1" branch="false"/>
+						<line number="26" hits="1" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.postgresql.PostgresqlLoader" filename="pl/edu/agh/ftj/datamining/dbapi/postgresql/PostgresqlLoader.java" line-rate="0.7" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;Ljava/lang/String;)V" line-rate="0.4" branch-rate="1.0">
+							<lines>
+								<line number="26" hits="2" branch="false"/>
+								<line number="28" hits="2" branch="false"/>
+								<line number="29" hits="2" branch="false"/>
+								<line number="32" hits="2" branch="false"/>
+								<line number="33" hits="0" branch="false"/>
+								<line number="34" hits="0" branch="false"/>
+								<line number="35" hits="0" branch="false"/>
+								<line number="36" hits="0" branch="false"/>
+								<line number="37" hits="0" branch="false"/>
+								<line number="38" hits="0" branch="false"/>
+								<line number="39" hits="0" branch="false"/>
+								<line number="40" hits="0" branch="false"/>
+								<line number="41" hits="0" branch="false"/>
+								<line number="42" hits="2" branch="false"/>
+								<line number="43" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="fetchInstances" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="52" hits="2" branch="false"/>
+								<line number="53" hits="2" branch="false"/>
+								<line number="54" hits="2" branch="false"/>
+								<line number="55" hits="2" branch="false"/>
+								<line number="56" hits="2" branch="false"/>
+								<line number="57" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="getDbUrl" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="64" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="getInstances" signature="()Lweka/core/Instances;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="72" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="getRelation" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="80" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="setDbUrl" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="88" hits="2" branch="false"/>
+								<line number="89" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="setInstances" signature="(Lweka/core/Instances;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="104" hits="2" branch="false"/>
+								<line number="105" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="setRelation" signature="(Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="96" hits="2" branch="false"/>
+								<line number="97" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="26" hits="2" branch="false"/>
+						<line number="28" hits="2" branch="false"/>
+						<line number="29" hits="2" branch="false"/>
+						<line number="32" hits="2" branch="false"/>
+						<line number="33" hits="0" branch="false"/>
+						<line number="34" hits="0" branch="false"/>
+						<line number="35" hits="0" branch="false"/>
+						<line number="36" hits="0" branch="false"/>
+						<line number="37" hits="0" branch="false"/>
+						<line number="38" hits="0" branch="false"/>
+						<line number="39" hits="0" branch="false"/>
+						<line number="40" hits="0" branch="false"/>
+						<line number="41" hits="0" branch="false"/>
+						<line number="42" hits="2" branch="false"/>
+						<line number="43" hits="2" branch="false"/>
+						<line number="52" hits="2" branch="false"/>
+						<line number="53" hits="2" branch="false"/>
+						<line number="54" hits="2" branch="false"/>
+						<line number="55" hits="2" branch="false"/>
+						<line number="56" hits="2" branch="false"/>
+						<line number="57" hits="2" branch="false"/>
+						<line number="64" hits="2" branch="false"/>
+						<line number="72" hits="2" branch="false"/>
+						<line number="80" hits="2" branch="false"/>
+						<line number="88" hits="2" branch="false"/>
+						<line number="89" hits="2" branch="false"/>
+						<line number="96" hits="2" branch="false"/>
+						<line number="97" hits="2" branch="false"/>
+						<line number="104" hits="2" branch="false"/>
+						<line number="105" hits="2" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.edu.agh.ftj.datamining.dbapi.sqlite" line-rate="0.8333333333333334" branch-rate="0.6666666666666666" complexity="0.0">
+			<classes>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.sqlite.Sqlite" filename="pl/edu/agh/ftj/datamining/dbapi/sqlite/Sqlite.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="13" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="getData" signature="(Ljava/lang/String;Ljava/lang/String;)Lweka/core/Instances;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="25" hits="2" branch="false"/>
+								<line number="26" hits="2" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="13" hits="2" branch="false"/>
+						<line number="25" hits="2" branch="false"/>
+						<line number="26" hits="2" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.sqlite.SqliteLoader" filename="pl/edu/agh/ftj/datamining/dbapi/sqlite/SqliteLoader.java" line-rate="0.8181818181818182" branch-rate="0.6666666666666666" complexity="0.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;Ljava/lang/String;)V" line-rate="0.6" branch-rate="1.0">
+							<lines>
+								<line number="25" hits="3" branch="false"/>
+								<line number="27" hits="3" branch="false"/>
+								<line number="28" hits="3" branch="false"/>
+								<line number="30" hits="3" branch="false"/>
+								<line number="31" hits="0" branch="false"/>
+								<line number="32" hits="0" branch="false"/>
+								<line number="33" hits="0" branch="false"/>
+								<line number="34" hits="0" branch="false"/>
+								<line number="35" hits="3" branch="false"/>
+								<line number="36" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="fetchInstances" signature="()V" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="45" hits="3" branch="false"/>
+								<line number="46" hits="3" branch="false"/>
+								<line number="47" hits="3" branch="false"/>
+								<line number="48" hits="3" branch="false"/>
+								<line number="49" hits="3" branch="false"/>
+								<line number="50" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="getInstances" signature="()Lweka/core/Instances;" line-rate="1.0" branch-rate="1.0">
+							<lines>
+								<line number="87" hits="3" branch="false"/>
+							</lines>
+						</method>
+						<method name="prepareProperName" signature="(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="0.875" branch-rate="0.6666666666666666">
+							<lines>
+								<line number="59" hits="3" branch="false"/>
+								<line number="60" hits="3" branch="true" condition-coverage="50% (1/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="50%"/>
+									</conditions>
+								</line>
+								<line number="61" hits="0" branch="false"/>
+								<line number="63" hits="3" branch="false"/>
+								<line number="64" hits="3" branch="false"/>
+								<line number="65" hits="3" branch="false"/>
+								<line number="66" hits="3" branch="false"/>
+								<line number="67" hits="3" branch="false"/>
+								<line number="68" hits="3" branch="false"/>
+								<line number="69" hits="42" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="70" hits="39" branch="false"/>
+								<line number="71" hits="39" branch="true" condition-coverage="75% (3/4)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="1" type="jump" coverage="50%"/>
+									</conditions>
+								</line>
+								<line number="72" hits="39" branch="false"/>
+								<line number="75" hits="3" branch="true" condition-coverage="50% (2/4)">
+									<conditions>
+										<condition number="0" type="jump" coverage="50%"/>
+										<condition number="1" type="jump" coverage="50%"/>
+									</conditions>
+								</line>
+								<line number="76" hits="0" branch="false"/>
+								<line number="78" hits="3" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="25" hits="3" branch="false"/>
+						<line number="27" hits="3" branch="false"/>
+						<line number="28" hits="3" branch="false"/>
+						<line number="30" hits="3" branch="false"/>
+						<line number="31" hits="0" branch="false"/>
+						<line number="32" hits="0" branch="false"/>
+						<line number="33" hits="0" branch="false"/>
+						<line number="34" hits="0" branch="false"/>
+						<line number="35" hits="3" branch="false"/>
+						<line number="36" hits="3" branch="false"/>
+						<line number="45" hits="3" branch="false"/>
+						<line number="46" hits="3" branch="false"/>
+						<line number="47" hits="3" branch="false"/>
+						<line number="48" hits="3" branch="false"/>
+						<line number="49" hits="3" branch="false"/>
+						<line number="50" hits="3" branch="false"/>
+						<line number="59" hits="3" branch="false"/>
+						<line number="60" hits="3" branch="true" condition-coverage="50% (1/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="50%"/>
+							</conditions>
+						</line>
+						<line number="61" hits="0" branch="false"/>
+						<line number="63" hits="3" branch="false"/>
+						<line number="64" hits="3" branch="false"/>
+						<line number="65" hits="3" branch="false"/>
+						<line number="66" hits="3" branch="false"/>
+						<line number="67" hits="3" branch="false"/>
+						<line number="68" hits="3" branch="false"/>
+						<line number="69" hits="42" branch="true" condition-coverage="100% (2/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="70" hits="39" branch="false"/>
+						<line number="71" hits="39" branch="true" condition-coverage="75% (3/4)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+								<condition number="1" type="jump" coverage="50%"/>
+							</conditions>
+						</line>
+						<line number="72" hits="39" branch="false"/>
+						<line number="75" hits="3" branch="true" condition-coverage="50% (2/4)">
+							<conditions>
+								<condition number="0" type="jump" coverage="50%"/>
+								<condition number="1" type="jump" coverage="50%"/>
+							</conditions>
+						</line>
+						<line number="76" hits="0" branch="false"/>
+						<line number="78" hits="3" branch="false"/>
+						<line number="87" hits="3" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package name="pl.edu.agh.ftj.datamining.dbapi.webservice" line-rate="0.0" branch-rate="0.0" complexity="0.0">
+			<classes>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.webservice.DataAccess" filename="pl/edu/agh/ftj/datamining/dbapi/webservice/DataAccess.java" line-rate="0.0" branch-rate="0.0" complexity="0.0">
+					<methods>
+						<method name="&lt;clinit&gt;" signature="()V" line-rate="0.0" branch-rate="1.0">
+							<lines>
+								<line number="28" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0">
+							<lines>
+								<line number="36" hits="0" branch="false"/>
+								<line number="38" hits="0" branch="false"/>
+								<line number="39" hits="0" branch="false"/>
+								<line number="40" hits="0" branch="false"/>
+								<line number="41" hits="0" branch="false"/>
+								<line number="42" hits="0" branch="false"/>
+								<line number="43" hits="0" branch="false"/>
+								<line number="44" hits="0" branch="false"/>
+								<line number="45" hits="0" branch="false"/>
+								<line number="46" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="getData" signature="(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="0.0" branch-rate="0.0">
+							<lines>
+								<line number="57" hits="0" branch="true" condition-coverage="0% (0/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="0%"/>
+									</conditions>
+								</line>
+								<line number="58" hits="0" branch="false"/>
+								<line number="59" hits="0" branch="false"/>
+								<line number="60" hits="0" branch="false"/>
+								<line number="61" hits="0" branch="false"/>
+								<line number="62" hits="0" branch="true" condition-coverage="0% (0/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="0%"/>
+									</conditions>
+								</line>
+								<line number="63" hits="0" branch="false"/>
+								<line number="64" hits="0" branch="true" condition-coverage="0% (0/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="0%"/>
+									</conditions>
+								</line>
+								<line number="65" hits="0" branch="false"/>
+								<line number="67" hits="0" branch="false"/>
+								<line number="69" hits="0" branch="false"/>
+								<line number="71" hits="0" branch="false"/>
+								<line number="72" hits="0" branch="false"/>
+								<line number="73" hits="0" branch="false"/>
+								<line number="74" hits="0" branch="false"/>
+								<line number="75" hits="0" branch="false"/>
+								<line number="76" hits="0" branch="false"/>
+								<line number="77" hits="0" branch="false"/>
+								<line number="78" hits="0" branch="false"/>
+								<line number="79" hits="0" branch="false"/>
+								<line number="80" hits="0" branch="false"/>
+								<line number="81" hits="0" branch="false"/>
+								<line number="82" hits="0" branch="false"/>
+								<line number="83" hits="0" branch="false"/>
+								<line number="84" hits="0" branch="false"/>
+								<line number="85" hits="0" branch="false"/>
+								<line number="86" hits="0" branch="false"/>
+								<line number="87" hits="0" branch="false"/>
+								<line number="88" hits="0" branch="false"/>
+								<line number="89" hits="0" branch="false"/>
+								<line number="90" hits="0" branch="false"/>
+								<line number="91" hits="0" branch="false"/>
+								<line number="92" hits="0" branch="false"/>
+								<line number="93" hits="0" branch="false"/>
+								<line number="94" hits="0" branch="false"/>
+								<line number="95" hits="0" branch="false"/>
+								<line number="97" hits="0" branch="false"/>
+								<line number="98" hits="0" branch="false"/>
+								<line number="99" hits="0" branch="false"/>
+								<line number="100" hits="0" branch="false"/>
+								<line number="101" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="getDataSources" signature="()[Lpl/edu/agh/ftj/datamining/dbapi/core/BasicConfigurationDataSourceModel;" line-rate="0.0" branch-rate="0.0">
+							<lines>
+								<line number="111" hits="0" branch="false"/>
+								<line number="112" hits="0" branch="false"/>
+								<line number="115" hits="0" branch="true" condition-coverage="0% (0/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="0%"/>
+									</conditions>
+								</line>
+								<line number="118" hits="0" branch="false"/>
+								<line number="120" hits="0" branch="false"/>
+								<line number="121" hits="0" branch="false"/>
+								<line number="122" hits="0" branch="false"/>
+								<line number="123" hits="0" branch="false"/>
+								<line number="124" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="readConfigurationFile" signature="()V" line-rate="0.0" branch-rate="1.0">
+							<lines>
+								<line number="133" hits="0" branch="false"/>
+								<line number="134" hits="0" branch="false"/>
+								<line number="135" hits="0" branch="false"/>
+								<line number="136" hits="0" branch="false"/>
+								<line number="137" hits="0" branch="false"/>
+								<line number="138" hits="0" branch="false"/>
+								<line number="139" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="28" hits="0" branch="false"/>
+						<line number="36" hits="0" branch="false"/>
+						<line number="38" hits="0" branch="false"/>
+						<line number="39" hits="0" branch="false"/>
+						<line number="40" hits="0" branch="false"/>
+						<line number="41" hits="0" branch="false"/>
+						<line number="42" hits="0" branch="false"/>
+						<line number="43" hits="0" branch="false"/>
+						<line number="44" hits="0" branch="false"/>
+						<line number="45" hits="0" branch="false"/>
+						<line number="46" hits="0" branch="false"/>
+						<line number="57" hits="0" branch="true" condition-coverage="0% (0/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="0%"/>
+							</conditions>
+						</line>
+						<line number="58" hits="0" branch="false"/>
+						<line number="59" hits="0" branch="false"/>
+						<line number="60" hits="0" branch="false"/>
+						<line number="61" hits="0" branch="false"/>
+						<line number="62" hits="0" branch="true" condition-coverage="0% (0/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="0%"/>
+							</conditions>
+						</line>
+						<line number="63" hits="0" branch="false"/>
+						<line number="64" hits="0" branch="true" condition-coverage="0% (0/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="0%"/>
+							</conditions>
+						</line>
+						<line number="65" hits="0" branch="false"/>
+						<line number="67" hits="0" branch="false"/>
+						<line number="69" hits="0" branch="false"/>
+						<line number="71" hits="0" branch="false"/>
+						<line number="72" hits="0" branch="false"/>
+						<line number="73" hits="0" branch="false"/>
+						<line number="74" hits="0" branch="false"/>
+						<line number="75" hits="0" branch="false"/>
+						<line number="76" hits="0" branch="false"/>
+						<line number="77" hits="0" branch="false"/>
+						<line number="78" hits="0" branch="false"/>
+						<line number="79" hits="0" branch="false"/>
+						<line number="80" hits="0" branch="false"/>
+						<line number="81" hits="0" branch="false"/>
+						<line number="82" hits="0" branch="false"/>
+						<line number="83" hits="0" branch="false"/>
+						<line number="84" hits="0" branch="false"/>
+						<line number="85" hits="0" branch="false"/>
+						<line number="86" hits="0" branch="false"/>
+						<line number="87" hits="0" branch="false"/>
+						<line number="88" hits="0" branch="false"/>
+						<line number="89" hits="0" branch="false"/>
+						<line number="90" hits="0" branch="false"/>
+						<line number="91" hits="0" branch="false"/>
+						<line number="92" hits="0" branch="false"/>
+						<line number="93" hits="0" branch="false"/>
+						<line number="94" hits="0" branch="false"/>
+						<line number="95" hits="0" branch="false"/>
+						<line number="97" hits="0" branch="false"/>
+						<line number="98" hits="0" branch="false"/>
+						<line number="99" hits="0" branch="false"/>
+						<line number="100" hits="0" branch="false"/>
+						<line number="101" hits="0" branch="false"/>
+						<line number="111" hits="0" branch="false"/>
+						<line number="112" hits="0" branch="false"/>
+						<line number="115" hits="0" branch="true" condition-coverage="0% (0/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="0%"/>
+							</conditions>
+						</line>
+						<line number="118" hits="0" branch="false"/>
+						<line number="120" hits="0" branch="false"/>
+						<line number="121" hits="0" branch="false"/>
+						<line number="122" hits="0" branch="false"/>
+						<line number="123" hits="0" branch="false"/>
+						<line number="124" hits="0" branch="false"/>
+						<line number="133" hits="0" branch="false"/>
+						<line number="134" hits="0" branch="false"/>
+						<line number="135" hits="0" branch="false"/>
+						<line number="136" hits="0" branch="false"/>
+						<line number="137" hits="0" branch="false"/>
+						<line number="138" hits="0" branch="false"/>
+						<line number="139" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="pl.edu.agh.ftj.datamining.dbapi.webservice.IDataAccess" filename="pl/edu/agh/ftj/datamining/dbapi/webservice/IDataAccess.java" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+</coverage>

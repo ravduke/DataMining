@@ -33,7 +33,7 @@ public class PlainText implements IDataSource{
             throw new DataSourceException("File not found or couldn't be opened. Please check configuration file.");
         }catch(Exception e){
             e.printStackTrace();
-            throw new DataSourceException("Unexpected exception while reading CVS source file "+e.getMessage());
+            throw new DataSourceException("Unexpected exception while reading CSV source file: "+e.getMessage());
         }
     }
 }

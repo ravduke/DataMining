@@ -31,9 +31,9 @@ public class ConfigurationHelperTest {
             assertEquals("",result.get(0).getUsername());
             assertEquals("",result.get(0).getPassword());
             assertEquals("pl.edu.agh.ftj.datamining.dbapi.plaintext.PlainText",result.get(0).getClassName());
-            assertEquals(1,result.get(0).getTables().length);
+            //assertEquals(1,result.get(0).getTables().length);
             //for(int i = 0;i<1;i++)
-                assertEquals("iris.arff.csv",result.get(0).getTables()[0]);
+//            assertEquals("iris.arff.csv",result.get(0).getTables()[0]);
             
         }catch(Exception e){
             System.out.println(e.getMessage());

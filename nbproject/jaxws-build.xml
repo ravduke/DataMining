@@ -21,7 +21,7 @@
     <target name="wsimport-client-DataAccessService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/DataAccessService"/>
         <property name="wsdl-DataAccessService" location="xml-resources/web-service-references/DataAccessService/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/DataAccessService" destdir="${build.generated.dir}/jax-wsCache/DataAccessService" wsdl="${wsdl-DataAccessService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/axis2/services/DataAccessService?wsdl" xendorsed="true">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/DataAccessService" destdir="${build.generated.dir}/jax-wsCache/DataAccessService" wsdl="${wsdl-DataAccessService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/axis2/services/DataAccessService?wsdl" xendorsed="true" package="pl.edu.agh.ftj.datamining.dbapi.webservice">
             <depends file="${wsdl-DataAccessService}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/DataAccessService"/>
         </wsimport>
