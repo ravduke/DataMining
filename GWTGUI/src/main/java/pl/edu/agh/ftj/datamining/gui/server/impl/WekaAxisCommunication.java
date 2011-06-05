@@ -42,8 +42,8 @@ public class WekaAxisCommunication implements WekaCommunication {
 	 * @see pl.edu.agh.ftj.datamining.gui.WekaCommunication#runAlgorithm()
 	 */
 	@Override
-	public WekaAnswer runAlgorithm(Integer algorithmType, String location,
-			String id, String table) {
+	public WekaAnswer runAlgorithm(Integer algorithmType, /*String location,*/
+			String id, String table, String options) {
 		// TODO Auto-generated method stub
 		return null;
 	}

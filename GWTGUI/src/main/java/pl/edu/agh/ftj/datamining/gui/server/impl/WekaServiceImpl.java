@@ -45,11 +45,11 @@ public class WekaServiceImpl extends RemoteServiceServlet implements WekaService
 	 * @see pl.edu.agh.ftj.datamining.gui.WekaService#runAlgorithm(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public WekaAnswerDTO runAlgorithm(Integer algorithmType, String location,
-			String id, String table) {
+	public WekaAnswerDTO runAlgorithm(Integer algorithmType, /*String location,*/
+			String id, String table, String options) {
 		
 		WekaAnswerDTO wekaAnswerDTO = new WekaAnswerDTO();
-		WekaAnswer wekaAnswer = wekaCommunication.runAlgorithm(algorithmType, location, id, table);
+		WekaAnswer wekaAnswer = wekaCommunication.runAlgorithm(algorithmType, id, table, options);
 		mapper.map(wekaAnswer, wekaAnswerDTO);
 		return wekaAnswerDTO;
 	}

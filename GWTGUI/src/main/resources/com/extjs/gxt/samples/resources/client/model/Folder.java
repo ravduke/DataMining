@@ -31,6 +31,12 @@ public class Folder extends BaseTreeModel implements Serializable {
     }
   }
 
+  public Folder(String database, DBTable r) {
+    this(database);
+      add(r);
+    
+  }
+
   public void setChildren(BaseTreeModel[] children) {
     for (int i = 0; i < children.length; i++) {
       add(children[i]);
@@ -48,7 +54,9 @@ public class Folder extends BaseTreeModel implements Serializable {
   public String getName() {
     return (String) get("name");
   }
-
+  public void setName(String name) {
+    set("name", name);
+  }
   public String toString() {
     return getName();
   }
