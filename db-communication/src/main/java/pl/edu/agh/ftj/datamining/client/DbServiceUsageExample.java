@@ -23,16 +23,16 @@ public class DbServiceUsageExample extends VerticalPanel {
     private Button btnGet = new Button("Get available data sources");
     
     public DbServiceUsageExample() {
-		add(btnGet);
+        add(btnGet);
         add(lblServerReply);
 
         // Create an asynchronous callback to handle the result.
         final AsyncCallback<List<DataSource> > callback = new AsyncCallback<List<DataSource> >() {
             public void onSuccess(List<DataSource> result) {
-				String text = "Available Data Sources:\n";
-				for (DataSource ds : result) {
-					text += ds.getDisplayedName() + "\n";
-				}
+                String text = "Available Data Sources:\n";
+                for (DataSource ds : result) {
+                    text += ds.getDisplayedName() + "\n";
+                }
                 lblServerReply.setText(text);
             }
 
