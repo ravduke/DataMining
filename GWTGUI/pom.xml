@@ -173,7 +173,7 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/axis2/services/DataAccessService.wsdl</wsdlFile>
+                                <wsdlFile>DataAccessService.wsdl</wsdlFile>
                             </wsdlFiles>
                             <staleFile>${project.build.directory}/jaxws/stale/DataAccessService.stale</staleFile>
                         </configuration>

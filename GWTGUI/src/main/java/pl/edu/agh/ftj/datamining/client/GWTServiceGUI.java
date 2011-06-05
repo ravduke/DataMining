@@ -100,9 +100,26 @@ public class GWTServiceGUI extends LayoutContainer {
   */
  boolean Wekaconnected = false;
   /**
-  * Wybranie bazy danych
+  * Wybranie tabeli danych do przetwarzania
   */
  boolean selectDataTab = false;
+ /**
+  * Wybranie atrybutow danych do przetwarzania
+  */
+  boolean selectAttributesTab = false;
+ /**
+  * Opcje wybranego algorytmu
+  */
+  String algorithmOptions = new String();
+  /**
+  * Wybrana tablica z bazy danych
+  */
+  DBTable selectedTabel;
+  /**
+  * Odpowiedz WekaAnswer
+  */
+ WekaAnswerDTO weka = null;
+
  public  GWTServiceGUI() {
    
 
@@ -203,23 +220,61 @@ public class GWTServiceGUI extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if(!DBconnected)
-                getService().getDatabases(new AsyncCallback<Folder>() {
+                    getDbService().getDataSources(new AsyncCallback<List<DataSource>>() {
+
                     public void onFailure(Throwable caught) {
                         MessageBox.alert("Failure", "Connecting to server failed.", null);
                         DBconnected = false;
+                        tree.getStore().removeAll();
+                        tree.collapseAll();
+                        DBconnected = false;
+                        selectDataTab = false;
+                        selectAttributesTab = false;
+                        //selectAttributes.disable();
+                        database_type.setValue("Database type:");
+                        database_name.setValue("Database name:");
+                        table_name.setValue("Table name:");
+                        info_name.setValue("Connect to the server");
+                        database_type.setVisible(false);
+                        database_name.setVisible(false);
+                        table_name.setVisible(false);
+                        MessageBox.alert("Failure", "Connecting to DB server failed.", null);
                     }
 
-                    public void onSuccess(Folder result) {
-                            tree.getStore().removeAll();
-                            tree.collapseAll();
-                            tree.getStore().add(result.getChildren(), true);
-                            DBconnected = true;
-                            selectAttributes.disable();
-                            info_name.setValue("    Data selection:");
-                            MessageBox.info("Connected", "Connected to the DB server.", null);
-                            database_type.setVisible(true);
-                            database_name.setVisible(true);
-                            table_name.setVisible(true);
+                    public void onSuccess(List<DataSource> result) {
+                        MessageBox.info("Connected", "Connected to the DB server.", null);
+                           // narazie po stronie klienta
+                        Folder[] folders = new Folder[] {
+                            new Folder("PostgreSQL"),
+                            new Folder("SQLite"),
+                            new Folder("Plain Text")
+                            }; 
+                        int i = 0;
+
+                        for (DataSource ds : result) {
+
+                            DBTable[] dbTabel = new DBTable[ds.getTables().size()];
+                            for (int j = 0; j < ds.getTables().size(); j++) {
+                                dbTabel[j] = new DBTable(ds.getTables().get(j),ds.getDisplayedName(),ds.getDatabase(),ds.getId(),ds.getLocation());
+                            }
+
+                            folders[i].setChildren( new Folder (ds.getDatabase(), dbTabel));
+
+                            i++;  
+                        }
+                        Folder root = new Folder("root");
+                        for (int j = 0; j < folders.length; j++) {
+                          root.add((Folder) folders[j]);
+                        }
+                        DBconnected = true;
+                        selectAttributesTab = false;
+                        info_name.setValue("    Data selection:");                        
+                        database_type.setVisible(true);
+                        database_name.setVisible(true);
+                        table_name.setVisible(true);
+                        tree.getStore().removeAll();
+                        tree.collapseAll();
+                        tree.getStore().add(root.getChildren(), true);
                     }
                 });
                 else
@@ -251,12 +306,13 @@ public class GWTServiceGUI extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if(DBconnected){
-                    getService().getDatabases(new AsyncCallback<Folder>() {
+                   getDbService().getDataSources(new AsyncCallback<List<DataSource>>() {
                         public void onFailure(Throwable caught) {
                             tree.getStore().removeAll();
                             tree.collapseAll();
                             DBconnected = false;
                             selectDataTab = false;
+                            selectAttributesTab = false;
                             selectAttributes.disable();
                             database_type.setValue("Database type:");
                             database_name.setValue("Database name:");
@@ -268,12 +324,43 @@ public class GWTServiceGUI extends LayoutContainer {
                             MessageBox.alert("Failure", "Connecting to DB server failed.", null);
                         }
 
-                        public void onSuccess(Folder result) {
-                            selectAttributes.enable();
-                            tree.getStore().removeAll();
-                            tree.collapseAll();
-                            tree.getStore().add(result.getChildren(), true);
-                            MessageBox.info("Connection refreshed.", "Connection to the DB server refreshed.", null);
+                        public void onSuccess(List<DataSource> result) {
+                        Folder[] folders = new Folder[] {
+                            new Folder("PostgreSQL"),
+                            new Folder("SQLite"),
+                            new Folder("Plain Text")
+                            };
+                        int i = 0;
+
+                        for (DataSource ds : result) {
+
+                            DBTable[] dbTabel = new DBTable[ds.getTables().size()];
+                            for (int j = 0; j < ds.getTables().size(); j++) {
+                                dbTabel[j] = new DBTable(ds.getTables().get(j),ds.getDisplayedName(),ds.getDatabase(),ds.getId(),ds.getLocation());
+                            }
+
+                            folders[i].setChildren( new Folder (ds.getDatabase(), dbTabel));
+
+                            i++;
+                        }
+                        Folder root = new Folder("root");
+                        for (int j = 0; j < folders.length; j++) {
+                          root.add((Folder) folders[j]);
+                        }
+                        DBconnected = true;
+                        selectAttributesTab = false;
+                        selectAttributes.disable();
+                        info_name.setValue("    Data selection:");
+                        database_type.setVisible(true);
+                        database_name.setVisible(true);
+                        table_name.setVisible(true);
+                        tree.getStore().removeAll();
+                        tree.collapseAll();
+                        tree.getStore().add(root.getChildren(), true);
+                        database_type.setValue("Database type:");
+                        database_name.setValue("Database name:");
+                        table_name.setValue("Table name:");
+                        MessageBox.info("Connection refreshed.", "Connection to the DB server refreshed.", null);
                         }
                     });
              } else
@@ -309,6 +396,7 @@ public class GWTServiceGUI extends LayoutContainer {
                     tree.collapseAll();
                     DBconnected = false;
                     selectDataTab = false;
+                    selectAttributesTab = false;
                     selectAttributes.disable();
                     database_type.setValue("Database type:");
                     database_name.setValue("Database name:");
@@ -374,11 +462,16 @@ public class GWTServiceGUI extends LayoutContainer {
                 for(ModelData iteam : tree.getStore().getModels())
                 {
                     if(se.getSelectedItem().equals(iteam)){
-                        database_type.setValue(se.getSelectedItem().get("genre").toString());
-                        database_name.setValue(se.getSelectedItem().get("author").toString());
-                        table_name.setValue(se.getSelectedItem().toString() ) ;
+                        database_type.setValue(se.getSelectedItem().get("displayedName").toString());
+                        database_name.setValue(se.getSelectedItem().get("database").toString());
+                        table_name.setValue(se.getSelectedItem().get("name").toString() ) ;
                         selectDataTab = true;
                         selectAttributes.enable();
+                        selectedTabel = new DBTable(se.getSelectedItem().get("name").toString(),
+                                se.getSelectedItem().get("displayedName").toString(),
+                                se.getSelectedItem().get("database").toString(),
+                                se.getSelectedItem().get("id").toString(),
+                                se.getSelectedItem().get("location").toString());
                     }
                 }
             }
@@ -434,33 +527,38 @@ public class GWTServiceGUI extends LayoutContainer {
     horizontalTab2Pane1.setLayout(new RowLayout(Orientation.HORIZONTAL));
 
     final SimpleComboBox combo = new SimpleComboBox<String>();
-    combo.setEmptyText("Select algorithm...");
+    combo.setEmptyText("SimpleKMeans ");
+    
     //combo.setLabelSeparator("Select algorithm type:");
     combo.setFieldLabel("Algorithm type");
 
     final LabelField dataTypeLabel = new LabelField();
     final LabelField dataNameLabel = new LabelField();
     final LabelField tableNameLabel = new LabelField();
+    final LabelField algOptionsLabel = new LabelField();
 
     selectAttributes.addListener(Events.Select,new Listener<ComponentEvent>() {
 
             public void handleEvent(ComponentEvent be) {
-                getWekaService().getAlgorithms(new AsyncCallback<List<String>>() {
+                if(!selectAttributesTab)
+                    getWekaService().getAlgorithms(new AsyncCallback<List<String>>() {
+                    public void onFailure(Throwable caught) {
+                        MessageBox.alert("Error", "Cannot get algotrithm list.", null);
+                    }
+                    public void onSuccess(List<String> result) {
+                        selectAttributesTab = true;
+                        combo.removeAll();
+                        for(String s : result)
+                            combo.add(s);
 
-                public void onFailure(Throwable caught) {
-                    MessageBox.alert("Error", "Cannot get algotrithm list.", null);
-                }
-                public void onSuccess(List<String> result) {
-                    combo.removeAll();
-                    for(String s : result)
-                        combo.add(s);
+                    }
+                    });
+                    
                     dataTypeLabel.setValue(database_type.getValue());
                     dataNameLabel.setValue(database_name.getValue());
-                    tableNameLabel.setValue(table_name.getValue());                    
-                }
-        });                
+                    tableNameLabel.setValue(table_name.getValue());
             }
-        });
+    });
         
     combo.setTypeAhead(true);
     combo.setTriggerAction(TriggerAction.ALL);
@@ -474,30 +572,30 @@ public class GWTServiceGUI extends LayoutContainer {
     horizontalTab2Pane2.setWidth("100%");
     horizontalTab2Pane2.setLayout(new RowLayout(Orientation.HORIZONTAL));
 
-    FormPanel attributePane = new FormPanel();
+    final FormPanel attributePane = new FormPanel();
     attributePane.setHeaderVisible(false);
     attributePane.setWidth("100%");
     attributePane.setLayout(new RowLayout(Orientation.VERTICAL));
     attributePane.setBorders(true);
-    final int algorithmType = 1;
+
     //
     //  Attribute SimpleKMeans
     //
 
-    FormPanel a1 = new FormPanel();
+    final FormPanel a1 = new FormPanel();
     a1.setHeaderVisible(false);
     a1.setWidth("100%");
     a1.setLayout(new RowLayout(Orientation.HORIZONTAL));
 
 
     final LabelField numCluster = new LabelField();
-    numCluster.setValue("Liczba klastrow: 2");
+    numCluster.setValue("Liczba klastrow: 1");
 
     final Slider slider = new Slider();
     slider.setMinValue(1);
     slider.setMaxValue(12);
-    slider.setValue(2);
-    slider.setMessage("{0} klastry");
+    slider.setValue(1);
+    slider.setMessage("{0} klaster");
     slider.setIncrement(1);
     slider.addListener(Events.Change, new Listener<ComponentEvent>() {
 
@@ -518,11 +616,11 @@ public class GWTServiceGUI extends LayoutContainer {
     a1.add(numCluster, new RowData(0.2, 1, new Margins(4,4,4,4)));
     a1.add(sf, new RowData(0.5, 1, new Margins(4,4,4,4)));
 
-    CheckBox variationCheckBox = new CheckBox();
+    final CheckBox variationCheckBox = new CheckBox();
     variationCheckBox.setBoxLabel("     Wyswietl odchylenia standardowe dla srodkow klastrow");
     variationCheckBox.setValue(false);
 
-    FormPanel a2 = new FormPanel();
+    final FormPanel a2 = new FormPanel();
     a2.setHeaderVisible(false);
     a2.setWidth("100%");
     a2.setLayout(new RowLayout(Orientation.HORIZONTAL));
@@ -546,7 +644,7 @@ public class GWTServiceGUI extends LayoutContainer {
     a2.add(distanceFunction, new RowData(0.2, 1, new Margins(2)));
     a2.add(radioGroup, new RowData(0.5, 1, new Margins(2)));
 
-    FormPanel a3 = new FormPanel();
+    final FormPanel a3 = new FormPanel();
     a3.setHeaderVisible(false);
     a3.setWidth("100%");
     a3.setLayout(new RowLayout(Orientation.HORIZONTAL));
@@ -558,7 +656,7 @@ public class GWTServiceGUI extends LayoutContainer {
     slider2.setMinValue(1);
     slider2.setMaxValue(100);
     slider2.setValue(20);
-    slider2.setMessage("{0} klastry");
+    slider2.setMessage("{0} iteracji");
     slider2.setIncrement(1);
     slider2.addListener(Events.Change, new Listener<ComponentEvent>() {
 
@@ -578,16 +676,16 @@ public class GWTServiceGUI extends LayoutContainer {
     a3.add(maxIteration, new RowData(0.2, 1, new Margins(4,4,4,4)));
     a3.add(sf2, new RowData(0.5, 1, new Margins(4,4,4,4)));
 
-    CheckBox instanceOrderCheckBox = new CheckBox();
+    final CheckBox instanceOrderCheckBox = new CheckBox();
     instanceOrderCheckBox.setBoxLabel("     Zachowaj kolejnosc instancji");
     instanceOrderCheckBox.setValue(false);
 
-    CheckBox fastCheckBox = new CheckBox();
+    final CheckBox fastCheckBox = new CheckBox();
     fastCheckBox.setBoxLabel("     Szybsze obliczanie dystansow poprzez okrojenie wartosci."
             + "\n Wylacza obliczanie kwadratowych bledow");
     fastCheckBox.setValue(false);
 
-    FormPanel a4 = new FormPanel();
+    final FormPanel a4 = new FormPanel();
     a4.setHeaderVisible(false);
     a4.setWidth("100%");
     a4.setLayout(new RowLayout(Orientation.HORIZONTAL));
@@ -618,8 +716,7 @@ public class GWTServiceGUI extends LayoutContainer {
 
     a4.add(randomSeed, new RowData(0.3, 1, new Margins(4,4,4,4)));
     a4.add(sf3, new RowData(0.5, 1, new Margins(4,4,4,4)));
-
-
+    
     attributePane.add(a1, new RowData(1, 0.15, new Margins(2)));
     attributePane.add(variationCheckBox, new RowData(1, 0.15, new Margins(2,2,2,14)));
     attributePane.add(a2, new RowData(1, 0.15, new Margins(2,2,2,4)));
@@ -627,7 +724,189 @@ public class GWTServiceGUI extends LayoutContainer {
     attributePane.add(instanceOrderCheckBox, new RowData(1, 0.15, new Margins(2,2,2,14)));
     attributePane.add(fastCheckBox, new RowData(1, 0.15, new Margins(2,2,2,14)));
     attributePane.add(a4, new RowData(1, 0.15, new Margins(2,2,2,4)));
+    //
+    //  Attribute EM
+    //
+    final CheckBox EM_printOldFormat = new CheckBox();
+    EM_printOldFormat.setBoxLabel("Wyswietla model w starym formacie (przydatne jesli istnieje wiele klastrow)");
+    EM_printOldFormat.setValue(false);
+    attributePane.add(EM_printOldFormat, new RowData(1, 0.15, new Margins(2,2,2,4)));
 
+    //
+    //  HierarchicalClusterer
+    //
+
+   final SimpleComboBox sposobLaczeniaComboBox = new SimpleComboBox<String>();
+    sposobLaczeniaComboBox.setEmptyText("Sposob laczenia.. ");
+
+    final FormPanel a5 = new FormPanel();
+    a5.setHeaderVisible(false);
+    a5.setWidth("100%");
+    a5.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    sposobLaczeniaComboBox.setFieldLabel("Sposob laczenia");
+    sposobLaczeniaComboBox.setTypeAhead(true);
+    sposobLaczeniaComboBox.setTriggerAction(TriggerAction.ALL);
+    sposobLaczeniaComboBox.setEditable(false);
+
+    sposobLaczeniaComboBox.add("SINGLE");
+    sposobLaczeniaComboBox.add("COMPLETE");
+    sposobLaczeniaComboBox.add("AVERAGE");
+    sposobLaczeniaComboBox.add("MEAN");
+    sposobLaczeniaComboBox.add("CENTROID");
+    sposobLaczeniaComboBox.add("WARD");
+    sposobLaczeniaComboBox.add("ADJCOMLPETE");
+    sposobLaczeniaComboBox.add("NEIGHBOR_JOINING");
+
+    sposobLaczeniaComboBox.select(1);
+
+    final LabelField linkType = new LabelField();
+    linkType.setValue("Sposob laczenia: ");
+
+    a5.add(linkType, new RowData(0.2, 0.15, new Margins(4,4,4,4)));
+    a5.add(sposobLaczeniaComboBox, new RowData(0.25, 0.3, new Margins(4,4,4,4)));
+
+    attributePane.add(a5, new RowData(1,0.16, new Margins(2,2,2,4)));
+    
+    final CheckBox HC_formNewick = new CheckBox();
+    HC_formNewick.setBoxLabel("Wyswietlanie hierarchi w  formacie Newick");
+    HC_formNewick.setValue(false);
+    attributePane.add(HC_formNewick, new RowData(1, 0.15, new Margins(2,2,2,4)));
+
+    final CheckBox HC_Debug = new CheckBox();
+    HC_Debug.setBoxLabel("Debug mode. Wyswietla dodatkowe informacje na wyjsciu");
+    HC_Debug.setValue(false);
+    attributePane.add(HC_Debug, new RowData(1, 0.15, new Margins(2,2,2,4)));
+
+    final CheckBox HC_Distance = new CheckBox();
+    HC_Distance.setBoxLabel("Interpretacja odleglosci jako dugosci galezi, lub jako wysokosci wezla (niezaznaczone)");
+    HC_Distance.setValue(false);
+    attributePane.add(HC_Distance, new RowData(1, 0.15, new Margins(2,2,2,4)));
+
+    //
+    //  Cobweb
+    //
+
+ final FormPanel a6 = new FormPanel();
+    a6.setHeaderVisible(false);
+    a6.setWidth("100%");
+    a6.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    final LabelField minDeviation = new LabelField();
+    minDeviation.setValue("Min odchylenie standardowe: ");
+
+    final Slider slider4 = new Slider();
+    slider4.setMinValue(0);
+    slider4.setMaxValue(5);
+    slider4.setValue(0);
+    slider4.setMessage("{0} Ostrosc");
+    slider4.setIncrement(1);
+    slider4.addListener(Events.Change, new Listener<ComponentEvent>() {
+
+            public void handleEvent(ComponentEvent be) {
+                minDeviation.setValue("Min odchylenie standardowe: " + slider4.getValue() );
+            }
+    });
+
+    final SliderField sf4 = new SliderField(slider4);
+
+    a6.add(minDeviation, new RowData(0.35, 1, new Margins(4,4,4,4)));
+    a6.add(sf4, new RowData(0.5, 1, new Margins(4,4,4,4)));
+
+   attributePane.add(a6, new RowData(1,0.16, new Margins(2,2,2,4)));
+
+
+ final FormPanel a7 = new FormPanel();
+    a7.setHeaderVisible(false);
+    a7.setWidth("100%");
+    a7.setLayout(new RowLayout(Orientation.HORIZONTAL));
+
+    final LabelField cutOff = new LabelField();
+    cutOff.setValue("Wartosc graniczna: ");
+
+    final Slider slider5 = new Slider();
+    slider5.setMinValue(0);
+    slider5.setMaxValue(10);
+    slider5.setValue(2);
+    slider5.setIncrement(1);
+    slider5.addListener(Events.Change, new Listener<ComponentEvent>() {
+
+            public void handleEvent(ComponentEvent be) {
+                cutOff.setValue("Wartosc graniczna: " + (float)slider5.getValue()/1000f );
+            }
+    });
+
+    final SliderField sf5 = new SliderField(slider5);
+
+    a7.add(cutOff, new RowData(0.35, 1, new Margins(4,4,4,4)));
+    a7.add(sf5, new RowData(0.5, 1, new Margins(4,4,4,4)));
+
+   attributePane.add(a7, new RowData(1,0.16, new Margins(2,2,2,4)));
+    //
+    //  FarthestFirst
+    //
+
+   /////////////////////
+    combo.addListener(Events.Select, new Listener<BaseEvent>() {
+
+            public void handleEvent(BaseEvent be) {
+                switch(combo.getSelectedIndex()) {
+                    case 0:
+                        for(int i =0; i < attributePane.getItemCount(); i++)
+                            if(i<7)
+                                attributePane.getWidget(i).setVisible(true);
+                            else
+                                attributePane.getWidget(i).setVisible(false);
+
+                        break;
+                    case 1:
+                        for(int i =0; i < attributePane.getItemCount(); i++)
+                            attributePane.getWidget(i).setVisible(false);
+
+                        attributePane.getWidget(7).setVisible(true);
+                        attributePane.getWidget(0).setVisible(true);
+                        attributePane.getWidget(3).setVisible(true);
+                        attributePane.getWidget(6).setVisible(true);
+                        break;
+                    case 2:
+                        for(int i =1; i < attributePane.getItemCount(); i++)
+                                attributePane.getWidget(i).setVisible(false);
+
+                        attributePane.getWidget(0).setVisible(true);
+                        attributePane.getWidget(2).setVisible(true);
+                        attributePane.getWidget(8).setVisible(true);
+                        attributePane.getWidget(9).setVisible(true);
+                        attributePane.getWidget(10).setVisible(true);
+                        attributePane.getWidget(11).setVisible(true);
+                        
+                        break;
+                    case 3:
+                        for(int i =0; i < attributePane.getItemCount(); i++)
+                                attributePane.getWidget(i).setVisible(false);
+
+                        attributePane.getWidget(6).setVisible(true);
+                        attributePane.getWidget(12).setVisible(true);
+                        attributePane.getWidget(13).setVisible(true);
+
+                        break;
+                    case 4:
+                        for(int i =0; i < attributePane.getItemCount(); i++)
+                                attributePane.getWidget(i).setVisible(false);
+
+                        attributePane.getWidget(0).setVisible(true);
+                        attributePane.getWidget(6).setVisible(true);
+                        break;
+                    default:
+                        for(int i =0; i < attributePane.getItemCount(); i++)
+                            if(i<7)
+                                attributePane.getWidget(i).setVisible(true);
+                            else
+                                attributePane.getWidget(i).setVisible(false);
+                        break;
+                }
+                
+            }
+    });
     //
     //  Panel wyniku
     //
@@ -639,7 +918,7 @@ public class GWTServiceGUI extends LayoutContainer {
     resultTab2Pane.add(dataTypeLabel,new RowData(0.3, 0.15, new Margins(4,4,4,104)));
     resultTab2Pane.add(dataNameLabel,new RowData(0.3, 0.15, new Margins(4,4,4,104)));
     resultTab2Pane.add(tableNameLabel,new RowData(0.3, 0.15, new Margins(4,4,4,104)));
-
+    resultTab2Pane.add(algOptionsLabel,new RowData(1, 0.15, new Margins(4,4,4,104)));
     //
     // client close do weki
     // testy jednostkowe
@@ -649,28 +928,84 @@ public class GWTServiceGUI extends LayoutContainer {
     Button buttonRun = new Button("RUN");
      buttonRun.addListener(Events.OnClick, new Listener<ButtonEvent>() {
        public void handleEvent(ButtonEvent be) {
-            getWekaService().runAlgorithm(algorithmType, stateId, database_name.getValue(), table_name.getValue(), height, new AsyncCallback<WekaAnswerDTO>() {
+
+                int algorithmType = 1;
+                switch(combo.getSelectedIndex()) {
+                    case 0:
+                        algorithmType = 1;
+                        
+                        algorithmOptions = "N " + slider.getValue() + ";I " + slider2.getValue() + ";S " + slider3.getValue();
+                        if(variationCheckBox.getValue())
+                           algorithmOptions += ";V";
+                        if(instanceOrderCheckBox.getValue())
+                           algorithmOptions += ";O";
+                        if(fastCheckBox.getValue())
+                           algorithmOptions += ";fast";
+                        
+                        break;
+                    case 1:
+                        algorithmType = 2;
+                        
+                        algorithmOptions = "N " + slider.getValue() + ";I " + slider2.getValue() + ";S " + slider3.getValue();
+                        if(EM_printOldFormat.getValue())
+                           algorithmOptions += ";O";
+                      
+                        break;
+                    case 2:
+                        algorithmType = 3;
+
+                        algorithmOptions = "N " + slider.getValue() ;
+                        if(HC_formNewick.getValue())
+                           algorithmOptions += ";P";
+                        if(HC_Debug.getValue())
+                           algorithmOptions += ";D";
+                        if(HC_Distance.getValue())
+                           algorithmOptions += ";B";
+
+                        if(sposobLaczeniaComboBox.getSelectedIndex() == -1)
+                            algorithmOptions += ";L SINGLE";
+                        else
+                            algorithmOptions += ";L " + sposobLaczeniaComboBox.getRawValue().toString();
+                        break;
+                    case 3:
+                        algorithmType = 4;
+                        algorithmOptions = "A " + slider4.getValue() + ";C " + slider5.getValue() + ";S " + slider3.getValue();
+                        break;
+                    case 4:
+                        algorithmType = 5;
+                        algorithmOptions = "N " + slider.getValue() + ";S " + slider3.getValue();
+                        break;
+                    default:
+                        algorithmType = 1;
+                        algorithmOptions = "N " + slider.getValue() + ";I " + slider2.getValue() + ";S " + slider3.getValue();
+                        if(variationCheckBox.getValue())
+                           algorithmOptions += ";V";
+                        if(instanceOrderCheckBox.getValue())
+                           algorithmOptions += ";O";
+                        if(fastCheckBox.getValue())
+                           algorithmOptions += ";fast";
+                        break;
+                }
+
+        
+          // algOptionsLabel.setValue(algorithmOptions + selectedTabel.getLocation() + " " + selectedTabel.getId() + " " + selectedTabel.getName());
+           algOptionsLabel.setValue(algorithmOptions);
+            getWekaService().runAlgorithm(algorithmType, selectedTabel.getLocation(), selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
 
                     public void onFailure(Throwable caught) {
                         throw new UnsupportedOperationException("Not supported yet.");
                     }
 
                     public void onSuccess(WekaAnswerDTO result) {
-                        
+                        weka = result;
+                        algOptionsLabel.setValue(":)" + algorithmOptions + weka.getAlgorithmName());
                     }
                 });     
        }
      });
 
-    // TODO COMBOBOX ALGORITHM_INDEX CHOOSE TO RUNALGORITHM
-     // COMBOBOOX ATTRIBUTES PANE CHANGE
-     // Options string creation
-     // result tab
-     // chart tab
-     // REFRESH - default database, type name, table name
-     // default button
 
-    resultTab2Pane.add(buttonRun,new RowData(0.3, 0.15, new Margins(124,4,4,204)));
+    resultTab2Pane.add(buttonRun,new RowData(0.3, 0.35, new Margins(64,4,4,204)));
 
     horizontalTab2Pane1.add(combo, new RowData(0.15, 1, new Margins(4,4,4,14)));
     horizontalTab2Pane2.add(attributePane,new RowData(0.5, 1, new Margins(4,4,4,14)));
@@ -713,68 +1048,11 @@ public class GWTServiceGUI extends LayoutContainer {
     
    }
 
-  /*  private TabPanel createTabPanel() {
-     
-     //FormData formData = new FormData("-500");
- */
-
-/*      COMBOBOX DATABASE TYPE       
-     SimpleComboBox combo = new SimpleComboBox<String>();
-     combo.setEmptyText("Select database...");  
-     //combo.setLabelSeparator("Database type:");
-     combo.setFieldLabel("Database type");
-     combo.add("PostgreSQL");
-     combo.add("SQLite");
-     combo.add("Plain Text");
-     combo.setTypeAhead(true);
-     combo.setTriggerAction(TriggerAction.ALL);
-     combo.setEditable(false);
- */
-
-/*
-  
-/* ******************* SELECT ATTRIBUTES ********************************* */
-  /*   TabItem selectAttributes = new TabItem("Select Attributes");
-    // iconTab.setIcon(Resources.ICONS.table());
-     selectAttributes.addStyleName("pad-text");
-     selectAttributes.addText("Just a plain old tab with an icon");
-     panel.add(selectAttributes);
-
-     TabItem results = new TabItem("Results");
-     results.setScrollMode(Scroll.AUTO);
-     results.addStyleName("pad-text");
-     results.addText("Text Ajax tab");
-    // results.setAutoLoad(new RequestBuilder(RequestBuilder.GET, GWT.getHostPageBaseURL() + "data/ajax1.html"));
-     panel.add(results);
-
-     TabItem visualization = new TabItem("Visualization");
-     visualization.addListener(Events.Select, new Listener<ComponentEvent>() {
-       public void handleEvent(ComponentEvent be) {
-        // Window.alert("Event Tab Was Selected");
-       }
-     });
-     visualization.addStyleName("pad-text");
-     visualization.addText("I am tab 4's content. I also have an event listener attached.");
-     panel.add(visualization);
-
-     /*TabItem disabled = new TabItem("Disabled");
-     disabled.setEnabled(false);
-     panel.add(disabled);*/
-   //  return panel;
-   // }
-
-    public static GWTServiceAsync getService() {
-        // Create the client proxy. Note that although you are creating the
-        // service interface proper, you cast the result to the asynchronous
-        // version of the interface. The cast is always safe because the
-        // generated proxy implements the asynchronous interface automatically.
-
-        return GWT.create(GWTService.class);
-    }
     public static WekaServiceAsync getWekaService() {
        return GWT.create(WekaService.class);
     }
-
+    public static DbServiceAsync getDbService() {
+       return GWT.create(DbService.class);
+    }
 
 }
-
