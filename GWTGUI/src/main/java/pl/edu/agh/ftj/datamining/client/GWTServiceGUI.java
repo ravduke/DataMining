@@ -990,7 +990,7 @@ public class GWTServiceGUI extends LayoutContainer {
         
           // algOptionsLabel.setValue(algorithmOptions + selectedTabel.getLocation() + " " + selectedTabel.getId() + " " + selectedTabel.getName());
            algOptionsLabel.setValue(algorithmOptions);
-            getWekaService().runAlgorithm(algorithmType, selectedTabel.getLocation(), selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
+            getWekaService().runAlgorithm(algorithmType, selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
 
                     public void onFailure(Throwable caught) {
                         throw new UnsupportedOperationException("Not supported yet.");
