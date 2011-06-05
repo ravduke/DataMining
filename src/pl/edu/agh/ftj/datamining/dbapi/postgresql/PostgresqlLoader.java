@@ -1,6 +1,8 @@
 package pl.edu.agh.ftj.datamining.dbapi.postgresql;
 
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import pl.edu.agh.ftj.datamining.dbapi.exceptions.DataSourceException;
 import weka.core.Instances;
 import weka.core.converters.DatabaseLoader;
@@ -27,6 +29,8 @@ public final class PostgresqlLoader {
 
         this.setDbUrl(url);
         this.setRelation(table);
+
+        this.checkUrl();
 
         try {
             this.fetchInstances();
@@ -56,6 +60,20 @@ public final class PostgresqlLoader {
         this.setInstances(loader.getDataSet());
     }
 
+    /**
+     * Sprawdza poprawnosc podanego URLa do bazy danych.
+     *
+     * @throws DataSourceException Wyrzucany, gdy URL jest nieprawidlowy.
+     */
+    private void checkUrl() throws DataSourceException{
+        String regexp = "^jdbc:postgresql://[a-zA-Z0-9.]*/[a-zA-Z0-9]*[?]user[=][a-zA-Z0-9]*[&]password[=][a-zA-Z0-9`~!@#$%^*(){},.<>?/|]*$";
+
+        Pattern pattern = Pattern.compile(regexp);
+        Matcher match = pattern.matcher(this.getDbUrl());
+        if( ! match.find() ){
+            throw new DataSourceException("Podany URL jest nieprawidlowy!");
+        }
+    }
     /**
      * Standardowy getter - pobiera URL do bazy danych
      * @return URL do bazy danych
