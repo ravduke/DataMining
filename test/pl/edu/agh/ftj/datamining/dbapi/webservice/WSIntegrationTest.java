@@ -20,8 +20,8 @@ public class WSIntegrationTest {
 
     //@WebServiceRef(wsdlLocation = "C:\\Users\\janek\\Documents\\NetBeansProjects\\WekaDBApi\\WekaDBApi\\src\\META-INF\\wsdl\\localhost_8080\\axis2\\services\\DataAccessService.wsdl")
     //private pl.edu.agh.ftj.datamining.dbapi.jaxrpc.DataAccessService client;
-    //@WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl")
-    //private DataAccessService client;
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl")
+    private DataAccessService client;
 
     public WSIntegrationTest() {
 
@@ -35,19 +35,15 @@ public class WSIntegrationTest {
         
 
         try{
-            //client = new DataAccessService(new URL("http://localhost:8080/axis2/services/DataAccessService"));
-          //  DataAccessServicePortType type = client.getDataAccessServiceHttpSoap12Endpoint();
-            //assertEquals(3,type.getDataSources().getReturn().size());
-        //client = new pl.edu.agh.ftj.datamining.dbapi.jaxrpc.DataAccessService_Impl();//new URL("http://localhost:8080/axis2/services/DataAccessService?wsdl"));
-        //pl.edu.agh.ftj.datamining.dbapi.jaxrpc.DataAccessServicePortType dataClient = client.getDataAccessServiceHttpSoap11Endpoint();
-         //client = new pl.edu.agh.ftj.datamining.dbapi.jaxrpc.DataAccessService_Impl();//new URL("http://localhost:8080/axis2/services/DataAccessService?wsdl"));
-        //client = new DataAccessService();
-        //pl.edu.agh.ftj.datamining.dbapi.jaxrpc.BasicConfigurationDataSourceModel[] response = dataClient.getDataSources().get_return();
-//        assertEquals(client.getDataAccessServiceHttpSoap11Endpoint().getDataSources().getReturn().size(),3);
+
+            DataAccessServicePortType type = client.getDataAccessServiceHttpSoap11Endpoint();
+            GetDataSourcesResponse result = type.getDataSources();
+            assertEquals(3,result.getReturn().size());
+       
         }catch(Exception ex){
             System.out.print(ex.getMessage());
             ex.printStackTrace();
-        //    fail();
+            fail();
         }
     }
 
@@ -57,16 +53,14 @@ public class WSIntegrationTest {
     @Test
     public void testDataSource(){
         try{
-        //client = new pl.edu.agh.ftj.datamining.dbapi.jaxrpc.DataAccessService_Impl();
-        //pl.edu.agh.ftj.datamining.dbapi.jaxrpc.DataAccessServicePortType dataClient = client.getDataAccessServiceHttpSoap11Endpoint();
-        //client = new DataAccessService();
-        //DataAccessServicePortType type = client.getDataAccessServiceHttpSoap12Endpoint();
-        //String response = type.getData("1", "iris.arff.csv");
-        //assertTrue(response.length()>100?true:false);
+            DataAccessServicePortType type = client.getDataAccessServiceHttpSoap11Endpoint();
+            String result = type.getData("1","iris.arff.csv");
+
+            assertTrue(result.length()>100?true:false);
         }catch(Exception ex){
             System.out.print(ex.getMessage());
             ex.printStackTrace();
-          //  fail();
+            fail();
         }
     }
 

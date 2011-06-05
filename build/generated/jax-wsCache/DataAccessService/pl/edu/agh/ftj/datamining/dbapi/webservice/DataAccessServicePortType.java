@@ -19,7 +19,8 @@ import javax.xml.ws.ResponseWrapper;
  */
 @WebService(name = "DataAccessServicePortType", targetNamespace = "http://webservice.dbapi.datamining.ftj.agh.edu.pl")
 @XmlSeeAlso({
-    ObjectFactory.class
+    pl.edu.agh.ftj.datamining.dbapi.core.xsd.ObjectFactory.class,
+    pl.edu.agh.ftj.datamining.dbapi.webservice.ObjectFactory.class
 })
 public interface DataAccessServicePortType {
 

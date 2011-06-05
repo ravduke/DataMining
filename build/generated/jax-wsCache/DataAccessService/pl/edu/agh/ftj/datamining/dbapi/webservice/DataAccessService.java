@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "DataAccessService", targetNamespace = "http://webservice.dbapi.datamining.ftj.agh.edu.pl", wsdlLocation = "http://localhost:8080/axis2/services/DataAccessService?wsdl")
+@WebServiceClient(name = "DataAccessService", targetNamespace = "http://webservice.dbapi.datamining.ftj.agh.edu.pl", wsdlLocation = "file:/C:/Users/janek/Documents/NetBeansProjects/WekaDBApi/WekaDBApi/src/META-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl")
 public class DataAccessService
     extends Service
 {
@@ -30,7 +30,7 @@ public class DataAccessService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:8080/axis2/services/DataAccessService?wsdl");
+            url = new URL("file:/C:/Users/janek/Documents/NetBeansProjects/WekaDBApi/WekaDBApi/src/META-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

@@ -3,9 +3,9 @@
   <services/>
   <clients>
     <client name="DataAccessService">
-      <wsdl-url>http://localhost:8080/axis2/services/DataAccessService?wsdl</wsdl-url>
-      <local-wsdl-file>localhost_8080/axis2/services/DataAccessService.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">pl.edu.agh.ftj.datamining.dbapi.webservice</package-name>
+      <wsdl-url>file:/C:/Users/janek/Documents/NetBeansProjects/WekaDBApi/WekaDBApi/src/META-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl</wsdl-url>
+      <local-wsdl-file>DataAccessService.wsdl</local-wsdl-file>
+      <package-name>pl.edu.agh.ftj.datamining.dbapi.webservice</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -18,15 +18,11 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8080/axis2/services/DataAccessService?wsdl</wsimport-option-value>
+          <wsimport-option-value>file:/C:/Users/janek/Documents/NetBeansProjects/WekaDBApi/WekaDBApi/src/META-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xendorsed</wsimport-option-name>
           <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>pl.edu.agh.ftj.datamining.dbapi.webservice</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>

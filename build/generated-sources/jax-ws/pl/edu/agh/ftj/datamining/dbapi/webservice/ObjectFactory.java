@@ -24,10 +24,6 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _BasicConfigurationDataSourceModelLocation_QNAME = new QName("http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", "location");
-    private final static QName _BasicConfigurationDataSourceModelId_QNAME = new QName("http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", "id");
-    private final static QName _BasicConfigurationDataSourceModelDisplayedName_QNAME = new QName("http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", "displayedName");
-    private final static QName _BasicConfigurationDataSourceModelDatabase_QNAME = new QName("http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", "database");
     private final static QName _GetDataResponseReturn_QNAME = new QName("http://webservice.dbapi.datamining.ftj.agh.edu.pl", "return");
     private final static QName _GetDataId_QNAME = new QName("http://webservice.dbapi.datamining.ftj.agh.edu.pl", "id");
     private final static QName _GetDataTable_QNAME = new QName("http://webservice.dbapi.datamining.ftj.agh.edu.pl", "table");
@@ -37,22 +33,6 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link BasicConfigurationDataSourceModel }
-     * 
-     */
-    public BasicConfigurationDataSourceModel createBasicConfigurationDataSourceModel() {
-        return new BasicConfigurationDataSourceModel();
-    }
-
-    /**
-     * Create an instance of {@link GetDataSourcesResponse }
-     * 
-     */
-    public GetDataSourcesResponse createGetDataSourcesResponse() {
-        return new GetDataSourcesResponse();
     }
 
     /**
@@ -72,39 +52,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link GetDataSourcesResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", name = "location", scope = BasicConfigurationDataSourceModel.class)
-    public JAXBElement<String> createBasicConfigurationDataSourceModelLocation(String value) {
-        return new JAXBElement<String>(_BasicConfigurationDataSourceModelLocation_QNAME, String.class, BasicConfigurationDataSourceModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", name = "id", scope = BasicConfigurationDataSourceModel.class)
-    public JAXBElement<String> createBasicConfigurationDataSourceModelId(String value) {
-        return new JAXBElement<String>(_BasicConfigurationDataSourceModelId_QNAME, String.class, BasicConfigurationDataSourceModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", name = "displayedName", scope = BasicConfigurationDataSourceModel.class)
-    public JAXBElement<String> createBasicConfigurationDataSourceModelDisplayedName(String value) {
-        return new JAXBElement<String>(_BasicConfigurationDataSourceModelDisplayedName_QNAME, String.class, BasicConfigurationDataSourceModel.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://core.dbapi.datamining.ftj.agh.edu.pl/xsd", name = "database", scope = BasicConfigurationDataSourceModel.class)
-    public JAXBElement<String> createBasicConfigurationDataSourceModelDatabase(String value) {
-        return new JAXBElement<String>(_BasicConfigurationDataSourceModelDatabase_QNAME, String.class, BasicConfigurationDataSourceModel.class, value);
+    public GetDataSourcesResponse createGetDataSourcesResponse() {
+        return new GetDataSourcesResponse();
     }
 
     /**
