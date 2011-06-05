@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/zip1522761118.tmp/services/DataAccess?wsdl" uri="xml-resources/web-service-references/DataAccess/wsdl/localhost_8080/zip1522761118.tmp/services/DataAccess.wsdl"/>
+    <system systemId="http://localhost:8080/axis2/services/DataAccessService?wsdl" uri="xml-resources/web-service-references/DataAccessService/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl"/>
+    <system systemId="file:/C:/Users/janek/Documents/NetBeansProjects/WekaDBApi/WekaDBApi/src/META-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl" uri="xml-resources/web-service-references/DataAccessService/wsdl/DataAccessService.wsdl"/>
+</catalog>

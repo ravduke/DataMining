@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : conf.xml
+    Created on : 14 kwiecien 2011
+    Author     : janek
+    Description: glowny plik konfiguracyjny zrodel danych
+-->
+
+<dataSources>
+    <server>
+        <id>1</id>
+        <type>PlainText</type>
+        <name>Tekst</name>
+        <location>C:\Program Files\Weka-3-7\data</location>
+        <port>-1</port>
+        <database></database>
+        <username></username>
+        <password></password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.plaintext.PlainText</className>
+        <tables>
+            <table>contact-lenses.arff.csv</table>
+			<table>cpu.arff.csv</table>
+			<table>cpu.with.vendor.arff.csv</table>
+			<table>diabetes.arff.csv</table>
+			<table>glass.arff.csv</table>
+			<table>ionosphere.arff.csv</table>
+			<table>iris.arff.csv</table>
+			<table>labor.arff.csv</table>
+			<table>ReutersCorn-test.arff.csv</table>
+			<table>ReutersCorn-train.arff.csv</table>
+			<table>ReutersGrain-test.arff.csv</table>
+			<table>ReutersGrain-train.arff.csv</table>
+			<table>segment-challenge.arff.csv</table>
+			<table>segment-test.arff.csv</table>
+			<table>soybean.arff.csv</table>
+			<table>supermarket.arff.csv</table>
+			<table>vote.arff.csv</table>
+			<table>weather.arff.csv</table>
+			<table>weather.nominal.arff.csv</table>
+        </tables>
+    </server>
+	<server>
+        <id>2</id>
+        <type>PostgreSQL</type>
+        <name>Postgres</name>
+        <location>jdbc:postgresql://localhost</location>
+        <port>5432</port>
+        <database>P3DataMining</database>
+        <username>P3DataMining</username>
+        <password>p3dm</password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.postgresql.Postgresql</className>
+        <tables>
+             <table>contact-lenses</table>
+			<table>cpu</table>
+			<table>diabetes</table>
+			<table>glass</table>
+			<table>ionosphere</table>
+			<table>iris</table>
+			<table>labor</table>
+			<table>ReutersCorn-test</table>
+			<table>ReutersCorn-train</table>
+			<table>ReutersGrain-test</table>
+			<table>ReutersGrain-train</table>
+			<table>segment-challenge</table>
+			<table>segment-test</table>
+			<table>soybean</table>
+			<table>supermarket</table>
+			<table>vote</table>
+			<table>weather</table>
+			<table>wine</table>
+			<table>veteran</table>
+			<table>trains</table>
+			<table>vehicle</table>
+			<table>tae</table>
+			<table>strike</table>
+			<table>stroke</table>
+			<table>kin8nm</table>
+			<table>zoo</table>
+        </tables>
+    </server>
+	<server>
+        <id>3</id>
+        <type>SQLite</type>
+        <name>SQLite</name>
+        <location>jdbc:sqlite:/C:\Users\janek\documents\NetBeansProjects\WekaDBapi\WekaDBapi\data</location>
+        <port>-1</port>
+        <database>weka.db</database>
+        <username></username>
+        <password></password>
+		<className>pl.edu.agh.ftj.datamining.dbapi.sqlite.Sqlite</className>
+        <tables>
+            <table>contact-lenses</table>
+			<table>cpu</table>
+			<table>diabetes</table>
+			<table>glass</table>
+			<table>ionosphere</table>
+			<table>iris</table>
+			<table>labor</table>
+			<table>ReutersCorn-test</table>
+			<table>ReutersCorn-train</table>
+			<table>ReutersGrain-test</table>
+			<table>ReutersGrain-train</table>
+			<table>segment-challenge</table>
+			<table>segment-test</table>
+			<table>soybean</table>
+			<table>supermarket</table>
+			<table>vote</table>
+			<table>weather</table>
+        </tables>
+    </server>
+</dataSources>

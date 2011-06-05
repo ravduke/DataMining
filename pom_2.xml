@@ -1,0 +1,72 @@
+<!--
+    Document   : pom.xml
+    Created on : 24 kwiecień 2011, 00:11
+    Author     : janek
+    Description:
+        Do buildowania w mavenie, glownie do badania pokrycia testami jednostkowymi.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.maventest</groupId>
+    <artifactId>DataMining</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>DataMining</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
+        </dependency>
+		
+        <dependency>
+            <groupId>weka</groupId>
+            <artifactId>weka</artifactId>
+            <version>3.6.4</version>
+        </dependency>
+    </dependencies>
+	
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+	  
+	  
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>5</source>
+                    <target>5</target>
+                    <includes>
+                        <include>build/generated-sources/jax-ws/pl/edu/agh/ftj/datamining/dbapi/*</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>
