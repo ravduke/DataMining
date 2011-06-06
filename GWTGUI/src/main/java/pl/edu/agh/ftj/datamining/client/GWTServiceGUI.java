@@ -3,6 +3,7 @@
  import com.extjs.gxt.samples.resources.client.Resources;
  import com.extjs.gxt.samples.resources.client.model.DBTable;
  import com.extjs.gxt.samples.resources.client.model.Folder;
+import com.extjs.gxt.ui.client.Style.LayoutRegion;
  import com.extjs.gxt.ui.client.Style.Orientation;
  import com.extjs.gxt.ui.client.widget.layout.FlowData;
  import com.extjs.gxt.ui.client.widget.menu.MenuBar;
@@ -33,6 +34,8 @@ import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.Slider;
  import com.extjs.gxt.ui.client.widget.TabItem;
  import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.extjs.gxt.ui.client.widget.custom.Portal;
+import com.extjs.gxt.ui.client.widget.custom.Portlet;
 import com.extjs.gxt.ui.client.widget.form.CheckBox;
  import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
 
@@ -44,14 +47,26 @@ import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.form.SimpleComboBox;
 import com.extjs.gxt.ui.client.widget.form.SliderField;
 import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.extjs.gxt.ui.client.widget.layout.FitData;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 
 import com.extjs.gxt.ui.client.widget.layout.RowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Vector;
+import org.adapters.highcharts.codegen.sections.options.OptionPath;
+import org.adapters.highcharts.codegen.types.SeriesType;
+import org.adapters.highcharts.codegen.utils.ClientConsole;
+import org.adapters.highcharts.gxt.widgets.HighChart;
+import org.adapters.highcharts.gxt.widgets.ext.ChartFrame;
 import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
 import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
 
@@ -63,6 +78,13 @@ import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
  */
 public class GWTServiceGUI extends LayoutContainer {
 
+    final String types[] = new String[] {
+   "spline",
+   "column",
+   "areaspline",
+   "area",
+   "line"
+ };
   /**
   * Panel glowny
   */
@@ -924,9 +946,9 @@ public class GWTServiceGUI extends LayoutContainer {
     // testy jednostkowe
     //
     //
-
+    
     Button buttonRun = new Button("RUN");
-     buttonRun.addListener(Events.OnClick, new Listener<ButtonEvent>() {
+    buttonRun.addListener(Events.OnClick, new Listener<ButtonEvent>() {
        public void handleEvent(ButtonEvent be) {
 
                 int algorithmType = 1;
@@ -988,9 +1010,10 @@ public class GWTServiceGUI extends LayoutContainer {
                 }
 
         
-          // algOptionsLabel.setValue(algorithmOptions + selectedTabel.getLocation() + " " + selectedTabel.getId() + " " + selectedTabel.getName());
+           algOptionsLabel.setValue(algorithmOptions + selectedTabel.getLocation() + " " + selectedTabel.getId() + " " + selectedTabel.getName());
            algOptionsLabel.setValue(algorithmOptions);
-            getWekaService().runAlgorithm(algorithmType, selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
+           
+           getWekaService().runAlgorithm(algorithmType, selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
 
                     public void onFailure(Throwable caught) {
                         throw new UnsupportedOperationException("Not supported yet.");
@@ -1018,17 +1041,8 @@ public class GWTServiceGUI extends LayoutContainer {
    //////////////////////////////////////////////////////////////////////////
     //  Panel Results
     //////////////////////////////////////////////////////////////////////////
-    showResults = new TabItem("Show Results");
-    // iconTab.setIcon(Resources.ICONS.table());
-    showResults.addStyleName("pad-text");
-    //showResults.disable();
-    ContentPanel verticalTab3Pane = new ContentPanel();
-    verticalTab3Pane.setHeaderVisible(false);
-    verticalTab3Pane.setFrame(true);
-    verticalTab3Pane.setWidth("100%");
-    verticalTab3Pane.setHeight(479);
-    verticalTab3Pane.setLayout(new RowLayout(Orientation.VERTICAL));
-
+    
+    createResultPane();
 
 
      //////////////////////////////////////////////////////////////
@@ -1055,4 +1069,171 @@ public class GWTServiceGUI extends LayoutContainer {
        return GWT.create(DbService.class);
     }
 
+    private void createResultPane() {
+        showResults = new TabItem("Show Results");
+        showResults.setId("resultTab");
+        // iconTab.setIcon(Resources.ICONS.table());
+        showResults.addStyleName("pad-text");
+        ContentPanel verticalTab3Pane = new ContentPanel();
+        verticalTab3Pane.setHeaderVisible(false);
+        verticalTab3Pane.setFrame(true);
+        verticalTab3Pane.setWidth("100%");
+        verticalTab3Pane.setHeight(479);
+        verticalTab3Pane.setLayout(new FitLayout());
+
+        /*ChartModel cm = new ChartModel("Weka Results", "font-size: 14px; "
+                + "font-family: Verdana;");
+        cm.setBackgroundColour("#ffffff");
+        
+        AreaChart area1 = new AreaChart();
+        area1.setFillAlpha(0.3f);
+        area1.setColour("#ff0000");
+        area1.setFillColour("#ff0000");
+        for (int n = 0; n < 12; n++) {
+            if (n % 3 != 0 && n != 11)
+                area1.addNullValue();
+            else
+                area1.addValues(n );
+        }
+        cm.addChartConfig(area1);
+        String url =  "resources/chart/open-flash-chart.swf";
+
+        final Chart chart = new Chart(url);
+        
+        chart.setBorders(true);
+        chart.setChartModel(cm);
+        verticalTab3Pane.add(chart, new FitData(0, 0, 20, 0));*/
+       final Portal portal = new Portal(2);
+      portal.setBorders(true);
+      portal.setStyleAttribute("backgroundColor", "white");
+      portal.setColumnWidth(0, .50);
+      portal.setColumnWidth(1, .50);
+
+      for (int chartNum = 0; chartNum < 2; chartNum++) {
+       addChart(200, chartNum, portal, false);
+      }
+
+      // add a chartframe
+      addChart(200, 2, portal, true);
+
+      addRawChart(200, 3, portal);
+
+  // insert the whole portal container
+        verticalTab3Pane.add(portal);
+        showResults.add(verticalTab3Pane);
+    }
+
+    private void addRawChart(final int delay,
+     final int position,
+     final Portal portal){
+   Timer timer = new Timer() {
+   public void run() {
+    final HighChart hc = new HighChart(null, "spline");
+    List<Map<String, Object>> series =
+       new Vector<Map<String,Object>>();
+
+    Map<String, Object> series1 = new HashMap<String, Object>();
+    series1.put("type", "area");
+    series1.put("data", new int[] {4,5,2,10});
+
+    Map<String, Object> series2 = new HashMap<String, Object>();
+    series2.put("type", "line");
+    series2.put("data", new int[] {14,53,0,7});
+
+    series.add(series1);
+    series.add(series2);
+
+    try {
+     hc.setOption(new OptionPath("/series"), series);
+    } catch (Exception e) {
+     e.printStackTrace();
+    }
+
+    try {
+     hc.setOption(new OptionPath("/credits/text"),
+         "Sample of HighChart-GXT");
+     hc.setOption(new OptionPath("/credits/href"),
+         "http://sourceforge.net/projects/highcharts-gxt/");
+    } catch (Exception e) {
+    }
+
+    Portlet portlet = new Portlet();
+    portlet.setHeight(400);
+    portlet.setHeading("Chart with raw creation of series");
+    portlet.setLayout(new FitLayout());
+    portlet.add(hc);
+    portal.add(portlet, position % 2);
+   }
+  };
+
+  // Execute the timer to expire 2 seconds in the future
+  timer.schedule(delay);
+ }
+
+ private void addChart(final int delay, final int position,
+         final Portal portal, final boolean insideFrame) {
+  Timer timer = new Timer() {
+   public void run() {
+    Portlet portlet = new Portlet();
+    portlet.setHeight(400);
+    portlet.setHeading("Chart in a Portlet");
+    portlet.setLayout(new FitLayout());
+    HighChart hc = initHighChart(position);
+    try {
+     hc.setOption(new OptionPath("/chart/type"),
+          types[position % types.length]);
+    } catch (Exception e) {}
+    if (insideFrame) {
+     portlet.setHeading("ChartFrame in a Portlet");
+     hc.setAutoResize(true);
+     hc.followWindowResize(false);
+     ChartFrame cf = new ChartFrame(hc);
+     portlet.add(cf);
+    } else {
+     portlet.add(hc);
+    }
+    portal.add(portlet, position % 2);
+   }
+  };
+  // Execute the timer to expire 2 seconds in the future
+  timer.schedule(delay);
+ }
+
+ private HighChart initHighChart(int chartNum) {
+  final HighChart hc = new HighChart(null, "spline");
+  try {
+   hc.setOption(new OptionPath("/title/text"), "My chart #" + chartNum);
+   hc.setOption(new OptionPath("/credits/enabled"), false);
+   hc.setOption(new OptionPath("/xAxis/allowDecimals"), false);
+   hc.setOption(new OptionPath("/xAxis/title/text"), "And the X axis");
+   hc.setOption(new OptionPath("/yAxis/title/text"), "And the Y axis");
+   hc.setOption(new OptionPath("/yAxis/min"), 0);
+   hc.setOption(new OptionPath("/subtitle/text"), "the subtitle");
+
+   hc.setOption(new OptionPath("/plotOptions/spline/marker/enabled"), true);
+   hc.setOption(new OptionPath("/plotOptions/spline/marker/radius"), 4);
+   hc.setOption(new OptionPath("/plotOptions/spline/marker/lineColor"), "#666666");
+   hc.setOption(new OptionPath("/plotOptions/spline/marker/lineWidth"), 1);
+  } catch (Exception e) {
+   ClientConsole.err("Building options", e);
+  }
+
+  for (int i = 0 ; i < 5 ; i++) {
+   SeriesType series = new SeriesType("line #" + (i+1));
+   series.setType(types[i % types.length]);
+   for (int j = 0; j < 5; j++) {
+    series.addEntry(new SeriesType.SeriesDataEntry(
+         com.google.gwt.user.client.Random.nextInt(500)));
+   }
+   hc.addSeries(series);
+  }
+
+  // no offset in the resize
+  hc.setHeightOffset(0);
+  // reduces the refresh delay from 1000 to 100 it seems to work
+  hc.setResizeDelay(100);
+
+  hc.followWindowResize(false);
+  return hc;
+ }
 }
