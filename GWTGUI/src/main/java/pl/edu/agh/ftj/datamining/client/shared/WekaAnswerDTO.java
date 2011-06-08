@@ -1,79 +1,161 @@
 package pl.edu.agh.ftj.datamining.client.shared;
 
-import java.io.Serializable;
+/**
+ * Klasa obiektu przechowującego dane wyprodukowane przez algorytmy Weki.
+ * Obiekt ten będzie zwracany do silnika.
+ * @author Bartłomiej Wojas, Adrian Kremblewski, Szymon Skupień
+ * @version 0.9.6
 
-
-public class WekaAnswerDTO implements Serializable {
+ */
+public class WekaAnswerDTO {
     /**
      * Typ algorytmu jaki ma zostac uzyty. Dostepne opcje: 1 - SimpleKMeans, 2 - EM, 3 - HierarchicalClusterer, 4 - Cobweb.
      */
+    private int algorithmType = -1;
 
-    private int algorithmType;
+    /**
+     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
+     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     */
+    private String info;
+
+    /**
+     * Przechowuje informację o tym, czy obiekt WekaAnswer został poprawnie utworzony (wartość true).
+     * Jeśli wystąpił błąd (wartość false) wtedy wszystkie pola klasy będą puste.
+     */
+    private boolean correct = true;
 
     /**
      * Nazwa użytego algorytmu.
      */
-    private String algorithmName;
+    private String algorithmName = null;
 
     /**
      * Tablica indeksów pozwalających powiązać środki klastrów z poszczególnymi instancjami.
      */
-    private int[] assignments;
+    private int[] assignments = null;
+
+//    /**
+//     * Standardowe możliwości jakie posiada wybrany typ algorytmu.
+//     */
+//    private Capabilities capabilities = null;
+
+    /**
+     * Zbiór instancji będących środkami wszystkich wyznaczonych klastrów.
+     */
+    private String clusterCentroids = null;
 
     /**
      * Liczba częstotliwości występowania wartości dla poszczególnych atrybutów.
      */
-    private int[][][] clusterNominalCounts;
+    private int[][][] clusterNominalCounts = null;
 
     /**
      * Tablica z liczbami instancji w klastrach.
      */
-    private int[] clusterSizes;
+    private int[] clusterSizes = null;
+
+    /**
+     * Odchylenia standardowe atrybutow numerycznych w klastrach.
+     */
+    private String clusterStandardDevs = null;
+
+    /**
+     * Przechowuje dane instancji dla obiektu funkcji dystansu.
+     */
+    private String instancesForDistanceFunction = null;
+
+    /**
+     * Przechowuje atrybuty dla obiektu funkcji dystansu.
+     */
+    private String attributeIndicesForDistanceFunction = null;
+
+    /**
+     * Przechowuje informację dla obiektu funkcji dystansu dotyczącą indeksów atrybutów.
+     */
+    private boolean invertSelectionForDistanceFunction = false;
+
+    /**
+     * Przechowuje opcje dla obiektu funkcji dystnasu.
+     */
+    private String[] optionsForDistanseFunction = null;
 
     /**
      * Maksymalna liczba iteracji.
      */
-    private int maxIterations;
+    private int maxIterations = -1;
 
     /**
      * Liczba klastrow do wygenerowania.
      */
-    private int numClusters;
+    private int numClusters = -1;
 
     /**
-     * Opcje wg. których działał algorytm.
+     * Opcje wg. kt�rych dzia�a algorytm.
      */
-    private String[] options;
+    private String[] options = null;
 
     /**
-     * �?ańcuch z rewizją.
+     * �ancuch z rewizja
      */
-    private String revision;
+    private String revision = null;
 
     /**
      * Blad kwadratowy. NaN jesli jest uzywana szybka kalkulacja dystansow.
      */
-    private double squaredError;
+    private double squaredError = -1.;
 
     /**
      * Liczba klastrów.
      */
-    private int numberOfClusters;
+    private int numberOfClusters = -1;
 
     /**
      * Poprzedniki[priors](?) klastrów
      */
-    private double[] clusterPriors;
+    private double[] clusterPriors = null;
 
     /**
      * Rozkłady normalne dla modeli klastra.
      */
-    private double[][][] clusterModelsNumericAtts;
+    private double[][][] clusterModelsNumericAtts = null;
 
     /**
      * Minimalne dopuszczalne odchylenie standardowe.
      */
-    private double minStdDev;
+    private double minStdDev = -1;
+
+    /**
+     *
+     */
+    private double acuity = -1.;
+
+    /**
+     *
+     */
+    private double cutoff = -1.;
+
+    /**
+     *
+     */
+    private String graph = null;
+
+    /**
+     *
+     */
+    private int graphType = -1;
+
+//    /**
+//     *
+//     */
+//    private SelectedTag linkType = null;
+
+    /**
+     *
+     */
+    private boolean printNewick = false;
+
+    ////////////////////////////////////////////////////////////////////////////
 
     /**
     * Zwraca tablice indeksow pozwalajacych powiazac srodki klastrow z poszczegolnymi instancjami.
@@ -285,8 +367,8 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Zwraca łańcuch z informacją o typie algorytmu i jego nazwie.
-     * @return �?ańcuch z informacją o algorytmie.
+     * Zwraca �a�cuch z informacj� o typie algorytmu i jego nazwie.
+     * @return lancuch z informacja o algorytmie.
      */
     @Override
     public String toString() {
@@ -301,10 +383,117 @@ public class WekaAnswerDTO implements Serializable {
         this.algorithmName = algorithmName;
     }
 
+/* --- Cobweb, HierarchicalClusterer --- */
+
+    /**
+     * @return the acuity
+     */
+    public double getAcuity() {
+        return acuity;
+    }
+
+    /**
+     * @param acuity the acuity to set
+     */
+    public void setAcuity(double acuity) {
+        this.acuity = acuity;
+    }
+
+    /**
+     * @return the cutoff
+     */
+    public double getCutoff() {
+        return cutoff;
+    }
+
+    /**
+     * @param cutoff the cutoff to set
+     */
+    public void setCutoff(double cutoff) {
+        this.cutoff = cutoff;
+    }
+
+    /**
+     * @return the graph
+     */
+    public String getGraph() {
+        return graph;
+    }
+
+    /**
+     * @param graph the graph to set
+     */
+    public void setGraph(String graph) {
+        this.graph = graph;
+    }
+
+    /**
+     * @return the graphType
+     */
+    public int getGraphType() {
+        return graphType;
+    }
+
+    /**
+     * @param graphType the graphType to set
+     */
+    public void setGraphType(int graphType) {
+        this.graphType = graphType;
+    }
+
+    /**
+     * @return the printNewick
+     */
+    public boolean isPrintNewick() {
+        return printNewick;
+    }
+
+    /**
+     * @param printNewick the printNewick to set
+     */
+    public void setPrintNewick(boolean printNewick) {
+        this.printNewick = printNewick;
+    }
+
     /**
      * @return the algorithmName
      */
     public String getAlgorithmName() {
         return algorithmName;
+    }
+
+    /**
+     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
+     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     */
+    public String getInfo() {
+        if(info == null) {
+            info = "\n==== WekaAnswer informations ====\n";
+        }
+        return info;
+    }
+
+    /**
+     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
+     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     */
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    /**
+     * Zwraca informację o poprawności obiektu WekaAnswer.
+     * @return TRUE - jeśli obiekt został utworzony poprawnie. FALSE - w przeciwnym przypadku.
+     */
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    /**
+     * Ustawia parametr informujący o poprawności obiektu.
+     * @param value TRUE - jeśli obiekt poprawny, FALSE - w przeciwnym przypadku.
+     */
+    public void setCorrect(boolean value) {
+        correct = value;
     }
 }

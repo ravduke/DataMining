@@ -1,108 +1,182 @@
 package pl.edu.agh.ftj.datamining.gui.server;
 
-import javax.xml.bind.annotation.*;
-import weka.core.Capabilities;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringReader;
+import weka.clusterers.ClusterEvaluation;
+import weka.clusterers.Clusterer;
 import weka.core.DistanceFunction;
+import weka.core.EuclideanDistance;
 import weka.core.Instances;
+import weka.core.converters.ArffLoader.ArffReader;
 
 /**
  * Klasa obiektu przechowującego dane wyprodukowane przez algorytmy Weki.
  * Obiekt ten będzie zwracany do silnika.
- * @author Bartłomiej Wojas
- * @version 0.8.0
+ * @author Bartłomiej Wojas, Adrian Kremblewski, Szymon Skupień
+ * @version 0.9.6
+
  */
-@XmlRootElement
-public class WekaAnswer {
+public class WekaAnswer implements Serializable {
     /**
      * Typ algorytmu jaki ma zostac uzyty. Dostepne opcje: 1 - SimpleKMeans, 2 - EM, 3 - HierarchicalClusterer, 4 - Cobweb.
      */
+    private int algorithmType = -1;
 
-    private int algorithmType;
+    /**
+     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
+     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     */
+    private String info;
+
+    /**
+     * Przechowuje informację o tym, czy obiekt WekaAnswer został poprawnie utworzony (wartość true).
+     * Jeśli wystąpił błąd (wartość false) wtedy wszystkie pola klasy będą puste.
+     */
+    private boolean correct = true;
 
     /**
      * Nazwa użytego algorytmu.
      */
-    private String algorithmName;
+    private String algorithmName = null;
 
     /**
      * Tablica indeksów pozwalających powiązać środki klastrów z poszczególnymi instancjami.
      */
-    private int[] assignments;
+    private int[] assignments = null;
 
-    /**
-     * Standardowe możliwości jakie posiada wybrany typ algorytmu.
-     */
-    private Capabilities capabilities;
+//    /**
+//     * Standardowe możliwości jakie posiada wybrany typ algorytmu.
+//     */
+//    private Capabilities capabilities = null;
 
     /**
      * Zbiór instancji będących środkami wszystkich wyznaczonych klastrów.
      */
-    private Instances clusterCentroids;
+    private String clusterCentroids = null;
 
     /**
      * Liczba częstotliwości występowania wartości dla poszczególnych atrybutów.
      */
-    private int[][][] clusterNominalCounts;
+    private int[][][] clusterNominalCounts = null;
 
     /**
      * Tablica z liczbami instancji w klastrach.
      */
-    private int[] clusterSizes;
+    private int[] clusterSizes = null;
 
     /**
      * Odchylenia standardowe atrybutow numerycznych w klastrach.
      */
-    private Instances clusterStandardDevs;
+    private String clusterStandardDevs = null;
 
     /**
-     * Obiekt z funkcja dystansu.
+     * Przechowuje dane instancji dla obiektu funkcji dystansu.
      */
-    private DistanceFunction distanceFunction;
+    private String instancesForDistanceFunction = null;
+
+    /**
+     * Przechowuje atrybuty dla obiektu funkcji dystansu.
+     */
+    private String attributeIndicesForDistanceFunction = null;
+
+    /**
+     * Przechowuje informację dla obiektu funkcji dystansu dotyczącą indeksów atrybutów.
+     */
+    private boolean invertSelectionForDistanceFunction = false;
+
+    /**
+     * Przechowuje opcje dla obiektu funkcji dystnasu.
+     */
+    private String[] optionsForDistanseFunction = null;
 
     /**
      * Maksymalna liczba iteracji.
      */
-    private int maxIterations;
+    private int maxIterations = -1;
 
     /**
      * Liczba klastrow do wygenerowania.
      */
-    private int numClusters;
+    private int numClusters = -1;
 
     /**
-     * Opcje wg. których działał algorytm.
+     * Opcje wg. kt�rych dzia�a algorytm.
      */
-    private String[] options;
+    private String[] options = null;
 
     /**
-     * �?ańcuch z rewizją.
+     * �ancuch z rewizja
      */
-    private String revision;
+    private String revision = null;
 
     /**
      * Blad kwadratowy. NaN jesli jest uzywana szybka kalkulacja dystansow.
      */
-    private double squaredError;
+    private double squaredError = -1.;
 
     /**
      * Liczba klastrów.
      */
-    private int numberOfClusters;
+    private int numberOfClusters = -1;
 
     /**
      * Poprzedniki[priors](?) klastrów
      */
-    private double[] clusterPriors;
+    private double[] clusterPriors = null;
 
     /**
      * Rozkłady normalne dla modeli klastra.
      */
-    private double[][][] clusterModelsNumericAtts;
+    private double[][][] clusterModelsNumericAtts = null;
 
     /**
      * Minimalne dopuszczalne odchylenie standardowe.
      */
-    private double minStdDev;
+    private double minStdDev = -1;
+
+    /**
+     *
+     */
+    private double acuity = -1.;
+
+    /**
+     *
+     */
+    private double cutoff = -1.;
+
+    /**
+     *
+     */
+    private String graph = null;
+
+    /**
+     *
+     */
+    private int graphType = -1;
+
+//    /**
+//     *
+//     */
+//    private SelectedTag linkType = null;
+
+    /**
+     *
+     */
+    private boolean printNewick = false;
+
+    /**
+     * Obiekt klasteryzatora.
+     */
+    private Clusterer clusterer = null;
+
+    /**
+     * Obiekt ewaluacji modelu.
+     */
+    private ClusterEvaluation eval = null;
+
+    ////////////////////////////////////////////////////////////////////////////
 
     /**
     * Zwraca tablice indeksow pozwalajacych powiazac srodki klastrow z poszczegolnymi instancjami.
@@ -120,30 +194,39 @@ public class WekaAnswer {
         this.assignments = assignments;
     }
 
-    /**
-     * Zwraca obiekt z możliwościami jakie posiada użyty typ algorytmu.
-     * @return Obiekt możliwości.
-     */
-    @XmlAnyElement
-    public Capabilities getCapabilities() {
-        return capabilities;
-    }
+//    /**
+//     * Zwraca obiekt z możliwościami jakie posiada użyty typ algorytmu.
+//     * @return Obiekt możliwości.
+//     */
+//    public Capabilities getCapabilities() {
+//        return capabilities;
+//    }
 
-    /**
-     * Ustawia możliwości jakie posiadał użyty typ algorytmu.
-     * @param capabilities Obiekt z możliwościami użytego algorytmu.
-     */
-    public void setCapabilities(Capabilities capabilities) {
-        this.capabilities = capabilities;
-    }
+//    /**
+//     * Ustawia możliwości jakie posiadał użyty typ algorytmu.
+//     * @param capabilities Obiekt z możliwościami użytego algorytmu.
+//     */
+//    public void setCapabilities(Capabilities capabilities) {
+//        this.capabilities = capabilities;
+//    }
 
     /**
     * Oblicza i zwraca srodki wszystkich znalezionych klastrow w postaci zbioru instacji.
     * @return Zbior instancji bedacych srodkami wszystkich wyznaczonych klastrow.
     */
-     @XmlAnyElement
     public Instances getClusterCentroids() {
-        return clusterCentroids;
+        if(clusterCentroids != null) {
+            BufferedReader reader = new BufferedReader(new StringReader(clusterCentroids));
+            ArffReader arff = null;
+            try {
+                arff = new ArffReader(reader);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return arff.getData();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -151,7 +234,8 @@ public class WekaAnswer {
      * @param clusterCentroids Instacje będące środkami klastrów.
      */
     public void setClusterCentroids(Instances clusterCentroids) {
-        this.clusterCentroids = clusterCentroids;
+        if(clusterCentroids != null)
+            this.clusterCentroids = clusterCentroids.toString();
     }
 
     /**
@@ -190,9 +274,19 @@ public class WekaAnswer {
     * Zwraca odchylenia standardowe atrybutow numerycznych w kazdym klastrze.
     * @return Odchylenia standardowe atrybutow numerycznych w klastrach
     */
-     @XmlAnyElement
     public Instances getClusterStandardDevs() {
-        return clusterStandardDevs;
+        if(clusterStandardDevs != null) {
+            BufferedReader reader = new BufferedReader(new StringReader(clusterStandardDevs));
+            ArffReader arff = null;
+            try {
+                arff = new ArffReader(reader);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return arff.getData();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -200,16 +294,27 @@ public class WekaAnswer {
      * @param clusterStandardDevs Odchylenia standardowe atrybutow numerycznych w klastrach.
      */
     public void setClusterStandardDevs(Instances clusterStandardDevs) {
-        this.clusterStandardDevs = clusterStandardDevs;
+        if(clusterStandardDevs != null)
+            this.clusterStandardDevs = clusterStandardDevs.toString();
     }
 
     /**
     * Pobiera funkcje odleglosci, ktora jest aktualnie w uzyciu.
     * @return Obiekt zawierajacy m.in. funkcje dystansu, wszystkie instancje, a takze pozwalajacy na obliczenie odleglosci miedzy poszczegolnymi instancjami.
     */
-     @XmlAnyElement
     public DistanceFunction getDistanceFunction() {
-        return distanceFunction;
+        DistanceFunction d = new EuclideanDistance();
+        d.setAttributeIndices(attributeIndicesForDistanceFunction);
+        BufferedReader reader = new BufferedReader(new StringReader(instancesForDistanceFunction));
+        ArffReader arff = null;
+        try {
+            arff = new ArffReader(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        d.setInstances(arff.getData());
+        d.setInvertSelection(invertSelectionForDistanceFunction);
+        return d;
     }
 
     /**
@@ -217,7 +322,12 @@ public class WekaAnswer {
      * @param distanceFunction Obiekt z funkcją dystansu.
      */
     public void setDistanceFunction(DistanceFunction distanceFunction) {
-        this.distanceFunction = distanceFunction;
+        this.instancesForDistanceFunction = distanceFunction.getInstances().toString();
+        this.attributeIndicesForDistanceFunction = distanceFunction.getAttributeIndices();
+        this.invertSelectionForDistanceFunction = distanceFunction.getInvertSelection();
+        this.optionsForDistanseFunction = distanceFunction.getOptions().clone();
+
+       // this.distanceFunction = distanceFunction;
     }
 
     /**
@@ -382,8 +492,8 @@ public class WekaAnswer {
     }
 
     /**
-     * Zwraca łańcuch z informacją o typie algorytmu i jego nazwie.
-     * @return �?ańcuch z informacją o algorytmie.
+     * Zwraca �a�cuch z informacj� o typie algorytmu i jego nazwie.
+     * @return lancuch z informacja o algorytmie.
      */
     @Override
     public String toString() {
@@ -398,10 +508,163 @@ public class WekaAnswer {
         this.algorithmName = algorithmName;
     }
 
+/* --- Cobweb, HierarchicalClusterer --- */
+
+    /**
+     * @return the acuity
+     */
+    public double getAcuity() {
+        return acuity;
+    }
+
+    /**
+     * @param acuity the acuity to set
+     */
+    public void setAcuity(double acuity) {
+        this.acuity = acuity;
+    }
+
+    /**
+     * @return the cutoff
+     */
+    public double getCutoff() {
+        return cutoff;
+    }
+
+    /**
+     * @param cutoff the cutoff to set
+     */
+    public void setCutoff(double cutoff) {
+        this.cutoff = cutoff;
+    }
+
+    /**
+     * @return the graph
+     */
+    public String getGraph() {
+        return graph;
+    }
+
+    /**
+     * @param graph the graph to set
+     */
+    public void setGraph(String graph) {
+        this.graph = graph;
+    }
+
+    /**
+     * @return the graphType
+     */
+    public int getGraphType() {
+        return graphType;
+    }
+
+    /**
+     * @param graphType the graphType to set
+     */
+    public void setGraphType(int graphType) {
+        this.graphType = graphType;
+    }
+
+//    /**
+//     * @return the linkType
+//     */
+//    public SelectedTag getLinkType() {
+//        return linkType;
+//    }
+//
+//    /**
+//     * @param linkType the linkType to set
+//     */
+//    public void setLinkType(SelectedTag linkType) {
+//        this.linkType = linkType;
+//    }
+
+    /**
+     * @return the printNewick
+     */
+    public boolean isPrintNewick() {
+        return printNewick;
+    }
+
+    /**
+     * @param printNewick the printNewick to set
+     */
+    public void setPrintNewick(boolean printNewick) {
+        this.printNewick = printNewick;
+    }
+
     /**
      * @return the algorithmName
      */
     public String getAlgorithmName() {
         return algorithmName;
+    }
+
+    /**
+     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
+     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     */
+    public String getInfo() {
+        if(info == null) {
+            info = "\n==== WekaAnswer informations ====\n";
+        }
+        return info;
+    }
+
+    /**
+     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
+     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     */
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    /**
+     * Zwraca informację o poprawności obiektu WekaAnswer.
+     * @return TRUE - jeśli obiekt został utworzony poprawnie. FALSE - w przeciwnym przypadku.
+     */
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    /**
+     * Ustawia parametr informujący o poprawności obiektu.
+     * @param value TRUE - jeśli obiekt poprawny, FALSE - w przeciwnym przypadku.
+     */
+    public void setCorrect(boolean value) {
+        correct = value;
+    }
+
+    /**
+     * Zwraca obiekt klasteryzatora.
+     * @return Obiekt klasteryzatora.
+     */
+    public Clusterer getClusterer() {
+        return clusterer;
+    }
+
+    /**
+     * Ustawia obiekt klasteryzatora.
+     * @param clusterer Obiekt klasteryzatora
+     */
+    public void setClusterer(Clusterer clusterer) {
+        this.clusterer = clusterer;
+    }
+
+    /**
+     * Zwraca obiekt ewaluacji modelu.
+     * @return Obiekt ewaluacji modelu.
+     */
+    public ClusterEvaluation getEval() {
+        return eval;
+    }
+
+    /**
+     * Ustawia obiekt ewaluacji modelu.
+     * @param eval Obiekt ewaluacji modelu.
+     */
+    public void setEval(ClusterEvaluation eval) {
+        this.eval = eval;
     }
 }
