@@ -1,5 +1,7 @@
 package pl.edu.agh.ftj.datamining.client.shared;
 
+import java.io.Serializable;
+
 /**
  * Klasa obiektu przechowującego dane wyprodukowane przez algorytmy Weki.
  * Obiekt ten będzie zwracany do silnika.
@@ -7,7 +9,7 @@ package pl.edu.agh.ftj.datamining.client.shared;
  * @version 0.9.6
 
  */
-public class WekaAnswerDTO {
+public class WekaAnswerDTO implements Serializable {
     /**
      * Typ algorytmu jaki ma zostac uzyty. Dostepne opcje: 1 - SimpleKMeans, 2 - EM, 3 - HierarchicalClusterer, 4 - Cobweb.
      */
