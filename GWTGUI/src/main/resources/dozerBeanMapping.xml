@@ -6,7 +6,7 @@ xsi:schemaLocation="http://dozer.sourceforge.net
 http://dozer.sourceforge.net/schema/beanmapping.xsd">
   
   <mapping> 
-    <class-a>pl.edu.agh.ftj.datamining.gui.server.WekaAnswer</class-a>
+    <class-a>pl.edu.agh.ftj.datamining.weka.algorithm.WekaAnswer</class-a>
     <class-b>pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO</class-b>   
   </mapping>  
 </mappings>

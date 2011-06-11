@@ -66,6 +66,8 @@ import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
  */
 public class GWTServiceGUI extends LayoutContainer {
 
+	private final Portal portal = new Portal(2);
+	
   /**
   * Panel glowny
   */
@@ -1002,7 +1004,26 @@ public class GWTServiceGUI extends LayoutContainer {
 
                     public void onSuccess(WekaAnswerDTO result) {
                         weka = result;
-                        algOptionsLabel.setValue(":)" + algorithmOptions + weka.getAlgorithmName());
+                        portal.removeAll();
+                        portal.repaint();
+                        getResultService().getAttributes(new AsyncCallback<List<String>>() {
+							
+							public void onSuccess(List<String> arg0) {
+								int j = 0;
+								for (int chartNum = 0; chartNum < arg0.size(); chartNum +=2) {
+									if(chartNum + 1 < arg0.size()) {
+										addChart(200, j, portal, arg0.get(chartNum), arg0.get(chartNum+1));
+										j++;
+									}
+		                        }
+                                                                portal.repaint();
+		                        portal.show();
+							}
+							
+							public void onFailure(Throwable arg0) {
+								throw new UnsupportedOperationException("Not supported yet.");
+							}
+						});
                     }
                 });     
        }
@@ -1046,10 +1067,14 @@ public class GWTServiceGUI extends LayoutContainer {
     public static WekaServiceAsync getWekaService() {
        return GWT.create(WekaService.class);
     }
+    
     public static DbServiceAsync getDbService() {
        return GWT.create(DbService.class);
     }
 
+    public static ResultServiceAsync getResultService() {
+    	return GWT.create(ResultService.class);
+    }
     private void createResultPane() {
         showResults = new TabItem("Show Results");
         showResults.setId("resultTab");
@@ -1061,17 +1086,11 @@ public class GWTServiceGUI extends LayoutContainer {
         verticalTab3Pane.setWidth("100%");
         verticalTab3Pane.setHeight(479);
         verticalTab3Pane.setLayout(new FitLayout());
-
-
-        final Portal portal = new Portal(2);
+        
         portal.setBorders(true);
         portal.setStyleAttribute("backgroundColor", "white");
         portal.setColumnWidth(0, .50);
         portal.setColumnWidth(1, .50);
-
-        for (int chartNum = 0; chartNum < 4; chartNum++) {
-            addChart(200, chartNum, portal);
-        }
 
         // insert the whole portal container
         verticalTab3Pane.add(portal);
@@ -1079,7 +1098,7 @@ public class GWTServiceGUI extends LayoutContainer {
     }
 
     private void addChart(final int delay, final int position,
-        final Portal portal) {
+        final Portal portal, final String attrX, final String attrY) {
 
         Timer timer = new Timer() {
             public void run() {
@@ -1087,32 +1106,25 @@ public class GWTServiceGUI extends LayoutContainer {
                 portlet.setHeight(400);
                 portlet.setHeading("Weka Chart");
                 portlet.setLayout(new FitLayout());
-                HighChart hc = initHighChart(position);
-
-                try {
-                    hc.setOption(new OptionPath("/chart/type"), "scatter");
-                } catch (Exception e) {}
-                
-                portlet.add(hc);
-                portal.add(portlet, position % 2);
+                initHighChart(portlet, position, attrX, attrY);
             }
         };
         timer.schedule(delay);
     }
 
-    private HighChart initHighChart(int chartNum) {
+    private void initHighChart(final Portlet portlet, final int chartNum, String attrX, String attrY) {
         final HighChart hc = new HighChart(null, "scatter");
         try {
-            hc.setOption(new OptionPath("/title/text"), "My chart #" + chartNum);
+            hc.setOption(new OptionPath("/title/text"), "Cluster #" + chartNum);
             hc.setOption(new OptionPath("/credits/enabled"), false);
             hc.setOption(new OptionPath("/xAxis/allowDecimals"), true);
-            hc.setOption(new OptionPath("/xAxis/title/text"), "And the X axis");
-            hc.setOption(new OptionPath("/yAxis/title/text"), "And the Y axis");
-            hc.setOption(new OptionPath("/yAxis/min"), 0);
-            hc.setOption(new OptionPath("/subtitle/text"), "the subtitle");
+            hc.setOption(new OptionPath("/xAxis/title/text"), attrX);
+            hc.setOption(new OptionPath("/yAxis/title/text"), attrY);
+            //hc.setOption(new OptionPath("/yAxis/min"), 0);
+            //hc.setOption(new OptionPath("/subtitle/text"), "the subtitle");
             hc.setOption(new OptionPath("/chart/zoomType"), "xy");
             hc.setOption(new OptionPath("/chart/renderTo"), "container");
-
+            hc.setOption(new OptionPath("/chart/type"), "scatter");
             hc.setOption(new OptionPath("/plotOptions/scatter/marker/enabled"), true);
             hc.setOption(new OptionPath("/plotOptions/scatter/marker/radius"), 4);
             hc.setOption(new OptionPath("/plotOptions/scatter/marker/states/hover/enabled"), true);
@@ -1122,25 +1134,42 @@ public class GWTServiceGUI extends LayoutContainer {
         } catch (Exception e) {
             ClientConsole.err("Building options", e);
         }
+        
+        getResultService().getResults(attrX, attrY, new AsyncCallback<List<List<Number[]>>>() {
+            public void onSuccess(List<List<Number[]>> arg0) {
 
-        for (int i = 0 ; i < 2 ; i++) {
-            SeriesType series = new SeriesType("line #" + (i+1));
-            series.setType("scatter");
-            for (int j = 0; j < 100; j++) {
-                series.addEntry(new SeriesType.SeriesDataEntry(
-                    com.google.gwt.user.client.Random.nextInt(100),
-                    com.google.gwt.user.client.Random.nextInt(100)));
+                if(arg0 != null) {
+                    for(int i = 0 ; i < arg0.size(); i++) {
+                        SeriesType series = new SeriesType("cluster #" + i);
+                        series.setType("scatter");
+                        List<Number[]> numbers = arg0.get(i);
+
+                        if(numbers != null) {
+                            for (int j = 0 ; j < numbers.size() ; j++) {
+                                if(numbers.get(j) != null && numbers.get(j)[0] != null && numbers.get(j)[1] != null) {
+                                    series.addEntry(new SeriesType.SeriesDataEntry(
+                                        numbers.get(j)[0],
+                                        numbers.get(j)[1]));
+                                }
+                            }
+                        }
+                        hc.addSeries(series);
+                    }
+                }
+                        // no offset in the resize
+                hc.setHeightOffset(0);
+                // reduces the refresh delay from 1000 to 100 it seems to work
+                hc.setResizeDelay(100);
+
+                hc.followWindowResize(false);
+        
+                portlet.add(hc);
+                portal.add(portlet, chartNum % 2);
+	    }
+	
+            public void onFailure(Throwable arg0) {
 
             }
-            hc.addSeries(series);
-        }
-
-        // no offset in the resize
-        hc.setHeightOffset(0);
-        // reduces the refresh delay from 1000 to 100 it seems to work
-        hc.setResizeDelay(100);
-
-        hc.followWindowResize(false);
-        return hc;
+        });
     }
 }

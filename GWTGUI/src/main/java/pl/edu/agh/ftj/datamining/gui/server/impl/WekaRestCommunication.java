@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.ws.rs.core.MediaType;
 import pl.edu.agh.ftj.datamining.gui.server.WekaCommunication;
-import pl.edu.agh.ftj.datamining.gui.server.WekaAnswer;
+import pl.edu.agh.ftj.datamining.weka.algorithm.WekaAnswer;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
@@ -24,7 +24,7 @@ import javax.ws.rs.core.MultivaluedMap;
  */
 public class WekaRestCommunication implements WekaCommunication {
 
-	private static final String URI = "http://localhost:8080/WekaRESTService/rest/";
+	private static final String URI = "http://prgzsp.ftj.agh.edu.pl:8080/WekaRESTService/rest/";
 	private static final Logger LOGGER = Logger.getLogger(WekaRestCommunication.class.getName());
         
 	private WebResource webResource;
@@ -67,7 +67,8 @@ public class WekaRestCommunication implements WekaCommunication {
 	 */
 	@Override
 	public WekaAnswer runAlgorithm(Integer algorithmType, /*String location,*/ String id, String table, String options) {
-		LOGGER.info("WekaRestCommunication::runAlgorithm() [...]");
+		LOGGER.info("WekaRestCommunication::runAlgorithm() [algorithmType="
+                        + algorithmType + ", id=" + id + ", table=" + table + ", options=" + options + "]");
 		webResource = client.resource(URI);
 		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
 	 	queryParams.add("algorithmType", String.valueOf(algorithmType));
@@ -80,10 +81,11 @@ public class WekaRestCommunication implements WekaCommunication {
         try {
            
         	byte[] responseBytes = readFromStream(result);
-            System.out.println(new String(responseBytes));
+            
             ByteArrayInputStream bis = new ByteArrayInputStream(responseBytes);
             ObjectInput in = new ObjectInputStream(bis);
             weka = (WekaAnswer) in.readObject();
+            LOGGER.info("WekaRestCommunication::runAlgorithm() [weka=" + weka + "]");
         } catch (IOException e) {
         	LOGGER.warning("WekaRestCommunication::runAlgorithm() [error=" + e + "]");
         }

@@ -1,54 +1,60 @@
 package pl.edu.agh.ftj.datamining.client.shared;
 
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
 
 /**
- * Klasa obiektu przechowującego dane wyprodukowane przez algorytmy Weki.
- * Obiekt ten będzie zwracany do silnika.
- * @author Bartłomiej Wojas, Adrian Kremblewski, Szymon Skupień
+ * Klasa obiektu przechowuj??cego dane wyprodukowane przez algorytmy Weki.
+ * Obiekt ten b??dzie zwracany do silnika.
+ * @author Bart??omiej Wojas, Adrian Kremblewski, Szymon Skupie??
  * @version 0.9.6
 
  */
 public class WekaAnswerDTO implements Serializable {
+
     /**
      * Typ algorytmu jaki ma zostac uzyty. Dostepne opcje: 1 - SimpleKMeans, 2 - EM, 3 - HierarchicalClusterer, 4 - Cobweb.
      */
     private int algorithmType = -1;
 
     /**
-     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
-     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     * Informacja o b????dach lub o poprawno??ci wykonanego algorytmu. Je??eli jest ok w info znajdzie si?? string 'ok'
+     * je??eli b??d?? b????dy, tutaj znajdzie si?? wiadomo???? o napotkanym b????dzie. Reszta p??l b??dzie wtedy pusta.
      */
     private String info;
 
     /**
-     * Przechowuje informację o tym, czy obiekt WekaAnswer został poprawnie utworzony (wartość true).
-     * Jeśli wystąpił błąd (wartość false) wtedy wszystkie pola klasy będą puste.
+     * Przechowuje informacj?? o tym, czy obiekt WekaAnswer zosta?? poprawnie utworzony (warto???? true).
+     * Je??li wyst??pi?? b????d (warto???? false) wtedy wszystkie pola klasy b??d?? puste.
      */
     private boolean correct = true;
 
     /**
-     * Nazwa użytego algorytmu.
+     * Nazwa u??ytego algorytmu.
      */
     private String algorithmName = null;
 
     /**
-     * Tablica indeksów pozwalających powiązać środki klastrów z poszczególnymi instancjami.
+     * Tablica indeks??w pozwalaj??cych powi??za?? ??rodki klastr??w z poszczeg??lnymi instancjami.
      */
     private int[] assignments = null;
 
 //    /**
-//     * Standardowe możliwości jakie posiada wybrany typ algorytmu.
+//     * Standardowe mo??liwo??ci jakie posiada wybrany typ algorytmu.
 //     */
 //    private Capabilities capabilities = null;
 
     /**
-     * Zbiór instancji będących środkami wszystkich wyznaczonych klastrów.
+     * Zbi??r instancji b??d??cych ??rodkami wszystkich wyznaczonych klastr??w.
      */
     private String clusterCentroids = null;
 
     /**
-     * Liczba częstotliwości występowania wartości dla poszczególnych atrybutów.
+     * Liczba cz??stotliwo??ci wyst??powania warto??ci dla poszczeg??lnych atrybut??w.
      */
     private int[][][] clusterNominalCounts = null;
 
@@ -73,7 +79,7 @@ public class WekaAnswerDTO implements Serializable {
     private String attributeIndicesForDistanceFunction = null;
 
     /**
-     * Przechowuje informację dla obiektu funkcji dystansu dotyczącą indeksów atrybutów.
+     * Przechowuje informacj?? dla obiektu funkcji dystansu dotycz??c?? indeks??w atrybut??w.
      */
     private boolean invertSelectionForDistanceFunction = false;
 
@@ -93,12 +99,12 @@ public class WekaAnswerDTO implements Serializable {
     private int numClusters = -1;
 
     /**
-     * Opcje wg. kt�rych dzia�a algorytm.
+     * Opcje wg. kt???rych dzia???a algorytm.
      */
     private String[] options = null;
 
     /**
-     * �ancuch z rewizja
+     * ???ancuch z rewizja
      */
     private String revision = null;
 
@@ -108,17 +114,17 @@ public class WekaAnswerDTO implements Serializable {
     private double squaredError = -1.;
 
     /**
-     * Liczba klastrów.
+     * Liczba klastr??w.
      */
     private int numberOfClusters = -1;
 
     /**
-     * Poprzedniki[priors](?) klastrów
+     * Poprzedniki[priors](?) klastr??w
      */
     private double[] clusterPriors = null;
 
     /**
-     * Rozkłady normalne dla modeli klastra.
+     * Rozk??ady normalne dla modeli klastra.
      */
     private double[][][] clusterModelsNumericAtts = null;
 
@@ -161,7 +167,7 @@ public class WekaAnswerDTO implements Serializable {
 
     /**
     * Zwraca tablice indeksow pozwalajacych powiazac srodki klastrow z poszczegolnymi instancjami.
-    * @return Tablica indeksów.
+    * @return Tablica indeks??w.
     */
     public int[] getAssignments() {
         return assignments;
@@ -169,7 +175,7 @@ public class WekaAnswerDTO implements Serializable {
 
     /**
      * Ustawia tablice indeksow pozwalajacych powiazac srodki klastrow z poszczegolnymi instancjami.
-     * @param assignments Tablica indeksów.
+     * @param assignments Tablica indeks??w.
      */
     public void setAssignments(int[] assignments) {
         this.assignments = assignments;
@@ -224,7 +230,7 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-    * Zwraca liczbę klastrów do wygenerowania.
+    * Zwraca liczb?? klastr??w do wygenerowania.
     * @return Liczba klastrow do wygenerowania.
     */
     public int getNumClusters() {
@@ -232,15 +238,15 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Ustawia liczbę klastrów do wygenerowania.
-     * @param numClusters Liczba klastrów do wygenerowania.
+     * Ustawia liczb?? klastr??w do wygenerowania.
+     * @param numClusters Liczba klastr??w do wygenerowania.
      */
     public void setNumClusters(int numClusters) {
         this.numClusters = numClusters;
     }
 
     /**
-     * Zwraca tablicę opcji, wg. których funkcjonował algorytm.
+     * Zwraca tablic?? opcji, wg. kt??rych funkcjonowa?? algorytm.
      * @return Tablica opcji algorytmu.
      */
     public String[] getOptions() {
@@ -248,7 +254,7 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Ustawia tablicę opcji, wg. których funkcjonował algorytm.
+     * Ustawia tablic?? opcji, wg. kt??rych funkcjonowa?? algorytm.
      * @param options Tablica opcji algorytmu.
      */
     public void setOptions(String[] options) {
@@ -264,7 +270,7 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Ustawia łańcuch z rewizją.
+     * Ustawia ??a??cuch z rewizj??.
      * @param revision
      */
     public void setRevision(String revision) {
@@ -281,7 +287,7 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Ustawia typ algorytmu jaki został użyty.
+     * Ustawia typ algorytmu jaki zosta?? u??yty.
      * @param algorithmType Typ algorytmu.
      */
     public void setAlgorithmType(int algorithmType) {
@@ -297,8 +303,8 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Ustawia liczbę wyznaczonych klastrów.
-     * @param numberOfClusters Liczba klastrów.
+     * Ustawia liczb?? wyznaczonych klastr??w.
+     * @param numberOfClusters Liczba klastr??w.
      */
     public void setNumberOfClusters(int numberOfClusters) {
         this.numberOfClusters = numberOfClusters;
@@ -314,23 +320,23 @@ public class WekaAnswerDTO implements Serializable {
 
     /**
      * Ustawia blad kwadratowy dla wszystkich klastrow.
-     * @param squaredError Błąd kwadratowy dla wszystkich klastrów.
+     * @param squaredError B????d kwadratowy dla wszystkich klastr??w.
      */
     public void setSquaredError(double squaredError) {
         this.squaredError = squaredError;
     }
 
     /**
-     * Zwraca rozkłady normalne dla modeli klastra.
-     * @return Rozkłady normalne dla modeli klastra.
+     * Zwraca rozk??ady normalne dla modeli klastra.
+     * @return Rozk??ady normalne dla modeli klastra.
      */
     public double[][][] getClusterModelsNumericAtts() {
         return clusterModelsNumericAtts;
     }
 
     /**
-     * Ustawia rozkłady normalne dla modeli klastra.
-     * @param clusterModelsNumericAtts Rozkłady normalne dla modeli klastra.
+     * Ustawia rozk??ady normalne dla modeli klastra.
+     * @param clusterModelsNumericAtts Rozk??ady normalne dla modeli klastra.
      */
     public void setClusterModelsNumericAtts(double[][][] clusterModelsNumericAtts) {
         this.clusterModelsNumericAtts = clusterModelsNumericAtts;
@@ -369,7 +375,7 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Zwraca �a�cuch z informacj� o typie algorytmu i jego nazwie.
+     * Zwraca ???a???cuch z informacj??? o typie algorytmu i jego nazwie.
      * @return lancuch z informacja o algorytmie.
      */
     @Override
@@ -378,7 +384,7 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Ustawia nazwę algorytmu.
+     * Ustawia nazw?? algorytmu.
      * @param algorithmName Nazwa algorytmu.
      */
     public void setAlgorithmName(String algorithmName) {
@@ -443,6 +449,20 @@ public class WekaAnswerDTO implements Serializable {
         this.graphType = graphType;
     }
 
+//    /**
+//     * @return the linkType
+//     */
+//    public SelectedTag getLinkType() {
+//        return linkType;
+//    }
+//
+//    /**
+//     * @param linkType the linkType to set
+//     */
+//    public void setLinkType(SelectedTag linkType) {
+//        this.linkType = linkType;
+//    }
+
     /**
      * @return the printNewick
      */
@@ -465,8 +485,8 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
-     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     * Informacja o b????dach lub o poprawno??ci wykonanego algorytmu. Je??eli jest ok w info znajdzie si?? string 'ok'
+     * je??eli b??d?? b????dy, tutaj znajdzie si?? wiadomo???? o napotkanym b????dzie. Reszta p??l b??dzie wtedy pusta.
      */
     public String getInfo() {
         if(info == null) {
@@ -476,24 +496,24 @@ public class WekaAnswerDTO implements Serializable {
     }
 
     /**
-     * Informacja o błędach lub o poprawności wykonanego algorytmu. Jeżeli jest ok w info znajdzie się string 'ok'
-     * jeżeli będą błędy, tutaj znajdzie się wiadomość o napotkanym błędzie. Reszta pól będzie wtedy pusta.
+     * Informacja o b????dach lub o poprawno??ci wykonanego algorytmu. Je??eli jest ok w info znajdzie si?? string 'ok'
+     * je??eli b??d?? b????dy, tutaj znajdzie si?? wiadomo???? o napotkanym b????dzie. Reszta p??l b??dzie wtedy pusta.
      */
     public void setInfo(String info) {
         this.info = info;
     }
 
     /**
-     * Zwraca informację o poprawności obiektu WekaAnswer.
-     * @return TRUE - jeśli obiekt został utworzony poprawnie. FALSE - w przeciwnym przypadku.
+     * Zwraca informacj?? o poprawno??ci obiektu WekaAnswer.
+     * @return TRUE - je??li obiekt zosta?? utworzony poprawnie. FALSE - w przeciwnym przypadku.
      */
     public boolean isCorrect() {
         return correct;
     }
 
     /**
-     * Ustawia parametr informujący o poprawności obiektu.
-     * @param value TRUE - jeśli obiekt poprawny, FALSE - w przeciwnym przypadku.
+     * Ustawia parametr informuj??cy o poprawno??ci obiektu.
+     * @param value TRUE - je??li obiekt poprawny, FALSE - w przeciwnym przypadku.
      */
     public void setCorrect(boolean value) {
         correct = value;

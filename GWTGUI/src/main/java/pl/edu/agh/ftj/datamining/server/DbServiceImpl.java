@@ -9,7 +9,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.ws.WebServiceRef;
-
 import pl.edu.agh.ftj.datamining.client.DbService;
 import pl.edu.agh.ftj.datamining.client.DataSource;
 import pl.edu.agh.ftj.datamining.dbapi.webservice.DataAccessService;

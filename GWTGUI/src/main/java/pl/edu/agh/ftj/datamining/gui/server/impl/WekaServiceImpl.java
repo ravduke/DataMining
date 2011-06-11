@@ -5,9 +5,10 @@ import java.util.List;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import pl.edu.agh.ftj.datamining.client.WekaService;
-import pl.edu.agh.ftj.datamining.gui.server.WekaAnswer;
+import pl.edu.agh.ftj.datamining.weka.algorithm.WekaAnswer;
 import pl.edu.agh.ftj.datamining.gui.server.WekaCommunication;
 import pl.edu.agh.ftj.datamining.gui.server.WekaCommunicationFactory;
+import pl.edu.agh.ftj.datamining.gui.server.WekaWrapper;
 import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
 import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -20,7 +21,6 @@ public class WekaServiceImpl extends RemoteServiceServlet implements WekaService
 
 	private static final long serialVersionUID = 1L;
 	private WekaCommunication wekaCommunication;
-	private Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	
 	/*
 	 * (non-Javadoc)
@@ -48,9 +48,9 @@ public class WekaServiceImpl extends RemoteServiceServlet implements WekaService
 	public WekaAnswerDTO runAlgorithm(Integer algorithmType, /*String location,*/
 			String id, String table, String options) {
 		
-		WekaAnswerDTO wekaAnswerDTO = new WekaAnswerDTO();
 		WekaAnswer wekaAnswer = wekaCommunication.runAlgorithm(algorithmType, id, table, options);
-		mapper.map(wekaAnswer, wekaAnswerDTO);
-		return wekaAnswerDTO;
+		WekaWrapper ww = new WekaWrapper(wekaAnswer);
+
+		return ww.getWekaAnswer();
 	}
 }
