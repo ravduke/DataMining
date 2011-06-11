@@ -1,14 +1,12 @@
-package pl.edu.agh.ftj.datamining.gui.server.impl;
+package pl.edu.agh.ftj.datamining.server.impl;
 
 
 import java.util.List;
-import org.dozer.DozerBeanMapperSingletonWrapper;
-import org.dozer.Mapper;
 import pl.edu.agh.ftj.datamining.client.WekaService;
+import pl.edu.agh.ftj.datamining.server.WekaCommunication;
+import pl.edu.agh.ftj.datamining.server.WekaCommunicationFactory;
+import pl.edu.agh.ftj.datamining.server.WekaWrapper;
 import pl.edu.agh.ftj.datamining.weka.algorithm.WekaAnswer;
-import pl.edu.agh.ftj.datamining.gui.server.WekaCommunication;
-import pl.edu.agh.ftj.datamining.gui.server.WekaCommunicationFactory;
-import pl.edu.agh.ftj.datamining.gui.server.WekaWrapper;
 import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
 import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

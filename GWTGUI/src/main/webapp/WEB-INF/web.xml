@@ -3,11 +3,11 @@
     <display-name>GWTGUI</display-name>
     <servlet>
     	<servlet-name>ResultService</servlet-name>
-    	<servlet-class>pl.edu.agh.ftj.datamining.gui.server.impl.ResultServiceImpl</servlet-class>
+    	<servlet-class>pl.edu.agh.ftj.datamining.server.impl.ResultServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>WekaService</servlet-name>
-        <servlet-class>pl.edu.agh.ftj.datamining.gui.server.impl.WekaServiceImpl</servlet-class>
+        <servlet-class>pl.edu.agh.ftj.datamining.server.impl.WekaServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DbService</servlet-name>

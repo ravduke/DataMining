@@ -1,7 +1,8 @@
-package pl.edu.agh.ftj.datamining.gui.server.impl;
+package pl.edu.agh.ftj.datamining.server.impl;
 
 import java.util.List;
-import pl.edu.agh.ftj.datamining.gui.server.WekaCommunication;
+
+import pl.edu.agh.ftj.datamining.server.WekaCommunication;
 import pl.edu.agh.ftj.datamining.weka.algorithm.WekaAnswer;
 
 /*

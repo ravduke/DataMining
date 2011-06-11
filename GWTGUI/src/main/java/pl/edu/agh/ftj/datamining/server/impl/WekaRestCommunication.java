@@ -1,4 +1,4 @@
-package pl.edu.agh.ftj.datamining.gui.server.impl;
+package pl.edu.agh.ftj.datamining.server.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,7 +9,8 @@ import java.io.ObjectInputStream;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ws.rs.core.MediaType;
-import pl.edu.agh.ftj.datamining.gui.server.WekaCommunication;
+
+import pl.edu.agh.ftj.datamining.server.WekaCommunication;
 import pl.edu.agh.ftj.datamining.weka.algorithm.WekaAnswer;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;

@@ -62,6 +62,11 @@
             <scope>provided</scope>
             <type>jar</type>
         </dependency>
+        <!-- <dependency>
+            <groupId>com.google.code</groupId>
+            <artifactId>gwt-log</artifactId>
+            <version>3.0.4</version>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2</artifactId>
@@ -103,11 +108,6 @@
 	  mvn install:install-file -Dfile=weka-3.6.4.jar -DgroupId=weka -DartifactId=weka -Dversion=3.6.4 -Dpackaging=jar
 	   -->
         </dependency>
-        <dependency>
-	    <groupId>net.sf.dozer</groupId>
-	    <artifactId>dozer</artifactId>
-	    <version>5.3.2</version>
-	</dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>

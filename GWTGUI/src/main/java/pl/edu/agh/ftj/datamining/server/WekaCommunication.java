@@ -1,4 +1,4 @@
-package pl.edu.agh.ftj.datamining.gui.server;
+package pl.edu.agh.ftj.datamining.server;
 
 import java.util.List;
 

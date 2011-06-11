@@ -59,7 +59,6 @@ import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
 import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
 
 
-
 /**
  * Klasa odpowiedzialna za wyswietlanie GUI.
  * @author Rafal Jablonowski
@@ -1137,16 +1136,19 @@ public class GWTServiceGUI extends LayoutContainer {
         
         getResultService().getResults(attrX, attrY, new AsyncCallback<List<List<Number[]>>>() {
             public void onSuccess(List<List<Number[]>> arg0) {
-
+            	//Log.info("onSuccess...");
                 if(arg0 != null) {
+                	//Log.info("ARG0 is not null");
                     for(int i = 0 ; i < arg0.size(); i++) {
+                    	//Log.info("ARG0 has size > 0");
                         SeriesType series = new SeriesType("cluster #" + i);
                         series.setType("scatter");
                         List<Number[]> numbers = arg0.get(i);
-
+                       // Log.info("numbers=" + numbers);
                         if(numbers != null) {
                             for (int j = 0 ; j < numbers.size() ; j++) {
                                 if(numbers.get(j) != null && numbers.get(j)[0] != null && numbers.get(j)[1] != null) {
+                                	//Log.info("x= " + numbers.get(j)[0] + " y=" + numbers.get(j)[1]);
                                     series.addEntry(new SeriesType.SeriesDataEntry(
                                         numbers.get(j)[0],
                                         numbers.get(j)[1]));

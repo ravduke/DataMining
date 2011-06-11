@@ -1,7 +1,7 @@
-package pl.edu.agh.ftj.datamining.gui.server;
+package pl.edu.agh.ftj.datamining.server;
 
-import pl.edu.agh.ftj.datamining.gui.server.impl.WekaAxisCommunication;
-import pl.edu.agh.ftj.datamining.gui.server.impl.WekaRestCommunication;
+import pl.edu.agh.ftj.datamining.server.impl.WekaAxisCommunication;
+import pl.edu.agh.ftj.datamining.server.impl.WekaRestCommunication;
 import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
 
 /*
