@@ -11,5 +11,9 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("dbservice")
 public interface DbService extends RemoteService {
+    /**
+     *
+     * @return
+     */
     public abstract List<DataSource> getDataSources();
 }

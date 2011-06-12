@@ -9,7 +9,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.ws.WebServiceRef;
-
 import pl.edu.agh.ftj.datamining.client.DbService;
 import pl.edu.agh.ftj.datamining.client.DataSource;
 import pl.edu.agh.ftj.datamining.dbapi.webservice.DataAccessService;
@@ -28,7 +27,11 @@ public class DbServiceImpl extends RemoteServiceServlet implements DbService {
 	@WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/axis2/services/DataAccessService.wsdl")
 	private DataAccessService service;
 
-	public List<DataSource> getDataSources() {
+        /**
+         *
+         * @return
+         */
+        public List<DataSource> getDataSources() {
 		DataAccessServicePortType port = service.getDataAccessServiceHttpSoap12Endpoint();
 		GetDataSourcesResponse result = port.getDataSources();
 		ArrayList<DataSource> dsList = new ArrayList<DataSource>();

@@ -1,17 +1,15 @@
  package pl.edu.agh.ftj.datamining.client;
 
+
  import com.extjs.gxt.samples.resources.client.Resources;
  import com.extjs.gxt.samples.resources.client.model.DBTable;
  import com.extjs.gxt.samples.resources.client.model.Folder;
-import com.extjs.gxt.ui.client.Style.LayoutRegion;
  import com.extjs.gxt.ui.client.Style.Orientation;
  import com.extjs.gxt.ui.client.widget.layout.FlowData;
  import com.extjs.gxt.ui.client.widget.menu.MenuBar;
  import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
  import com.extjs.gxt.ui.client.widget.ContentPanel;
  import com.extjs.gxt.ui.client.widget.button.Button;
- import com.extjs.gxt.ui.client.data.BaseTreeModel;
-
  import com.extjs.gxt.ui.client.widget.menu.Menu;
  import com.extjs.gxt.ui.client.widget.menu.MenuItem;
  import com.extjs.gxt.ui.client.widget.menu.SeparatorMenuItem;
@@ -38,8 +36,6 @@ import com.extjs.gxt.ui.client.widget.custom.Portal;
 import com.extjs.gxt.ui.client.widget.custom.Portlet;
 import com.extjs.gxt.ui.client.widget.form.CheckBox;
  import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
-
-
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.form.Radio;
@@ -47,9 +43,7 @@ import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.form.SimpleComboBox;
 import com.extjs.gxt.ui.client.widget.form.SliderField;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.layout.FitData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
-
 import com.extjs.gxt.ui.client.widget.layout.RowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
@@ -57,19 +51,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Vector;
 import org.adapters.highcharts.codegen.sections.options.OptionPath;
 import org.adapters.highcharts.codegen.types.SeriesType;
 import org.adapters.highcharts.codegen.utils.ClientConsole;
 import org.adapters.highcharts.gxt.widgets.HighChart;
-import org.adapters.highcharts.gxt.widgets.ext.ChartFrame;
 import pl.edu.agh.ftj.datamining.client.shared.CommunicationType;
 import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
-
 
 
 /**
@@ -78,13 +67,8 @@ import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
  */
 public class GWTServiceGUI extends LayoutContainer {
 
-    final String types[] = new String[] {
-   "spline",
-   "column",
-   "areaspline",
-   "area",
-   "line"
- };
+	private final Portal portal = new Portal(2);
+	private List<Portlet> portlets = new ArrayList<Portlet>();
   /**
   * Panel glowny
   */
@@ -142,6 +126,9 @@ public class GWTServiceGUI extends LayoutContainer {
   */
  WekaAnswerDTO weka = null;
 
+ /**
+  * Konstruktor publiczny GUI
+  */
  public  GWTServiceGUI() {
    
 
@@ -154,7 +141,6 @@ public class GWTServiceGUI extends LayoutContainer {
   @Override
    protected void onRender(Element parent, int index) {
      super.onRender(parent, index);
-
      //
      // Panel glowny
      //
@@ -263,14 +249,14 @@ public class GWTServiceGUI extends LayoutContainer {
                         MessageBox.alert("Failure", "Connecting to DB server failed.", null);
                     }
 
-                    public void onSuccess(List<DataSource> result) {
+                     public void onSuccess(List<DataSource> result) {
                         MessageBox.info("Connected", "Connected to the DB server.", null);
                            // narazie po stronie klienta
                         Folder[] folders = new Folder[] {
-                            new Folder("PostgreSQL"),
-                            new Folder("SQLite"),
-                            new Folder("Plain Text")
-                            }; 
+                            new Folder(result.get(0).getDisplayedName()),
+                            new Folder(result.get(1).getDisplayedName()),
+                            new Folder(result.get(2).getDisplayedName())
+                            };
                         int i = 0;
 
                         for (DataSource ds : result) {
@@ -280,7 +266,10 @@ public class GWTServiceGUI extends LayoutContainer {
                                 dbTabel[j] = new DBTable(ds.getTables().get(j),ds.getDisplayedName(),ds.getDatabase(),ds.getId(),ds.getLocation());
                             }
 
-                            folders[i].setChildren( new Folder (ds.getDatabase(), dbTabel));
+                            if(i==0)
+                               folders[i].setChildren( new Folder ("CSV", dbTabel));
+                            else
+                                folders[i].setChildren( new Folder (ds.getDatabase(), dbTabel));
 
                             i++;  
                         }
@@ -348,9 +337,9 @@ public class GWTServiceGUI extends LayoutContainer {
 
                         public void onSuccess(List<DataSource> result) {
                         Folder[] folders = new Folder[] {
-                            new Folder("PostgreSQL"),
-                            new Folder("SQLite"),
-                            new Folder("Plain Text")
+                            new Folder(result.get(0).getDisplayedName()),
+                            new Folder(result.get(1).getDisplayedName()),
+                            new Folder(result.get(2).getDisplayedName())
                             };
                         int i = 0;
 
@@ -360,8 +349,10 @@ public class GWTServiceGUI extends LayoutContainer {
                             for (int j = 0; j < ds.getTables().size(); j++) {
                                 dbTabel[j] = new DBTable(ds.getTables().get(j),ds.getDisplayedName(),ds.getDatabase(),ds.getId(),ds.getLocation());
                             }
-
-                            folders[i].setChildren( new Folder (ds.getDatabase(), dbTabel));
+                            if(i==0)
+                               folders[i].setChildren( new Folder ("CSV", dbTabel));
+                            else
+                                folders[i].setChildren( new Folder (ds.getDatabase(), dbTabel));
 
                             i++;
                         }
@@ -505,11 +496,12 @@ public class GWTServiceGUI extends LayoutContainer {
     verticalPane1.setHeight(470);
     verticalPane1.setLayout(new RowLayout(Orientation.VERTICAL));
 
-    FormPanel verticalPane2 = new FormPanel();
+    ContentPanel verticalPane2 = new ContentPanel();
     verticalPane2.setHeaderVisible(false);
     verticalPane2.setWidth("100%");
     verticalPane2.setHeight(470);
-    verticalPane2.setLayout(new RowLayout(Orientation.VERTICAL));
+    //verticalPane2.setLayout(new RowLayout(Orientation.VERTICAL));
+    verticalPane2.setLayout(new FitLayout());
 
     FormPanel verticalPane3 = new FormPanel();
     verticalPane3.setHeaderVisible(false);
@@ -635,7 +627,7 @@ public class GWTServiceGUI extends LayoutContainer {
     final SliderField sf = new SliderField(slider);
     sf.setFieldLabel("Size");
     
-    a1.add(numCluster, new RowData(0.2, 1, new Margins(4,4,4,4)));
+    a1.add(numCluster, new RowData(0.3, 1, new Margins(4,4,4,4)));
     a1.add(sf, new RowData(0.5, 1, new Margins(4,4,4,4)));
 
     final CheckBox variationCheckBox = new CheckBox();
@@ -650,7 +642,7 @@ public class GWTServiceGUI extends LayoutContainer {
     final LabelField distanceFunction = new LabelField();
     distanceFunction.setValue("Distance Function:");
 
-    Radio radio = new Radio();
+    final Radio radio = new Radio();
     radio.setBoxLabel("Euclidean Distance");
     radio.setValue(true);
 
@@ -663,7 +655,7 @@ public class GWTServiceGUI extends LayoutContainer {
     radioGroup.add(radio2);
 
     
-    a2.add(distanceFunction, new RowData(0.2, 1, new Margins(2)));
+    a2.add(distanceFunction, new RowData(0.3, 1, new Margins(2)));
     a2.add(radioGroup, new RowData(0.5, 1, new Margins(2)));
 
     final FormPanel a3 = new FormPanel();
@@ -963,6 +955,10 @@ public class GWTServiceGUI extends LayoutContainer {
                            algorithmOptions += ";O";
                         if(fastCheckBox.getValue())
                            algorithmOptions += ";fast";
+                        if(radio.getValue())
+                           algorithmOptions += ";A weka.core.EuclideanDistance";
+                        else
+                           algorithmOptions += ";A weka.core.ManhattanDistance";
                         
                         break;
                     case 1:
@@ -988,6 +984,11 @@ public class GWTServiceGUI extends LayoutContainer {
                             algorithmOptions += ";L SINGLE";
                         else
                             algorithmOptions += ";L " + sposobLaczeniaComboBox.getRawValue().toString();
+                        if(radio.getValue())
+                           algorithmOptions += ";A weka.core.EuclideanDistance";
+                        else
+                           algorithmOptions += ";A weka.core.ManhattanDistance";
+
                         break;
                     case 3:
                         algorithmType = 4;
@@ -1006,14 +1007,21 @@ public class GWTServiceGUI extends LayoutContainer {
                            algorithmOptions += ";O";
                         if(fastCheckBox.getValue())
                            algorithmOptions += ";fast";
+                        if(radio.getValue())
+                           algorithmOptions += ";A weka.core.EuclideanDistance";
+                        else
+                           algorithmOptions += ";A weka.core.ManhattanDistance";
+
                         break;
                 }
 
         
            algOptionsLabel.setValue(algorithmOptions + selectedTabel.getLocation() + " " + selectedTabel.getId() + " " + selectedTabel.getName());
-           algOptionsLabel.setValue(algorithmOptions);
+          // algOptionsLabel.setValue(algorithmOptions);
 
-            getWekaService().runAlgorithm(algorithmType, selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
+           //Log.info("before runAlg onSuccess...");
+
+           getWekaService().runAlgorithm(algorithmType, selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
 
                     public void onFailure(Throwable caught) {
                         throw new UnsupportedOperationException("Not supported yet.");
@@ -1021,7 +1029,28 @@ public class GWTServiceGUI extends LayoutContainer {
 
                     public void onSuccess(WekaAnswerDTO result) {
                         weka = result;
-                        algOptionsLabel.setValue(":)" + algorithmOptions + weka.getAlgorithmName());
+                        for(Portlet p: portlets) {
+                            portal.remove(p, 0);
+                            portal.remove(p, 1);
+                        }
+                        portlets.clear();
+                        getResultService().getAttributes(new AsyncCallback<List<String>>() {
+							
+							public void onSuccess(List<String> arg0) {
+								int j = 0;
+								for (int chartNum = 0; chartNum < arg0.size(); chartNum +=2) {
+									if(chartNum + 1 < arg0.size()) {
+										addChart(200, j, arg0.get(chartNum), arg0.get(chartNum+1));
+										j++;
+									}
+		                        }
+                                                            
+							}
+							
+							public void onFailure(Throwable arg0) {
+								throw new UnsupportedOperationException("Not supported yet.");
+							}
+						});
                     }
                 });     
        }
@@ -1062,13 +1091,29 @@ public class GWTServiceGUI extends LayoutContainer {
     
    }
 
-    public static WekaServiceAsync getWekaService() {
+  /**
+   *
+   * @return
+   */
+  public static WekaServiceAsync getWekaService() {
        return GWT.create(WekaService.class);
     }
+    
+    /**
+     *
+     * @return
+     */
     public static DbServiceAsync getDbService() {
        return GWT.create(DbService.class);
     }
 
+    /**
+     *
+     * @return
+     */
+    public static ResultServiceAsync getResultService() {
+    	return GWT.create(ResultService.class);
+    }
     private void createResultPane() {
         showResults = new TabItem("Show Results");
         showResults.setId("resultTab");
@@ -1080,160 +1125,94 @@ public class GWTServiceGUI extends LayoutContainer {
         verticalTab3Pane.setWidth("100%");
         verticalTab3Pane.setHeight(479);
         verticalTab3Pane.setLayout(new FitLayout());
-
-        /*ChartModel cm = new ChartModel("Weka Results", "font-size: 14px; "
-                + "font-family: Verdana;");
-        cm.setBackgroundColour("#ffffff");
         
-        AreaChart area1 = new AreaChart();
-        area1.setFillAlpha(0.3f);
-        area1.setColour("#ff0000");
-        area1.setFillColour("#ff0000");
-        for (int n = 0; n < 12; n++) {
-            if (n % 3 != 0 && n != 11)
-                area1.addNullValue();
-            else
-                area1.addValues(n );
-        }
-        cm.addChartConfig(area1);
-        String url =  "resources/chart/open-flash-chart.swf";
+        portal.setBorders(true);
+        portal.setStyleAttribute("backgroundColor", "white");
+        portal.setColumnWidth(0, .50);
+        portal.setColumnWidth(1, .50);
 
-        final Chart chart = new Chart(url);
-        
-        chart.setBorders(true);
-        chart.setChartModel(cm);
-        verticalTab3Pane.add(chart, new FitData(0, 0, 20, 0));*/
-       final Portal portal = new Portal(2);
-      portal.setBorders(true);
-      portal.setStyleAttribute("backgroundColor", "white");
-      portal.setColumnWidth(0, .50);
-      portal.setColumnWidth(1, .50);
-
-      for (int chartNum = 0; chartNum < 2; chartNum++) {
-       addChart(200, chartNum, portal, false);
-      }
-
-      // add a chartframe
-      addChart(200, 2, portal, true);
-
-      addRawChart(200, 3, portal);
-
-  // insert the whole portal container
+        // insert the whole portal container
         verticalTab3Pane.add(portal);
         showResults.add(verticalTab3Pane);
     }
 
-    private void addRawChart(final int delay,
-     final int position,
-     final Portal portal){
-   Timer timer = new Timer() {
-   public void run() {
-    final HighChart hc = new HighChart(null, "spline");
-    List<Map<String, Object>> series =
-       new Vector<Map<String,Object>>();
-
-    Map<String, Object> series1 = new HashMap<String, Object>();
-    series1.put("type", "area");
-    series1.put("data", new int[] {4,5,2,10});
-
-    Map<String, Object> series2 = new HashMap<String, Object>();
-    series2.put("type", "line");
-    series2.put("data", new int[] {14,53,0,7});
-
-    series.add(series1);
-    series.add(series2);
-
-    try {
-     hc.setOption(new OptionPath("/series"), series);
-    } catch (Exception e) {
-     e.printStackTrace();
+    private void addChart(final int delay, final int position, final String attrX, final String attrY) {
+        Portlet portlet = new Portlet();
+        portlet.setId("portlet" + position);
+        portlet.setHeight(400);
+        portlet.setHeading("Weka Chart");
+        portlet.setLayout(new FitLayout());
+        initHighChart(portlet, position, attrX, attrY);
+            
     }
 
-    try {
-     hc.setOption(new OptionPath("/credits/text"),
-         "Sample of HighChart-GXT");
-     hc.setOption(new OptionPath("/credits/href"),
-         "http://sourceforge.net/projects/highcharts-gxt/");
-    } catch (Exception e) {
+    private void initHighChart(final Portlet portlet, final int chartNum, String attrX, String attrY) {
+        final HighChart hc = new HighChart(null, "scatter");
+        try {
+            hc.setOption(new OptionPath("/title/text"), "Wykres #" + chartNum);
+            hc.setOption(new OptionPath("/credits/enabled"), false);
+            hc.setOption(new OptionPath("/xAxis/allowDecimals"), true);
+            hc.setOption(new OptionPath("/xAxis/title/text"), attrX);
+            hc.setOption(new OptionPath("/yAxis/title/text"), attrY);
+            //hc.setOption(new OptionPath("/yAxis/min"), 0);
+            //hc.setOption(new OptionPath("/subtitle/text"), "the subtitle");
+            hc.setOption(new OptionPath("/chart/zoomType"), "xy");
+            hc.setOption(new OptionPath("/chart/renderTo"), "container");
+            hc.setOption(new OptionPath("/chart/type"), "scatter");
+            hc.setOption(new OptionPath("/plotOptions/scatter/marker/enabled"), true);
+            hc.setOption(new OptionPath("/plotOptions/scatter/marker/radius"), 4);
+            hc.setOption(new OptionPath("/plotOptions/scatter/marker/states/hover/enabled"), true);
+            hc.setOption(new OptionPath("/plotOptions/scatter/marker/states/hover/lineColor"), "rgb(100,100,100)");
+            hc.setOption(new OptionPath("/plotOptions/scatter/states/hover/marker/enabled"), false);
+            
+        } catch (Exception e) {
+            ClientConsole.err("Building options", e);
+        }
+        
+        getResultService().getResults(attrX, attrY, new AsyncCallback<List<List<Number[]>>>() {
+            public void onSuccess(List<List<Number[]>> arg0) {
+            	//Log.info("onSuccess...");
+                if(arg0 != null) {
+                	//Log.info("ARG0 is not null");
+                    for(int i = 0 ; i < arg0.size(); i++) {
+                    	//Log.info("ARG0 has size > 0");
+                        SeriesType series = new SeriesType("cluster #" + i);
+                        series.setType("scatter");
+                        List<Number[]> numbers = arg0.get(i);
+                        //Log.info("numbers=" + numbers);
+                        if(numbers != null) {
+                            for (int j = 0 ; j < numbers.size() ; j++) {
+                                if(numbers.get(j) != null && numbers.get(j)[0] != null && numbers.get(j)[1] != null) {
+                                	
+                                    series.addEntry(new SeriesType.SeriesDataEntry(
+                                        numbers.get(j)[0],
+                                        numbers.get(j)[1]));
+                                }
+                            }
+                        }
+                        hc.addSeries(series);
+                    }
+                }
+                        // no offset in the resize
+                hc.setHeightOffset(0);
+                // reduces the refresh delay from 1000 to 100 it seems to work
+                hc.setResizeDelay(100);
+
+                hc.followWindowResize(false);
+                portlet.add(hc);
+                portal.add(portlet, chartNum % 2);
+                
+                portlets.add(portlet);
+                portal.repaint();
+                for(Portlet p : portlets) {
+                    p.repaint();
+                    p.show();
+                }
+	    }
+	
+            public void onFailure(Throwable arg0) {
+
+            }
+        });
     }
-
-    Portlet portlet = new Portlet();
-    portlet.setHeight(400);
-    portlet.setHeading("Chart with raw creation of series");
-    portlet.setLayout(new FitLayout());
-    portlet.add(hc);
-    portal.add(portlet, position % 2);
-   }
-  };
-
-  // Execute the timer to expire 2 seconds in the future
-  timer.schedule(delay);
- }
-
- private void addChart(final int delay, final int position,
-         final Portal portal, final boolean insideFrame) {
-  Timer timer = new Timer() {
-   public void run() {
-    Portlet portlet = new Portlet();
-    portlet.setHeight(400);
-    portlet.setHeading("Chart in a Portlet");
-    portlet.setLayout(new FitLayout());
-    HighChart hc = initHighChart(position);
-    try {
-     hc.setOption(new OptionPath("/chart/type"),
-          types[position % types.length]);
-    } catch (Exception e) {}
-    if (insideFrame) {
-     portlet.setHeading("ChartFrame in a Portlet");
-     hc.setAutoResize(true);
-     hc.followWindowResize(false);
-     ChartFrame cf = new ChartFrame(hc);
-     portlet.add(cf);
-    } else {
-     portlet.add(hc);
-    }
-    portal.add(portlet, position % 2);
-   }
-  };
-  // Execute the timer to expire 2 seconds in the future
-  timer.schedule(delay);
- }
-
- private HighChart initHighChart(int chartNum) {
-  final HighChart hc = new HighChart(null, "spline");
-  try {
-   hc.setOption(new OptionPath("/title/text"), "My chart #" + chartNum);
-   hc.setOption(new OptionPath("/credits/enabled"), false);
-   hc.setOption(new OptionPath("/xAxis/allowDecimals"), false);
-   hc.setOption(new OptionPath("/xAxis/title/text"), "And the X axis");
-   hc.setOption(new OptionPath("/yAxis/title/text"), "And the Y axis");
-   hc.setOption(new OptionPath("/yAxis/min"), 0);
-   hc.setOption(new OptionPath("/subtitle/text"), "the subtitle");
-
-   hc.setOption(new OptionPath("/plotOptions/spline/marker/enabled"), true);
-   hc.setOption(new OptionPath("/plotOptions/spline/marker/radius"), 4);
-   hc.setOption(new OptionPath("/plotOptions/spline/marker/lineColor"), "#666666");
-   hc.setOption(new OptionPath("/plotOptions/spline/marker/lineWidth"), 1);
-  } catch (Exception e) {
-   ClientConsole.err("Building options", e);
-  }
-
-  for (int i = 0 ; i < 5 ; i++) {
-   SeriesType series = new SeriesType("line #" + (i+1));
-   series.setType(types[i % types.length]);
-   for (int j = 0; j < 5; j++) {
-    series.addEntry(new SeriesType.SeriesDataEntry(
-         com.google.gwt.user.client.Random.nextInt(500)));
-   }
-   hc.addSeries(series);
-  }
-
-  // no offset in the resize
-  hc.setHeightOffset(0);
-  // reduces the refresh delay from 1000 to 100 it seems to work
-  hc.setResizeDelay(100);
-
-  hc.followWindowResize(false);
-  return hc;
- }
 }

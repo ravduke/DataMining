@@ -1,13 +1,18 @@
-package pl.edu.agh.ftj.datamining.gui.server.impl;
+package pl.edu.agh.ftj.datamining.server.impl;
 
 import java.util.List;
-import pl.edu.agh.ftj.datamining.gui.server.WekaCommunication;
-import pl.edu.agh.ftj.datamining.gui.server.WekaAnswer;
+
+import pl.edu.agh.ftj.datamining.server.WekaCommunication;
+import pl.edu.agh.ftj.datamining.weka.algorithm.WekaAnswer;
 
 /*
  * Klasa implementujaca interfejs {@link WekaCommunication}.
  * Klasa odpowiedzialna za polaczenie z Axis-em.
  * @author Tomasz Pyszka
+ */
+/**
+ *
+ * @author ravduke
  */
 public class WekaAxisCommunication implements WekaCommunication {
 
@@ -23,7 +28,11 @@ public class WekaAxisCommunication implements WekaCommunication {
 		private static final WekaCommunication INSTANCE = new WekaAxisCommunication();
 	}
 	
-	public static WekaCommunication getInstance() {
+        /**
+         *
+         * @return
+         */
+        public static WekaCommunication getInstance() {
 		return WekaAxisCommunicationHolder.INSTANCE;
 	}
 
@@ -31,7 +40,11 @@ public class WekaAxisCommunication implements WekaCommunication {
 	 * (non-Javadoc)
 	 * @see pl.edu.agh.ftj.datamining.gui.WekaCommunication#getAlgorithms()
 	 */
-	@Override
+        /**
+         *
+         * @return
+         */
+        @Override
 	public List<String> getAlgorithms() {
 		// TODO Auto-generated method stub
 		return null;

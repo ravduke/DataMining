@@ -1,21 +1,29 @@
-package pl.edu.agh.ftj.datamining.client.shared;
+package pl.edu.agh.ftj.datamining.weka.algorithm;
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-
+import weka.clusterers.ClusterEvaluation;
+import weka.clusterers.Clusterer;
+import weka.core.Attribute;
+import weka.core.DistanceFunction;
+import weka.core.EuclideanDistance;
+import weka.core.Instance;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader.ArffReader;
 
 /**
  * Klasa obiektu przechowuj??cego dane wyprodukowane przez algorytmy Weki.
  * Obiekt ten b??dzie zwracany do silnika.
  * @author Bart??omiej Wojas, Adrian Kremblewski, Szymon Skupie??
- * @version 0.9.6
+ * @version 0.9.7
 
  */
-public class WekaAnswerDTO implements Serializable {
-
+public class WekaAnswer implements Serializable {
     /**
      * Typ algorytmu jaki ma zostac uzyty. Dostepne opcje: 1 - SimpleKMeans, 2 - EM, 3 - HierarchicalClusterer, 4 - Cobweb.
      */
@@ -36,7 +44,7 @@ public class WekaAnswerDTO implements Serializable {
     /**
      * Nazwa u??ytego algorytmu.
      */
-    private String algorithmName = null;
+    private String algorithmName = "";
 
     /**
      * Tablica indeks??w pozwalaj??cych powi??za?? ??rodki klastr??w z poszczeg??lnymi instancjami.
@@ -51,7 +59,7 @@ public class WekaAnswerDTO implements Serializable {
     /**
      * Zbi??r instancji b??d??cych ??rodkami wszystkich wyznaczonych klastr??w.
      */
-    private String clusterCentroids = null;
+    private String clusterCentroids = "";
 
     /**
      * Liczba cz??stotliwo??ci wyst??powania warto??ci dla poszczeg??lnych atrybut??w.
@@ -163,6 +171,21 @@ public class WekaAnswerDTO implements Serializable {
      */
     private boolean printNewick = false;
 
+    /**
+     * Obiekt klasteryzatora.
+     */
+    private Clusterer clusterer = null;
+
+    /**
+     * Obiekt ewaluacji modelu.
+     */
+    private ClusterEvaluation eval = null;
+
+    /**
+     * Obiekt z instancjami do analizy.
+     */
+    private Instances data = null;
+
     ////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -179,6 +202,50 @@ public class WekaAnswerDTO implements Serializable {
      */
     public void setAssignments(int[] assignments) {
         this.assignments = assignments;
+    }
+
+//    /**
+//     * Zwraca obiekt z mo??liwo??ciami jakie posiada u??yty typ algorytmu.
+//     * @return Obiekt mo??liwo??ci.
+//     */
+//    public Capabilities getCapabilities() {
+//        return capabilities;
+//    }
+
+//    /**
+//     * Ustawia mo??liwo??ci jakie posiada?? u??yty typ algorytmu.
+//     * @param capabilities Obiekt z mo??liwo??ciami u??ytego algorytmu.
+//     */
+//    public void setCapabilities(Capabilities capabilities) {
+//        this.capabilities = capabilities;
+//    }
+
+    /**
+    * Oblicza i zwraca srodki wszystkich znalezionych klastrow w postaci zbioru instacji.
+    * @return Zbior instancji bedacych srodkami wszystkich wyznaczonych klastrow.
+    */
+    public Instances getClusterCentroids() {
+        if(clusterCentroids != null) {
+            BufferedReader reader = new BufferedReader(new StringReader(clusterCentroids));
+            ArffReader arff = null;
+            try {
+                arff = new ArffReader(reader);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return arff.getData();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Ustawia obiekt ze ??rodkami klastr??w.
+     * @param clusterCentroids Instacje b??d??ce ??rodkami klastr??w.
+     */
+    public void setClusterCentroids(Instances clusterCentroids) {
+        if(clusterCentroids != null)
+            this.clusterCentroids = clusterCentroids.toString();
     }
 
     /**
@@ -211,6 +278,66 @@ public class WekaAnswerDTO implements Serializable {
      */
     public void setClusterSizes(int[] clusterSizes) {
         this.clusterSizes = clusterSizes;
+    }
+
+    /**
+    * Zwraca odchylenia standardowe atrybutow numerycznych w kazdym klastrze.
+    * @return Odchylenia standardowe atrybutow numerycznych w klastrach
+    */
+    public Instances getClusterStandardDevs() {
+        if(clusterStandardDevs != null) {
+            BufferedReader reader = new BufferedReader(new StringReader(clusterStandardDevs));
+            ArffReader arff = null;
+            try {
+                arff = new ArffReader(reader);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return arff.getData();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Ustawia odchylenia standardowe atrybutow numerycznych w kazdym klastrze.
+     * @param clusterStandardDevs Odchylenia standardowe atrybutow numerycznych w klastrach.
+     */
+    public void setClusterStandardDevs(Instances clusterStandardDevs) {
+        if(clusterStandardDevs != null)
+            this.clusterStandardDevs = clusterStandardDevs.toString();
+    }
+
+    /**
+    * Pobiera funkcje odleglosci, ktora jest aktualnie w uzyciu.
+    * @return Obiekt zawierajacy m.in. funkcje dystansu, wszystkie instancje, a takze pozwalajacy na obliczenie odleglosci miedzy poszczegolnymi instancjami.
+    */
+    public DistanceFunction getDistanceFunction() {
+        DistanceFunction d = new EuclideanDistance();
+        d.setAttributeIndices(attributeIndicesForDistanceFunction);
+        BufferedReader reader = new BufferedReader(new StringReader(instancesForDistanceFunction));
+        ArffReader arff = null;
+        try {
+            arff = new ArffReader(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        d.setInstances(arff.getData());
+        d.setInvertSelection(invertSelectionForDistanceFunction);
+        return d;
+    }
+
+    /**
+     * Ustawia w??asn?? funkcj?? obliczaj??c?? odleg??o???? mi??dzy klastrami.
+     * @param distanceFunction Obiekt z funkcj?? dystansu.
+     */
+    public void setDistanceFunction(DistanceFunction distanceFunction) {
+        this.instancesForDistanceFunction = distanceFunction.getInstances().toString();
+        this.attributeIndicesForDistanceFunction = distanceFunction.getAttributeIndices();
+        this.invertSelectionForDistanceFunction = distanceFunction.getInvertSelection();
+        this.optionsForDistanseFunction = distanceFunction.getOptions().clone();
+
+       // this.distanceFunction = distanceFunction;
     }
 
     /**
@@ -519,5 +646,107 @@ public class WekaAnswerDTO implements Serializable {
      */
     public void setCorrect(boolean value) {
         correct = value;
+    }
+
+    /**
+     * Zwraca obiekt klasteryzatora.
+     * @return Obiekt klasteryzatora.
+     */
+    public Clusterer getClusterer() {
+        return clusterer;
+    }
+
+    /**
+     * Ustawia obiekt klasteryzatora.
+     * @param clusterer Obiekt klasteryzatora
+     */
+    public void setClusterer(Clusterer clusterer) {
+        this.clusterer = clusterer;
+    }
+
+    /**
+     * Zwraca obiekt ewaluacji modelu.
+     * @return Obiekt ewaluacji modelu.
+     */
+    public ClusterEvaluation getEval() {
+        return eval;
+    }
+
+    /**
+     * Ustawia obiekt ewaluacji modelu.
+     * @param eval Obiekt ewaluacji modelu.
+     */
+    public void setEval(ClusterEvaluation eval) {
+        this.eval = eval;
+    }
+
+    /**
+     * Zwraca tylko te instancje, kt??re nale???? do klastra o podanym numerze.
+     * @param numClust Numer klastra
+     * @return Instancje nale????ce do podanego klastra.
+     */
+    public Instances getClusterInstances(int numClust) {
+        Instances inst = new Instances(data);
+        inst.clear();
+
+        try {
+            for (int i = 0; i < data.numInstances(); ++i) {
+                if (clusterer.clusterInstance(data.instance(i)) == numClust) {
+                    inst.add(data.instance(i));
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return inst;
+    }
+
+    /**
+     * Zwraca obiekt z instancjami, kt??re mia??y zosta?? poddane analizie.
+     * @return Obiekt z instancjami
+     */
+    public Instances getData() {
+        return data;
+    }
+
+    /**
+     * Ustawia obiekt z instancjami, kt??re mia?? zosta?? poddane analizie.
+     * @param data Obiekt z instancjami.
+     */
+    public void setData(Instances data) {
+        this.data = data;
+    }
+
+    /**
+     * Zwraca list?? dost??pnych atrybut??w.
+     * @return Lista dost??pnych atrybut??w.
+     */
+    public List<String> getAttributeNames() {
+        Enumeration e = data.enumerateAttributes();
+        List<String> attributeNames = new ArrayList<String>();
+
+        while (e.hasMoreElements()) {
+            attributeNames.add(((Attribute)e.nextElement()).name());
+        }
+
+        return attributeNames;
+    }
+
+    /**
+     * Metoda zwracaj??ca list?? warto??ci dla danej instancji.
+     * @param inst Analizowana instancja
+     * @param attrX Nazwa atrybutu dla osi X.
+     * @param attrY Nazwa atrybutu dla osi Y
+     * @return Lista dwuelementowa z warto??ciami kolejno dla osi X i Y.
+     */
+    public List<Number> getValueForInstance(Instance inst, String attrX, String attrY) {
+        List<Number> value = new ArrayList<Number>();
+        Attribute atX = inst.attribute(getAttributeNames().indexOf(attrX));
+        Attribute atY = inst.attribute(getAttributeNames().indexOf(attrY));
+
+        value.add(inst.value(atX));
+        value.add(inst.value(atY));
+        return value;
     }
 }

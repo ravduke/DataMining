@@ -17,39 +17,75 @@ public class DataSource implements Serializable {
 	private String location;
 	private List<String> tables;
 
-	public void setDatabase(String database) {
+        /**
+         *
+         * @param database
+         */
+        public void setDatabase(String database) {
 		this.database = database;
 	}
 
-	public String getDatabase() {
+        /**
+         *
+         * @return
+         */
+        public String getDatabase() {
 		return this.database;
 	}
 
-	public void setDisplayedName(String displayedName) {
+        /**
+         *
+         * @param displayedName
+         */
+        public void setDisplayedName(String displayedName) {
 		this.displayedName = displayedName;
 	}
 
-	public String getDisplayedName() {
+        /**
+         *
+         * @return
+         */
+        public String getDisplayedName() {
 		return this.displayedName;
 	}
 
-	public void setId(String id) {
+        /**
+         *
+         * @param id
+         */
+        public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getId() {
+        /**
+         *
+         * @return
+         */
+        public String getId() {
 		return this.id;
 	}
 
-	public void setLocation(String location) {
+        /**
+         *
+         * @param location
+         */
+        public void setLocation(String location) {
 		this.location = location;
 	}
 
-	public String getLocation() {
+        /**
+         *
+         * @return
+         */
+        public String getLocation() {
 		return this.location;
 	}
 
-	public List<String> getTables() {
+        /**
+         *
+         * @return
+         */
+        public List<String> getTables() {
         if (tables == null) {
             tables = new ArrayList<String>();
         }
