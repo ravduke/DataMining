@@ -1,5 +1,6 @@
  package pl.edu.agh.ftj.datamining.client;
 
+
  import com.extjs.gxt.samples.resources.client.Resources;
  import com.extjs.gxt.samples.resources.client.model.DBTable;
  import com.extjs.gxt.samples.resources.client.model.Folder;
@@ -50,6 +51,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import java.util.ArrayList;
 import java.util.List;
 import org.adapters.highcharts.codegen.sections.options.OptionPath;
 import org.adapters.highcharts.codegen.types.SeriesType;
@@ -66,7 +68,7 @@ import pl.edu.agh.ftj.datamining.client.shared.WekaAnswerDTO;
 public class GWTServiceGUI extends LayoutContainer {
 
 	private final Portal portal = new Portal(2);
-	
+	private List<Portlet> portlets = new ArrayList<Portlet>();
   /**
   * Panel glowny
   */
@@ -136,7 +138,6 @@ public class GWTServiceGUI extends LayoutContainer {
   @Override
    protected void onRender(Element parent, int index) {
      super.onRender(parent, index);
-
      //
      // Panel glowny
      //
@@ -994,7 +995,9 @@ public class GWTServiceGUI extends LayoutContainer {
         
            algOptionsLabel.setValue(algorithmOptions + selectedTabel.getLocation() + " " + selectedTabel.getId() + " " + selectedTabel.getName());
            algOptionsLabel.setValue(algorithmOptions);
-           
+
+           //Log.info("before runAlg onSuccess...");
+
            getWekaService().runAlgorithm(algorithmType, selectedTabel.getId(), selectedTabel.getName(), algorithmOptions, new AsyncCallback<WekaAnswerDTO>() {
 
                     public void onFailure(Throwable caught) {
@@ -1003,20 +1006,22 @@ public class GWTServiceGUI extends LayoutContainer {
 
                     public void onSuccess(WekaAnswerDTO result) {
                         weka = result;
-                        portal.removeAll();
-                        portal.repaint();
+                        for(Portlet p: portlets) {
+                            portal.remove(p, 0);
+                            portal.remove(p, 1);
+                        }
+                        portlets.clear();
                         getResultService().getAttributes(new AsyncCallback<List<String>>() {
 							
 							public void onSuccess(List<String> arg0) {
 								int j = 0;
 								for (int chartNum = 0; chartNum < arg0.size(); chartNum +=2) {
 									if(chartNum + 1 < arg0.size()) {
-										addChart(200, j, portal, arg0.get(chartNum), arg0.get(chartNum+1));
+										addChart(200, j, arg0.get(chartNum), arg0.get(chartNum+1));
 										j++;
 									}
 		                        }
-                                                                portal.repaint();
-		                        portal.show();
+                                                            
 							}
 							
 							public void onFailure(Throwable arg0) {
@@ -1096,25 +1101,20 @@ public class GWTServiceGUI extends LayoutContainer {
         showResults.add(verticalTab3Pane);
     }
 
-    private void addChart(final int delay, final int position,
-        final Portal portal, final String attrX, final String attrY) {
-
-        Timer timer = new Timer() {
-            public void run() {
-                Portlet portlet = new Portlet();
-                portlet.setHeight(400);
-                portlet.setHeading("Weka Chart");
-                portlet.setLayout(new FitLayout());
-                initHighChart(portlet, position, attrX, attrY);
-            }
-        };
-        timer.schedule(delay);
+    private void addChart(final int delay, final int position, final String attrX, final String attrY) {
+        Portlet portlet = new Portlet();
+        portlet.setId("portlet" + position);
+        portlet.setHeight(400);
+        portlet.setHeading("Weka Chart");
+        portlet.setLayout(new FitLayout());
+        initHighChart(portlet, position, attrX, attrY);
+            
     }
 
     private void initHighChart(final Portlet portlet, final int chartNum, String attrX, String attrY) {
         final HighChart hc = new HighChart(null, "scatter");
         try {
-            hc.setOption(new OptionPath("/title/text"), "Cluster #" + chartNum);
+            hc.setOption(new OptionPath("/title/text"), "Wykres #" + chartNum);
             hc.setOption(new OptionPath("/credits/enabled"), false);
             hc.setOption(new OptionPath("/xAxis/allowDecimals"), true);
             hc.setOption(new OptionPath("/xAxis/title/text"), attrX);
@@ -1144,11 +1144,11 @@ public class GWTServiceGUI extends LayoutContainer {
                         SeriesType series = new SeriesType("cluster #" + i);
                         series.setType("scatter");
                         List<Number[]> numbers = arg0.get(i);
-                       // Log.info("numbers=" + numbers);
+                        //Log.info("numbers=" + numbers);
                         if(numbers != null) {
                             for (int j = 0 ; j < numbers.size() ; j++) {
                                 if(numbers.get(j) != null && numbers.get(j)[0] != null && numbers.get(j)[1] != null) {
-                                	//Log.info("x= " + numbers.get(j)[0] + " y=" + numbers.get(j)[1]);
+                                	
                                     series.addEntry(new SeriesType.SeriesDataEntry(
                                         numbers.get(j)[0],
                                         numbers.get(j)[1]));
@@ -1164,9 +1164,15 @@ public class GWTServiceGUI extends LayoutContainer {
                 hc.setResizeDelay(100);
 
                 hc.followWindowResize(false);
-        
                 portlet.add(hc);
                 portal.add(portlet, chartNum % 2);
+                
+                portlets.add(portlet);
+                portal.repaint();
+                for(Portlet p : portlets) {
+                    p.repaint();
+                    p.show();
+                }
 	    }
 	
             public void onFailure(Throwable arg0) {

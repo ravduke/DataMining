@@ -7,10 +7,20 @@
     <inherits name="com.extjs.gxt.samples.resources.Resources"/>
     <inherits name="com.extjs.gxt.ui.GXT"/>
     <inherits name='org.adapters.highcharts.gxt.gxthighcharts' />
-    <!-- <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
-    <extend-property name="log_level" values="DEBUG,WARN,ERROR,INFO"/>
-    	<set-property name="user.agent" value="gecko1_8" />
-    Inherit the default GWT style sheet. You can change -->
+    <!--<inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+   
+  <set-property name="log_ConsoleLogger" value="ENABLED" />
+  <set-property name="log_DivLogger" value="ENABLED" />
+  <set-property name="log_FirebugLogger" value="ENABLED" />
+  <set-property name="log_GWTLogger" value="ENABLED" />
+  <set-property name="log_SystemLogger" value="ENABLED" />
+
+  <set-property name="log_WindowLogger" value="ENABLED" />
+  <inherits name="com.allen_sauer.gwt.log.gwt-log-RemoteLogger" />
+  
+    <extend-property name="log_level" values="INFO"/>
+    	<set-property name="user.agent" value="gecko1_8" />-->
+    <!-- Inherit the default GWT style sheet. You can change -->
     <!-- the theme of your GWT application by uncommenting -->
     <!-- any one of the following lines. -->
     <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->

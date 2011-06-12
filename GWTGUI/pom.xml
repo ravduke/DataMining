@@ -62,7 +62,7 @@
             <scope>provided</scope>
             <type>jar</type>
         </dependency>
-        <!-- <dependency>
+        <!--<dependency>
             <groupId>com.google.code</groupId>
             <artifactId>gwt-log</artifactId>
             <version>3.0.4</version>
